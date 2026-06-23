@@ -29,9 +29,9 @@ const caseStudySections = [
   },
   {
     id: "interaction-design",
-    title: "Interaction design",
-    heading: "The page responds as the reader moves",
-    body: "As each section reaches the reading zone, the table of contents updates the active item. Clicking a title scrolls directly to the matching section, making the left index feel connected to the content.",
+    title: "My Role",
+    heading: "Co-founder, product designer, and technical lead",
+    body: "Phoütify was built from the ground up with a former college classmate. As co-founders, we collaborated closely on the product vision and strategy, while taking ownership of different areas of the business.\n\nMy co-founder led marketing, sales, and partnership efforts, while I was responsible for product design, user experience, and technical implementation from concept through launch.",
   },
   {
     id: "reflection",
@@ -81,6 +81,58 @@ const solutionSteps = [
     screenBody:
       "Once matching is complete, users receive a personalized gallery containing only the photos in which they appear, making photo discovery effortless.",
     image: photifyScreen5,
+  },
+];
+
+const roleSections = [
+  {
+    title: "Product & Design",
+    paragraphs: [
+      "I led the product and design process from concept to launch, marking the first time I was fully responsible for designing an entire product experience from scratch.",
+      "Our goal was to create a product that could be comfortably used by a wide range of event attendees, regardless of age or technical familiarity.",
+      "Every design decision was guided by simplicity, clarity, and trust.",
+      "I tried to develop a visual identity that felt warm, and energetic. This direction influenced everything from the logo and branding to the interface language and interaction patterns.",
+    ],
+    bullets: [
+      "Defined the end-to-end user journey",
+      "Established the visual identity, design language, and component patterns",
+      "Iterated on flows based on testing and real-world feedback",
+    ],
+    callout:
+      "The primary challenge was not the matching technology itself, but creating an experience that felt simple, trustworthy, and accessible to first-time users.",
+    insight: {
+      title: "Designing Through Prototyping",
+      body: "Rather than following a traditional workflow of fully designing screens in Figma before implementation, I adopted a more iterative approach. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
+    },
+  },
+  {
+    title: "Frontend Development",
+    paragraphs: [
+      "Because frontend development is already my area of expertise, implementation became an extension of the design process. Familiar tools, reusable systems, and AI-assisted development allowed ideas to move quickly from concept to working prototype, creating a tighter feedback loop between design and execution. I was responsible for all frontend development across both the mobile application and marketing website.",
+    ],
+    bullets: [
+      "Mobile application development",
+      "Marketing website design and development",
+      "User onboarding and event flows",
+      "API integrations",
+      "App Store deployment",
+    ],
+  },
+  {
+    title: "Backend & Infrastructure",
+    paragraphs: [
+      "Having worked alongside backend engineers throughout my career, I was already familiar with many backend concepts and system design discussions. However, building and maintaining the backend myself required a much deeper understanding of how these systems operate in practice.",
+      "Using Django, I designed and implemented the backend powering the application. AI tools, particularly Claude, played an important role throughout this process—not only as coding assistants, but as learning tools that helped me understand unfamiliar concepts, evaluate architectural decisions, and deepen my understanding of backend development.",
+    ],
+    bullets: [
+      "Built backend services using Django",
+      "Designed user, event, and photo management systems",
+      "Implemented APIs supporting the mobile application",
+      "Managed authentication, storage, and media workflows",
+      "Integrated facial recognition and photo matching processes",
+    ],
+    callout:
+      "This experience transformed backend development from something I collaborated with into something I could confidently design, build, and reason about myself.",
   },
 ];
 
@@ -302,6 +354,57 @@ function WorkDetailPage() {
                         />
                       </div>
                     </div>
+                  </div>
+                </div>
+              ) : section.id === "interaction-design" ? (
+                <div className="role-section-list">
+                  {section.body
+                    .split("\n\n")
+                    .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+
+                  <div className="role-subsections">
+                    {roleSections.map((roleSection, roleSectionIndex) => (
+                      <div
+                        className="role-subsection"
+                        key={
+                          typeof roleSection === "string"
+                            ? roleSection
+                            : roleSection.title
+                        }
+                      >
+                        <h3>
+                          <span className="role-subsection__pill">
+                            <span>{roleSectionIndex + 1}</span>
+                            {typeof roleSection === "string"
+                              ? roleSection
+                              : roleSection.title}
+                          </span>
+                        </h3>
+                        {typeof roleSection !== "string" ? (
+                          <div className="role-subsection__content">
+                            {roleSection.paragraphs.map((paragraph) => (
+                              <p key={paragraph}>{paragraph}</p>
+                            ))}
+                            <ul>
+                              {roleSection.bullets.map((bullet) => (
+                                <li key={bullet}>{bullet}</li>
+                              ))}
+                            </ul>
+                            {roleSection.callout ? (
+                              <p className="role-subsection__callout">
+                                {roleSection.callout}
+                              </p>
+                            ) : null}
+                            {roleSection.insight ? (
+                              <aside className="role-subsection__insight">
+                                <h4>{roleSection.insight.title}</h4>
+                                <div>{roleSection.insight.body}</div>
+                              </aside>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </div>
+                    ))}
                   </div>
                 </div>
               ) : (
