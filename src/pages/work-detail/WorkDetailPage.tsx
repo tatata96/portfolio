@@ -1,5 +1,10 @@
 import {useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
+import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
+import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
+import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
+import photifyScreen4 from "../../assets/photify/photify_screen_4.jpeg";
+import photifyScreen5 from "../../assets/photify/photify_screen_5.jpeg";
 import {workItems} from "../work/workItems";
 import "./work_detail_page.css";
 
@@ -17,10 +22,10 @@ const caseStudySections = [
     body: "Photify transforms a complex image-matching process into a simple user experience. Attendees join an event, upload a selfie, and receive a personalized gallery of photos in which they appear.\n\nThe goal was to make photo discovery effortless while maintaining transparency and trust around the use of facial recognition technology.",
   },
   {
-    id: "features",
+    id: "solution-walkthrough",
     title: "Features",
-    heading: "Designed for scanning and reading",
-    body: "The layout uses a sticky table of contents, active section tracking, and click-to-scroll navigation. Readers can jump to the parts they care about while still understanding the full structure of the case study.",
+    heading: "Designed to make photo discovery effortless",
+    body: "",
   },
   {
     id: "interaction-design",
@@ -36,12 +41,57 @@ const caseStudySections = [
   },
 ];
 
+const solutionSteps = [
+  {
+    number: "1",
+    label: "Phone Verification",
+    screenTitle: "Phone Verification",
+    screenBody:
+      "Users create an account using their phone number and a one-time verification code, providing a simple and secure onboarding experience.",
+    image: photifyScreen1,
+  },
+  {
+    number: "2",
+    label: "Upload Selfie",
+    screenTitle: "Upload Selfie",
+    screenBody:
+      "Users upload a selfie that serves as their visual identifier. This image is used to match them with photos captured during events.",
+    image: photifyScreen2,
+  },
+  {
+    number: "3",
+    label: "Scan QR",
+    screenTitle: "Scan QR",
+    screenBody:
+      "Attendees can quickly access an event by scanning a QR code provided by the organizer, removing the need for manual event searches.",
+    image: photifyScreen3,
+  },
+  {
+    number: "4",
+    label: "Join Event",
+    screenTitle: "Join Event",
+    screenBody:
+      "After joining, users can view all events they are participating in and track the status of photo processing and matching.",
+    image: photifyScreen4,
+  },
+  {
+    number: "5",
+    label: "Personal Gallery",
+    screenTitle: "Personal Gallery",
+    screenBody:
+      "Once matching is complete, users receive a personalized gallery containing only the photos in which they appear, making photo discovery effortless.",
+    image: photifyScreen5,
+  },
+];
+
 function WorkDetailPage() {
   const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
   const [activeSectionId, setActiveSectionId] = useState(
     caseStudySections[0].id,
   );
+  const [activeSolutionStep, setActiveSolutionStep] = useState(0);
+  const currentSolutionStep = solutionSteps[activeSolutionStep];
 
   useEffect(() => {
     const sectionElements = caseStudySections
@@ -209,9 +259,56 @@ function WorkDetailPage() {
                 {String(index + 1).padStart(2, "0")}. {section.title}
               </p>
               <h2>{section.heading}</h2>
-              {section.body.split("\n\n").map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+              {section.id === "solution-walkthrough" ? (
+                <div className="solution-walkthrough">
+                  <p className="solution-walkthrough__intro">
+                    The goal was to create a flow simple enough for any event
+                    attendee to complete in under a minute. Each step was
+                    designed to reduce friction while building trust around the
+                    use of facial recognition technology.
+                  </p>
+
+                  <div
+                    className="solution-walkthrough__steps"
+                    aria-label="Photify solution steps"
+                  >
+                    {solutionSteps.map((step, stepIndex) => (
+                      <button
+                        className={
+                          stepIndex === activeSolutionStep
+                            ? "solution-step solution-step--active"
+                            : "solution-step"
+                        }
+                        key={step.number}
+                        type="button"
+                        onClick={() => setActiveSolutionStep(stepIndex)}
+                      >
+                        <span>{step.number}</span>
+                        <div>
+                          <strong>{step.label}</strong>
+                          <p>{step.screenBody}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="solution-phone" aria-live="polite">
+                    <div className="solution-phone__device">
+                      <div className="solution-phone__screen">
+                        <div className="solution-phone__island" />
+                        <img
+                          src={currentSolutionStep.image}
+                          alt={`${currentSolutionStep.screenTitle} screen`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                section.body
+                  .split("\n\n")
+                  .map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+              )}
             </section>
           ))}
         </div>
