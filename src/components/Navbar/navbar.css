@@ -1,0 +1,31 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 32px;
+  box-sizing: border-box;
+}
+
+.nav a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 20px;
+  }
+
+  .nav-links {
+    gap: 14px;
+    font-size: 12px;
+  }
+}
