@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { workItems } from "../work/workItems";
+import {useEffect, useState} from "react";
+import {Link, Navigate, useParams} from "react-router-dom";
+import {workItems} from "../work/workItems";
 import "./work_detail_page.css";
 
 const caseStudySections = [
@@ -37,14 +37,10 @@ const caseStudySections = [
 ];
 
 function WorkDetailPage() {
-  const { slug } = useParams();
+  const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
-  const [activeSectionId, setActiveSectionId] = useState(caseStudySections[0].id);
-  const activeSection = useMemo(
-    () =>
-      caseStudySections.find((section) => section.id === activeSectionId) ??
-      caseStudySections[0],
-    [activeSectionId],
+  const [activeSectionId, setActiveSectionId] = useState(
+    caseStudySections[0].id,
   );
 
   useEffect(() => {
@@ -115,39 +111,90 @@ function WorkDetailPage() {
         <button
           className="work-detail-sidebar__top"
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
         >
           ^ Back to top
         </button>
       </aside>
 
       <div className="work-detail-content">
-        <section className="work-detail-hero" aria-labelledby="case-study-title">
-          <img src={workItem.image} alt="" />
-          <div className="work-detail-kicker">
-            <span>Case study</span>
-            <span>{workItem.time}</span>
-          </div>
-          <h1 id="case-study-title">{workItem.title}</h1>
-          <p>{workItem.description}</p>
-        </section>
+        <section className="work-detail-snapshot" aria-label="Project snapshot">
+          <header className="work-detail-snapshot__header">
+            <h2>Project Snapshot</h2>
+          </header>
 
-        <section className="work-detail-summary" aria-label="Project summary">
-          <div>
-            <h2>Role</h2>
-            <p>{workItem.role}</p>
-          </div>
-          <div>
-            <h2>Timeline</h2>
-            <p>{workItem.time}</p>
-          </div>
-          <div>
-            <h2>Skills</h2>
-            <p>{workItem.tags.join(", ")}</p>
-          </div>
-          <div>
-            <h2>Active section</h2>
-            <p>{activeSection.title}</p>
+          <div className="work-detail-snapshot__body">
+            <div className="work-detail-snapshot__column">
+              <div className="work-detail-snapshot__item">
+                <h3>Client</h3>
+                <p>Self-initiated startup project</p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Product</h3>
+                <p>Photify - AI-powered event photo discovery platform</p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Duration</h3>
+                <p>2026</p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Capacity</h3>
+                <p>Product Design, Frontend Development, Backend Development</p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Team Model</h3>
+                <p>Built with one collaborator</p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Status</h3>
+                <p>Launched MVP</p>
+              </div>
+            </div>
+
+            <div className="work-detail-snapshot__column">
+              <div className="work-detail-snapshot__item">
+                <h3>In a Nutshell</h3>
+                <p>
+                  Photify helps event attendees instantly find photos of
+                  themselves using facial recognition. Instead of manually
+                  searching through hundreds of event photos, users upload a
+                  selfie and receive a personalized gallery of matched images.
+                </p>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Impact</h3>
+                <ul>
+                  <li>
+                    Reduced photo discovery from hundreds of images to a
+                    personalized selection
+                  </li>
+                  <li>
+                    Released a production-ready mobile application on the App
+                    Store
+                  </li>
+                  <li>
+                    Shipped and owned a complete product from concept to
+                    deployment
+                  </li>
+                </ul>
+              </div>
+              <div className="work-detail-snapshot__item">
+                <h3>Tags</h3>
+                <div className="work-detail-snapshot__tags">
+                  {[
+                    "Product Design",
+                    "Mobile App",
+                    "AI",
+                    "Facial Recognition",
+                    "React Native",
+                    "Django",
+                    "UX Design",
+                  ].map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
