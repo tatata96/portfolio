@@ -1,6 +1,9 @@
+import { useState, type MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import "./work_card.css";
 
 export type WorkCardData = {
+  slug: string;
   title: string;
   description: string;
   role: string;
@@ -16,9 +19,26 @@ type WorkCardProps = {
 
 function WorkCard({ item, number }: WorkCardProps) {
   const formattedNumber = String(number).padStart(2, "0");
+  const [cursorPosition, setCursorPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+
+  function updateCursorPosition(event: MouseEvent<HTMLElement>) {
+    setCursorPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+  }
 
   return (
-    <article className="work-card">
+    <Link
+      to={`/work/${item.slug}`}
+      className={`work-card${cursorPosition ? " work-card--cursor-active" : ""}`}
+      onMouseEnter={updateCursorPosition}
+      onMouseLeave={() => setCursorPosition(null)}
+      onMouseMove={updateCursorPosition}
+    >
       <span className="work-card__hole" aria-hidden="true" />
       <span className="work-card__number" aria-label={`Project ${number}`}>
         {formattedNumber}
@@ -51,7 +71,20 @@ function WorkCard({ item, number }: WorkCardProps) {
       <div className="work-card__image">
         <img src={item.image} alt="" />
       </div>
-    </article>
+
+      {cursorPosition && (
+        <span
+          className="work-card__cursor"
+          style={{
+            left: cursorPosition.x,
+            top: cursorPosition.y,
+          }}
+          aria-hidden="true"
+        >
+          VIEW CASE STUDY
+        </span>
+      )}
+    </Link>
   );
 }
 
