@@ -7,14 +7,14 @@ const caseStudySections = [
   {
     id: "context",
     title: "Context",
-    heading: "A portfolio system built around project clarity",
-    body: "The project started as a way to make selected work easier to scan without losing the story behind each decision. The page gives each project a clear hierarchy: what it is, what I did, when it happened, and why it matters.",
+    heading: "Event photography creates thousands of photos.",
+    body: "At concerts, festivals, conferences, and social events, photographers capture countless moments that participants may never see again.\n\nA familiar experience inspired this project: noticing a photographer take your photo, then never knowing where that image ended up. Even when galleries are published, attendees are often expected to manually search through hundreds or thousands of photos to find themselves.",
   },
   {
     id: "solution",
-    title: "The solution",
-    heading: "A reusable case study template",
-    body: "The work page and detail page share a single project record, so the listing card and the case study stay aligned. This keeps the system simple while leaving space for deeper sections, imagery, and links later.",
+    title: "Solution",
+    heading: "A selfie becomes the search query.",
+    body: "Photify transforms a complex image-matching process into a simple user experience. Attendees join an event, upload a selfie, and receive a personalized gallery of photos in which they appear.\n\nThe goal was to make photo discovery effortless while maintaining transparency and trust around the use of facial recognition technology.",
   },
   {
     id: "features",
@@ -209,7 +209,9 @@ function WorkDetailPage() {
                 {String(index + 1).padStart(2, "0")}. {section.title}
               </p>
               <h2>{section.heading}</h2>
-              <p>{section.body}</p>
+              {section.body.split("\n\n").map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </section>
           ))}
         </div>
