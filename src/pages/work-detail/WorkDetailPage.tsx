@@ -36,8 +36,8 @@ const caseStudySections = [
   {
     id: "reflection",
     title: "Reflection",
-    heading: "A foundation for richer project pages",
-    body: "This version keeps the content lightweight, but the structure can support image grids, process notes, launch links, and final results without changing the core interaction model.",
+    heading: "What I've learned",
+    body: "",
   },
 ];
 
@@ -136,6 +136,17 @@ const roleSections = [
   },
 ];
 
+const reflectionCards = [
+  {
+    title: "Beyond My Comfort Zone",
+    body: "Photify pushed me beyond my usual role as a frontend developer. Taking ownership of product design and backend development gave me a broader understanding of how decisions made in one area affect the entire product. The experience reinforced my interest in working across disciplines and approaching problems from both technical and human perspectives.",
+  },
+  {
+    title: "Ownership & Creative Freedom",
+    body: "Working on my own product was fundamentally different from working on client or company projects. Having ownership over every decision—from product direction and design choices to technical implementation—created a level of motivation I had not experienced before.\n\nThe freedom to experiment, challenge assumptions, and immediately act on ideas without organizational constraints allowed the product to evolve organically. It reinforced my interest in building products where design, technology, and strategy can influence one another rather than exist as separate disciplines.",
+  },
+];
+
 function WorkDetailPage() {
   const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
@@ -146,29 +157,42 @@ function WorkDetailPage() {
   const currentSolutionStep = solutionSteps[activeSolutionStep];
 
   useEffect(() => {
-    const sectionElements = caseStudySections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element));
+    let animationFrameId = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    function updateActiveSection() {
+      const sectionElements = caseStudySections
+        .map((section) => document.getElementById(section.id))
+        .filter((element): element is HTMLElement => Boolean(element));
 
-        if (visibleEntry) {
-          setActiveSectionId(visibleEntry.target.id);
-        }
-      },
-      {
-        rootMargin: "-28% 0px -58% 0px",
-        threshold: [0.12, 0.32, 0.58],
-      },
-    );
+      const activationLine = window.innerHeight * 0.36;
+      const activeElement =
+        sectionElements
+          .filter(
+            (element) => element.getBoundingClientRect().top <= activationLine,
+          )
+          .at(-1) ?? sectionElements[0];
 
-    sectionElements.forEach((element) => observer.observe(element));
+      if (activeElement) {
+        setActiveSectionId(activeElement.id);
+      }
+    }
 
-    return () => observer.disconnect();
+    function requestActiveSectionUpdate() {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(updateActiveSection);
+    }
+
+    updateActiveSection();
+    window.addEventListener("scroll", requestActiveSectionUpdate, {
+      passive: true,
+    });
+    window.addEventListener("resize", requestActiveSectionUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("scroll", requestActiveSectionUpdate);
+      window.removeEventListener("resize", requestActiveSectionUpdate);
+    };
   }, []);
 
   function scrollToSection(sectionId: string) {
@@ -406,6 +430,17 @@ function WorkDetailPage() {
                       </div>
                     ))}
                   </div>
+                </div>
+              ) : section.id === "reflection" ? (
+                <div className="reflection-card-grid">
+                  {reflectionCards.map((card) => (
+                    <article className="reflection-card" key={card.title}>
+                      <h3>{card.title}</h3>
+                      {card.body
+                        .split("\n\n")
+                        .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    </article>
+                  ))}
                 </div>
               ) : (
                 section.body
