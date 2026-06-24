@@ -110,15 +110,15 @@
 
 .work-detail-snapshot {
   overflow: hidden;
-  border: 1.5px solid var(--text-h);
+  border: 1.5px solid var(--project-accent);
   border-radius: 18px;
-  background: #f2f2f2;
+  background: transparent;
 }
 
 .work-detail-snapshot__header {
   padding: 28px 34px;
-  border-bottom: 1.5px solid var(--text-h);
-  background: #e6e6e6;
+  border-bottom: 1.5px solid var(--project-accent);
+  background: transparent;
 }
 
 .work-detail-snapshot__header h2 {
@@ -235,6 +235,60 @@
 .work-detail-section p:not(.work-detail-section__eyebrow) {
   max-width: 840px;
   font-size: 16px;
+}
+
+.solution-overview {
+  display: grid;
+  gap: 14px;
+}
+
+.solution-collage {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  margin: 24px 0 0;
+  border-radius: 34px;
+  background: #f8edc6;
+  box-shadow:
+    0 22px 54px rgba(122, 92, 0, 0.12),
+    inset 0 0 0 1px rgba(var(--project-accent-rgb), 0.58);
+}
+
+.solution-collage img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2112 / 990;
+  object-fit: cover;
+}
+
+.solution-collage__copy {
+  position: absolute;
+  left: clamp(22px, 5vw, 56px);
+  bottom: clamp(20px, 4.4vw, 48px);
+  display: grid;
+  gap: 4px;
+  max-width: min(420px, calc(100% - 44px));
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 16px 34px rgba(8, 6, 13, 0.12);
+  color: var(--text-h);
+}
+
+.solution-collage__copy span {
+  color: var(--project-accent-text);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.solution-collage__copy strong {
+  font-family: var(--heading);
+  font-size: clamp(24px, 3.2vw, 38px);
+  font-weight: 600;
+  line-height: 1.04;
 }
 
 .role-section-list {
@@ -612,6 +666,33 @@
 
   .work-detail-section h2 {
     font-size: 26px;
+  }
+
+  .solution-collage {
+    margin-top: 18px;
+    border-radius: 24px;
+  }
+
+  .solution-collage img {
+    min-height: 280px;
+    object-position: center;
+  }
+
+  .solution-collage__copy {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    max-width: none;
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .solution-collage__copy span {
+    font-size: 11px;
+  }
+
+  .solution-collage__copy strong {
+    font-size: 24px;
   }
 
   .role-subsection h3 {

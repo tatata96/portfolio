@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
+import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
 import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
@@ -379,6 +380,23 @@ function WorkDetailPage() {
                       </div>
                     </div>
                   </div>
+                </div>
+              ) : section.id === "solution" ? (
+                <div className="solution-overview">
+                  {section.body
+                    .split("\n\n")
+                    .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+
+                  <figure className="solution-collage">
+                    <img
+                      src={photifySolution}
+                      alt="Photify app screens showing selfie upload, event access, and personalized photo results"
+                    />
+                    <figcaption className="solution-collage__copy">
+                      <span>From digital clutter</span>
+                      <strong>to custom gallery</strong>
+                    </figcaption>
+                  </figure>
                 </div>
               ) : section.id === "interaction-design" ? (
                 <div className="role-section-list">
