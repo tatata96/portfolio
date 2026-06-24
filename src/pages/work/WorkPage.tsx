@@ -14,8 +14,8 @@ function WorkPage() {
       </section>
 
       <section className="work-list" aria-label="Selected work">
-        {workItems.map((item, index) => (
-          <WorkCard item={item} key={item.title} number={index + 1} />
+        {workItems.map((item) => (
+          <WorkCard item={item} key={item.title} />
         ))}
       </section>
     </main>

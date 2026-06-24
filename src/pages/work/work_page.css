@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 48px;
   min-height: calc(100svh - 74px);
-  width: min(1120px, 100%);
+  width: min(1180px, 100%);
   margin: 0 auto;
   padding: 72px 32px;
   box-sizing: border-box;
@@ -22,6 +22,7 @@
 
 .work-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -29,6 +30,11 @@
   .work-page {
     gap: 36px;
     padding: 48px 20px;
+  }
+
+  .work-list {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 

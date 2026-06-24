@@ -16,7 +16,6 @@ export type WorkCardData = {
 
 type WorkCardProps = {
   item: WorkCardData;
-  number: number;
 };
 
 type CursorStyle = CSSProperties & {
@@ -24,8 +23,12 @@ type CursorStyle = CSSProperties & {
   "--work-card-cursor-color"?: string;
 };
 
-function WorkCard({ item, number }: WorkCardProps) {
-  const formattedNumber = String(number).padStart(2, "0");
+type CardStyle = CSSProperties & {
+  "--work-card-project-bg"?: string;
+  "--work-card-project-color"?: string;
+};
+
+function WorkCard({ item }: WorkCardProps) {
   const [cursorPosition, setCursorPosition] = useState<{
     x: number;
     y: number;
@@ -46,46 +49,36 @@ function WorkCard({ item, number }: WorkCardProps) {
         "--work-card-cursor-color": item.cursorTextColor,
       }
     : undefined;
+  const cardStyle: CardStyle = {
+    "--work-card-project-bg": item.cursorColor,
+    "--work-card-project-color": item.cursorTextColor,
+  };
+  const marqueeTags = [...item.tags, ...item.tags];
 
   return (
     <Link
       to={`/work/${item.slug}`}
       className={`work-card${cursorPosition ? " work-card--cursor-active" : ""}`}
+      style={cardStyle}
       onMouseEnter={updateCursorPosition}
       onMouseLeave={() => setCursorPosition(null)}
       onMouseMove={updateCursorPosition}
     >
-      <span className="work-card__hole" aria-hidden="true" />
-      <span className="work-card__number" aria-label={`Project ${number}`}>
-        {formattedNumber}
-      </span>
-
-      <div className="work-card__content">
-        <div>
-          <h2>{item.title}</h2>
-          <p>{item.description}</p>
-        </div>
-
-        <dl className="work-card__meta">
-          <div>
-            <dt>Role</dt>
-            <dd>{item.role}</dd>
-          </div>
-          <div>
-            <dt>Time</dt>
-            <dd>{item.time}</dd>
-          </div>
-        </dl>
-
-        <div className="work-card__tags" aria-label={`${item.title} tags`}>
-          {item.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
-        </div>
-      </div>
-
       <div className="work-card__image">
         <img src={item.image} alt="" />
+      </div>
+
+      <div className="work-card__content">
+        <h2>{item.title}</h2>
+        <p>{item.role}</p>
+
+        <div className="work-card__tags" aria-label={`${item.title} tags`}>
+          <div className="work-card__tag-track">
+            {marqueeTags.map((tag, index) => (
+              <span key={`${tag}-${index}`}>{tag}</span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {cursorPosition && (
