@@ -423,6 +423,10 @@
   padding-top: 18px;
 }
 
+.reflection-card-grid:has(.reflection-card:only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .reflection-card {
   display: grid;
   align-content: start;

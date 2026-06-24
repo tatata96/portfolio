@@ -360,14 +360,14 @@ const brikCaseStudy: CaseStudy = {
     {
       id: "role",
       title: "My Role",
-      heading: "My contribution to Brik.",
-      body: "This section will explain responsibilities, collaboration model, and ownership across design and implementation.",
+      heading: "Mobile development with a product mindset.",
+      body: "Although I joined Brik as a mobile developer, working in an early-stage startup meant responsibilities often extended beyond implementation. Product decisions were highly collaborative, and everyone on the team had the opportunity to contribute ideas, challenge assumptions, and influence the direction of the product.\n\nThis environment gave me valuable exposure to product thinking and allowed me to participate in conversations around user experience, feature prioritization, and long-term product strategy while remaining primarily responsible for the mobile application.",
       variant: "role",
     },
     {
       id: "outcome",
       title: "Reflection",
-      heading: "Results and learnings will live here.",
+      heading: "What I've learned.",
       body: "",
       variant: "reflection",
     },
@@ -424,26 +424,11 @@ const brikCaseStudy: CaseStudy = {
       },
     ],
   },
-  roleSections: [
-    {
-      title: "Design",
-      paragraphs: ["Design contribution details coming soon."],
-      bullets: ["Scope coming soon"],
-    },
-    {
-      title: "Development",
-      paragraphs: ["Development contribution details coming soon."],
-      bullets: ["Scope coming soon"],
-    },
-  ],
+  roleSections: [],
   reflectionCards: [
     {
-      title: "Outcome",
-      body: "Outcome details coming soon.",
-    },
-    {
-      title: "Reflection",
-      body: "Reflection details coming soon.",
+      title: "Startup Pace",
+      body: "Brik gave me my first experience working within an early-stage startup environment, where product decisions, technical constraints, and business goals were constantly influencing one another. I learned that building successful products requires much more than shipping features-it requires understanding user needs, collaborating across disciplines, and balancing competing priorities.\n\nThe experience also sparked my interest in product design and strategy, which would later influence how I approached my own projects.",
     },
   ],
 };
