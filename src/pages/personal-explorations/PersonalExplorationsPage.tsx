@@ -257,6 +257,8 @@ function PersonalExplorationsPage() {
     target.style.setProperty("--active-float-x", `${rx * 28}px`);
     target.style.setProperty("--active-float-y", `${ry * 22}px`);
     target.style.setProperty("--active-rotate", `${rx * 2.2}deg`);
+    target.style.setProperty("--asset-meta-x", `${event.clientX - rect.left}px`);
+    target.style.setProperty("--asset-meta-y", `${event.clientY - rect.top}px`);
     setActiveAssetId(asset.id);
     setCursorPosition({ x: event.clientX, y: event.clientY });
   }
@@ -376,7 +378,7 @@ function PersonalExplorationsPage() {
 
       </div>
 
-      {/* ── Custom cursor ── */}
+      {/* ── Hover cursor ── */}
       {activeAssetId ? (
         <span
           className="personal-cursor"
@@ -387,9 +389,7 @@ function PersonalExplorationsPage() {
             } as CursorStyle
           }
           aria-hidden="true"
-        >
-          ×
-        </span>
+        />
       ) : null}
 
       {/* ── Modal ── */}
