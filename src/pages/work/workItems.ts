@@ -1,4 +1,5 @@
 import type { WorkCardData } from "../../components/WorkCard/WorkCard";
+import brikLogo from "../../assets/brik/brik-logo.jpg";
 import projectImage from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 
 export const workItems: WorkCardData[] = [
@@ -11,5 +12,14 @@ export const workItems: WorkCardData[] = [
     time: "2026",
     image: projectImage,
     tags: ["Mobile App", "AI", "Facial Recognition", "React Native", "Django"],
+  },
+  {
+    slug: "brik",
+    title: "Brik",
+    description: "Project details coming soon.",
+    role: "Details coming soon",
+    time: "TBD",
+    image: brikLogo,
+    tags: ["Coming Soon"],
   },
 ];

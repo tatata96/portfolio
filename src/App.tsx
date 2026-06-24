@@ -1,8 +1,14 @@
-import { BrowserRouter, Route, Routes, useMatch } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useMatch, useParams } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import HomePage from './pages/home/HomePage'
 import WorkDetailPage from './pages/work-detail/WorkDetailPage'
 import WorkPage from './pages/work/WorkPage'
+
+function WorkDetailRoute() {
+  const { slug } = useParams()
+
+  return <WorkDetailPage key={slug} />
+}
 
 function AppRoutes() {
   const isWorkDetailPage = useMatch('/work/:slug')
@@ -13,7 +19,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/work" element={<WorkPage />} />
-        <Route path="/work/:slug" element={<WorkDetailPage />} />
+        <Route path="/work/:slug" element={<WorkDetailRoute />} />
       </Routes>
     </>
   )

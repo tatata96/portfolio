@@ -1,0 +1,409 @@
+import brikLogo from "../../assets/brik/brik-logo.jpg";
+import photifySolution from "../../assets/photify/photify-solution.png";
+import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
+import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
+import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
+import photifyScreen4 from "../../assets/photify/photify_screen_4.jpeg";
+import photifyScreen5 from "../../assets/photify/photify_screen_5.jpeg";
+
+export type CaseStudySection = {
+  id: string;
+  title: string;
+  heading: string;
+  body: string;
+  variant?: "overview" | "walkthrough" | "role" | "reflection";
+};
+
+export type SnapshotItem = {
+  label: string;
+  value?: string;
+  bullets?: string[];
+  tags?: string[];
+};
+
+export type SolutionStep = {
+  number: string;
+  label: string;
+  screenTitle: string;
+  screenBody: string;
+  image: string;
+};
+
+export type RoleSection = {
+  title: string;
+  paragraphs: string[];
+  bullets: string[];
+  callout?: string;
+  insight?: {
+    title: string;
+    body: string;
+  };
+};
+
+export type ReflectionCard = {
+  title: string;
+  body: string;
+};
+
+export type CaseStudyAccent = {
+  color: string;
+  soft: string;
+  text: string;
+  rgb: string;
+  collageBackground: string;
+  shadow: string;
+};
+
+export type CaseStudy = {
+  accent: CaseStudyAccent;
+  snapshot: {
+    left: SnapshotItem[];
+    right: SnapshotItem[];
+  };
+  sections: CaseStudySection[];
+  solutionOverview?: {
+    image: string;
+    imageAlt: string;
+    captionKicker: string;
+    captionTitle: string;
+  };
+  walkthrough?: {
+    intro: string;
+    ariaLabel: string;
+    steps: SolutionStep[];
+  };
+  roleSections?: RoleSection[];
+  reflectionCards?: ReflectionCard[];
+};
+
+const photifyCaseStudy: CaseStudy = {
+  accent: {
+    color: "#f7d96b",
+    soft: "#fff3bf",
+    text: "#7a5c00",
+    rgb: "247, 217, 107",
+    collageBackground: "#f8edc6",
+    shadow: "122, 92, 0",
+  },
+  snapshot: {
+    left: [
+      {label: "Client", value: "Self-initiated startup project"},
+      {
+        label: "Product",
+        value: "Photify - AI-powered event photo discovery platform",
+      },
+      {label: "Duration", value: "2026"},
+      {
+        label: "Capacity",
+        value: "Product Design, Frontend Development, Backend Development",
+      },
+      {label: "Team Model", value: "Built with one collaborator"},
+      {label: "Status", value: "Launched MVP"},
+    ],
+    right: [
+      {
+        label: "In a Nutshell",
+        value:
+          "Photify helps event attendees instantly find photos of themselves using facial recognition. Instead of manually searching through hundreds of event photos, users upload a selfie and receive a personalized gallery of matched images.",
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Reduced photo discovery from hundreds of images to a personalized selection",
+          "Released a production-ready mobile application on the App Store",
+          "Shipped and owned a complete product from concept to deployment",
+        ],
+      },
+      {
+        label: "Tags",
+        tags: [
+          "Product Design",
+          "Mobile App",
+          "AI",
+          "Facial Recognition",
+          "React Native",
+          "Django",
+          "UX Design",
+        ],
+      },
+    ],
+  },
+  sections: [
+    {
+      id: "context",
+      title: "Context",
+      heading: "Event photography creates thousands of photos.",
+      body: "At concerts, festivals, conferences, and social events, photographers capture countless moments that participants may never see again.\n\nA familiar experience inspired this project: noticing a photographer take your photo, then never knowing where that image ended up. Even when galleries are published, attendees are often expected to manually search through hundreds or thousands of photos to find themselves.",
+    },
+    {
+      id: "solution",
+      title: "Solution",
+      heading: "A selfie becomes the search query.",
+      body: "Photify transforms a complex image-matching process into a simple user experience. Attendees join an event, upload a selfie, and receive a personalized gallery of photos in which they appear.\n\nThe goal was to make photo discovery effortless while maintaining transparency and trust around the use of facial recognition technology.",
+      variant: "overview",
+    },
+    {
+      id: "solution-walkthrough",
+      title: "Features",
+      heading: "Designed to make photo discovery effortless",
+      body: "",
+      variant: "walkthrough",
+    },
+    {
+      id: "interaction-design",
+      title: "My Role",
+      heading: "Co-founder, product designer, and technical lead",
+      body: "Photify was built from the ground up with a former college classmate. As co-founders, we collaborated closely on the product vision and strategy, while taking ownership of different areas of the business.\n\nMy co-founder led marketing, sales, and partnership efforts, while I was responsible for product design, user experience, and technical implementation from concept through launch.",
+      variant: "role",
+    },
+    {
+      id: "reflection",
+      title: "Reflection",
+      heading: "What I've learned",
+      body: "",
+      variant: "reflection",
+    },
+  ],
+  solutionOverview: {
+    image: photifySolution,
+    imageAlt:
+      "Photify app screens showing selfie upload, event access, and personalized photo results",
+    captionKicker: "From digital clutter",
+    captionTitle: "to custom gallery",
+  },
+  walkthrough: {
+    intro:
+      "The goal was to create a flow simple enough for any event attendee to complete in under a minute. Each step was designed to reduce friction while building trust around the use of facial recognition technology.",
+    ariaLabel: "Photify solution steps",
+    steps: [
+      {
+        number: "1",
+        label: "Phone Verification",
+        screenTitle: "Phone Verification",
+        screenBody:
+          "Users create an account using their phone number and a one-time verification code, providing a simple and secure onboarding experience.",
+        image: photifyScreen1,
+      },
+      {
+        number: "2",
+        label: "Upload Selfie",
+        screenTitle: "Upload Selfie",
+        screenBody:
+          "Users upload a selfie that serves as their visual identifier. This image is used to match them with photos captured during events.",
+        image: photifyScreen2,
+      },
+      {
+        number: "3",
+        label: "Scan QR",
+        screenTitle: "Scan QR",
+        screenBody:
+          "Attendees can quickly access an event by scanning a QR code provided by the organizer, removing the need for manual event searches.",
+        image: photifyScreen3,
+      },
+      {
+        number: "4",
+        label: "Join Event",
+        screenTitle: "Join Event",
+        screenBody:
+          "After joining, users can view all events they are participating in and track the status of photo processing and matching.",
+        image: photifyScreen4,
+      },
+      {
+        number: "5",
+        label: "Personal Gallery",
+        screenTitle: "Personal Gallery",
+        screenBody:
+          "Once matching is complete, users receive a personalized gallery containing only the photos in which they appear, making photo discovery effortless.",
+        image: photifyScreen5,
+      },
+    ],
+  },
+  roleSections: [
+    {
+      title: "Product & Design",
+      paragraphs: [
+        "I led the product and design process from concept to launch, marking the first time I was fully responsible for designing an entire product experience from scratch.",
+        "Our goal was to create a product that could be comfortably used by a wide range of event attendees, regardless of age or technical familiarity.",
+        "Every design decision was guided by simplicity, clarity, and trust.",
+        "I tried to develop a visual identity that felt warm, and energetic. This direction influenced everything from the logo and branding to the interface language and interaction patterns.",
+      ],
+      bullets: [
+        "Defined the end-to-end user journey",
+        "Established the visual identity, design language, and component patterns",
+        "Iterated on flows based on testing and real-world feedback",
+      ],
+      callout:
+        "The primary challenge was not the matching technology itself, but creating an experience that felt simple, trustworthy, and accessible to first-time users.",
+      insight: {
+        title: "Designing Through Prototyping",
+        body: "Rather than following a traditional workflow of fully designing screens in Figma before implementation, I adopted a more iterative approach. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
+      },
+    },
+    {
+      title: "Frontend Development",
+      paragraphs: [
+        "Because frontend development is already my area of expertise, implementation became an extension of the design process. Familiar tools, reusable systems, and AI-assisted development allowed ideas to move quickly from concept to working prototype, creating a tighter feedback loop between design and execution. I was responsible for all frontend development across both the mobile application and marketing website.",
+      ],
+      bullets: [
+        "Mobile application development",
+        "Marketing website design and development",
+        "User onboarding and event flows",
+        "API integrations",
+        "App Store deployment",
+      ],
+    },
+    {
+      title: "Backend & Infrastructure",
+      paragraphs: [
+        "Having worked alongside backend engineers throughout my career, I was already familiar with many backend concepts and system design discussions. However, building and maintaining the backend myself required a much deeper understanding of how these systems operate in practice.",
+        "Using Django, I designed and implemented the backend powering the application. AI tools, particularly Claude, played an important role throughout this process--not only as coding assistants, but as learning tools that helped me understand unfamiliar concepts, evaluate architectural decisions, and deepen my understanding of backend development.",
+      ],
+      bullets: [
+        "Built backend services using Django",
+        "Designed user, event, and photo management systems",
+        "Implemented APIs supporting the mobile application",
+        "Managed authentication, storage, and media workflows",
+        "Integrated facial recognition and photo matching processes",
+      ],
+      callout:
+        "This experience transformed backend development from something I collaborated with into something I could confidently design, build, and reason about myself.",
+    },
+  ],
+  reflectionCards: [
+    {
+      title: "Beyond My Comfort Zone",
+      body: "Photify pushed me beyond my usual role as a frontend developer. Taking ownership of product design and backend development gave me a broader understanding of how decisions made in one area affect the entire product. The experience reinforced my interest in working across disciplines and approaching problems from both technical and human perspectives.",
+    },
+    {
+      title: "Ownership & Creative Freedom",
+      body: "Working on my own product was fundamentally different from working on client or company projects. Having ownership over every decision-from product direction and design choices to technical implementation-created a level of motivation I had not experienced before.\n\nThe freedom to experiment, challenge assumptions, and immediately act on ideas without organizational constraints allowed the product to evolve organically. It reinforced my interest in building products where design, technology, and strategy can influence one another rather than exist as separate disciplines.",
+    },
+  ],
+};
+
+const brikCaseStudy: CaseStudy = {
+  accent: {
+    color: "#118cf2",
+    soft: "#dff0ff",
+    text: "#0b61b8",
+    rgb: "17, 140, 242",
+    collageBackground: "#edf7ff",
+    shadow: "11, 97, 184",
+  },
+  snapshot: {
+    left: [
+      {label: "Client", value: "Early-stage startup"},
+      {
+        label: "Product",
+        value: "Brik - AI-powered workforce learning platform",
+      },
+      {label: "Duration", value: "2024-2025"},
+      {label: "Capacity", value: "Mobile Development, Product Development"},
+      {label: "Team Model", value: "Cross-functional startup team"},
+      {label: "Status", value: "Live product"},
+    ],
+    right: [
+      {
+        label: "In a Nutshell",
+        value:
+          "Brik helps frontline teams build skills through short, engaging learning experiences. By combining AI-generated content, progress tracking, and gamification mechanics, the platform encourages consistent learning and measurable improvement.",
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Contributed to the development of a production mobile application",
+          "Built core learning, engagement, and progress-tracking experiences",
+          "Delivered features used across iOS and Android platforms",
+          "Helped establish the application's frontend architecture and component system",
+        ],
+      },
+      {
+        label: "Tags",
+        tags: [
+          "React Native",
+          "Expo",
+          "Mobile App",
+          "EdTech",
+          "AI",
+          "Gamification",
+          "Product Development",
+        ],
+      },
+    ],
+  },
+  sections: [
+    {
+      id: "overview",
+      title: "Overview",
+      heading: "Brik case study coming soon.",
+      body: "This section will introduce the product, context, and the problem space behind Brik.",
+    },
+    {
+      id: "challenge",
+      title: "Challenge",
+      heading: "The core problem will live here.",
+      body: "This section will describe the user need, business context, constraints, and key decisions that shaped the project.",
+      variant: "overview",
+    },
+    {
+      id: "approach",
+      title: "Approach",
+      heading: "The process and solution direction will live here.",
+      body: "",
+      variant: "walkthrough",
+    },
+    {
+      id: "role",
+      title: "My Role",
+      heading: "My contribution to Brik.",
+      body: "This section will explain responsibilities, collaboration model, and ownership across design and implementation.",
+      variant: "role",
+    },
+    {
+      id: "outcome",
+      title: "Outcome",
+      heading: "Results and learnings will live here.",
+      body: "",
+      variant: "reflection",
+    },
+  ],
+  solutionOverview: {
+    image: brikLogo,
+    imageAlt: "Brik logo",
+    captionKicker: "Brik",
+    captionTitle: "case study",
+  },
+  walkthrough: {
+    intro:
+      "This area will use the same case-study structure as Photify, with Brik-specific steps or feature highlights once the details are ready.",
+    ariaLabel: "Brik approach steps",
+    steps: [],
+  },
+  roleSections: [
+    {
+      title: "Design",
+      paragraphs: ["Design contribution details coming soon."],
+      bullets: ["Scope coming soon"],
+    },
+    {
+      title: "Development",
+      paragraphs: ["Development contribution details coming soon."],
+      bullets: ["Scope coming soon"],
+    },
+  ],
+  reflectionCards: [
+    {
+      title: "Outcome",
+      body: "Outcome details coming soon.",
+    },
+    {
+      title: "Reflection",
+      body: "Reflection details coming soon.",
+    },
+  ],
+};
+
+export const caseStudies: Record<string, CaseStudy> = {
+  photify: photifyCaseStudy,
+  brik: brikCaseStudy,
+};

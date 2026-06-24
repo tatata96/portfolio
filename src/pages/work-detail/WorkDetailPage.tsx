@@ -1,167 +1,74 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, type CSSProperties} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
-import photifySolution from "../../assets/photify/photify-solution.png";
-import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
-import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
-import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
-import photifyScreen4 from "../../assets/photify/photify_screen_4.jpeg";
-import photifyScreen5 from "../../assets/photify/photify_screen_5.jpeg";
 import {workItems} from "../work/workItems";
+import {
+  caseStudies,
+  type CaseStudySection,
+  type SnapshotItem,
+} from "./caseStudies";
 import "./work_detail_page.css";
 
-const caseStudySections = [
-  {
-    id: "context",
-    title: "Context",
-    heading: "Event photography creates thousands of photos.",
-    body: "At concerts, festivals, conferences, and social events, photographers capture countless moments that participants may never see again.\n\nA familiar experience inspired this project: noticing a photographer take your photo, then never knowing where that image ended up. Even when galleries are published, attendees are often expected to manually search through hundreds or thousands of photos to find themselves.",
-  },
-  {
-    id: "solution",
-    title: "Solution",
-    heading: "A selfie becomes the search query.",
-    body: "Photify transforms a complex image-matching process into a simple user experience. Attendees join an event, upload a selfie, and receive a personalized gallery of photos in which they appear.\n\nThe goal was to make photo discovery effortless while maintaining transparency and trust around the use of facial recognition technology.",
-  },
-  {
-    id: "solution-walkthrough",
-    title: "Features",
-    heading: "Designed to make photo discovery effortless",
-    body: "",
-  },
-  {
-    id: "interaction-design",
-    title: "My Role",
-    heading: "Co-founder, product designer, and technical lead",
-    body: "Phoütify was built from the ground up with a former college classmate. As co-founders, we collaborated closely on the product vision and strategy, while taking ownership of different areas of the business.\n\nMy co-founder led marketing, sales, and partnership efforts, while I was responsible for product design, user experience, and technical implementation from concept through launch.",
-  },
-  {
-    id: "reflection",
-    title: "Reflection",
-    heading: "What I've learned",
-    body: "",
-  },
-];
+type ProjectAccentStyle = CSSProperties & {
+  "--project-accent": string;
+  "--project-accent-soft": string;
+  "--project-accent-text": string;
+  "--project-accent-rgb": string;
+  "--project-collage-bg": string;
+  "--project-shadow-rgb": string;
+};
 
-const solutionSteps = [
-  {
-    number: "1",
-    label: "Phone Verification",
-    screenTitle: "Phone Verification",
-    screenBody:
-      "Users create an account using their phone number and a one-time verification code, providing a simple and secure onboarding experience.",
-    image: photifyScreen1,
-  },
-  {
-    number: "2",
-    label: "Upload Selfie",
-    screenTitle: "Upload Selfie",
-    screenBody:
-      "Users upload a selfie that serves as their visual identifier. This image is used to match them with photos captured during events.",
-    image: photifyScreen2,
-  },
-  {
-    number: "3",
-    label: "Scan QR",
-    screenTitle: "Scan QR",
-    screenBody:
-      "Attendees can quickly access an event by scanning a QR code provided by the organizer, removing the need for manual event searches.",
-    image: photifyScreen3,
-  },
-  {
-    number: "4",
-    label: "Join Event",
-    screenTitle: "Join Event",
-    screenBody:
-      "After joining, users can view all events they are participating in and track the status of photo processing and matching.",
-    image: photifyScreen4,
-  },
-  {
-    number: "5",
-    label: "Personal Gallery",
-    screenTitle: "Personal Gallery",
-    screenBody:
-      "Once matching is complete, users receive a personalized gallery containing only the photos in which they appear, making photo discovery effortless.",
-    image: photifyScreen5,
-  },
-];
+const emptySections: CaseStudySection[] = [];
 
-const roleSections = [
-  {
-    title: "Product & Design",
-    paragraphs: [
-      "I led the product and design process from concept to launch, marking the first time I was fully responsible for designing an entire product experience from scratch.",
-      "Our goal was to create a product that could be comfortably used by a wide range of event attendees, regardless of age or technical familiarity.",
-      "Every design decision was guided by simplicity, clarity, and trust.",
-      "I tried to develop a visual identity that felt warm, and energetic. This direction influenced everything from the logo and branding to the interface language and interaction patterns.",
-    ],
-    bullets: [
-      "Defined the end-to-end user journey",
-      "Established the visual identity, design language, and component patterns",
-      "Iterated on flows based on testing and real-world feedback",
-    ],
-    callout:
-      "The primary challenge was not the matching technology itself, but creating an experience that felt simple, trustworthy, and accessible to first-time users.",
-    insight: {
-      title: "Designing Through Prototyping",
-      body: "Rather than following a traditional workflow of fully designing screens in Figma before implementation, I adopted a more iterative approach. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
-    },
-  },
-  {
-    title: "Frontend Development",
-    paragraphs: [
-      "Because frontend development is already my area of expertise, implementation became an extension of the design process. Familiar tools, reusable systems, and AI-assisted development allowed ideas to move quickly from concept to working prototype, creating a tighter feedback loop between design and execution. I was responsible for all frontend development across both the mobile application and marketing website.",
-    ],
-    bullets: [
-      "Mobile application development",
-      "Marketing website design and development",
-      "User onboarding and event flows",
-      "API integrations",
-      "App Store deployment",
-    ],
-  },
-  {
-    title: "Backend & Infrastructure",
-    paragraphs: [
-      "Having worked alongside backend engineers throughout my career, I was already familiar with many backend concepts and system design discussions. However, building and maintaining the backend myself required a much deeper understanding of how these systems operate in practice.",
-      "Using Django, I designed and implemented the backend powering the application. AI tools, particularly Claude, played an important role throughout this process—not only as coding assistants, but as learning tools that helped me understand unfamiliar concepts, evaluate architectural decisions, and deepen my understanding of backend development.",
-    ],
-    bullets: [
-      "Built backend services using Django",
-      "Designed user, event, and photo management systems",
-      "Implemented APIs supporting the mobile application",
-      "Managed authentication, storage, and media workflows",
-      "Integrated facial recognition and photo matching processes",
-    ],
-    callout:
-      "This experience transformed backend development from something I collaborated with into something I could confidently design, build, and reason about myself.",
-  },
-];
+function renderParagraphs(body: string) {
+  return body
+    .split("\n\n")
+    .filter(Boolean)
+    .map((paragraph) => <p key={paragraph}>{paragraph}</p>);
+}
 
-const reflectionCards = [
-  {
-    title: "Beyond My Comfort Zone",
-    body: "Photify pushed me beyond my usual role as a frontend developer. Taking ownership of product design and backend development gave me a broader understanding of how decisions made in one area affect the entire product. The experience reinforced my interest in working across disciplines and approaching problems from both technical and human perspectives.",
-  },
-  {
-    title: "Ownership & Creative Freedom",
-    body: "Working on my own product was fundamentally different from working on client or company projects. Having ownership over every decision—from product direction and design choices to technical implementation—created a level of motivation I had not experienced before.\n\nThe freedom to experiment, challenge assumptions, and immediately act on ideas without organizational constraints allowed the product to evolve organically. It reinforced my interest in building products where design, technology, and strategy can influence one another rather than exist as separate disciplines.",
-  },
-];
+function renderSnapshotItem(item: SnapshotItem) {
+  return (
+    <div className="work-detail-snapshot__item" key={item.label}>
+      <h3>{item.label}</h3>
+      {item.value ? <p>{item.value}</p> : null}
+      {item.bullets ? (
+        <ul>
+          {item.bullets.map((bullet) => (
+            <li key={bullet}>{bullet}</li>
+          ))}
+        </ul>
+      ) : null}
+      {item.tags ? (
+        <div className="work-detail-snapshot__tags">
+          {item.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 function WorkDetailPage() {
   const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
-  const [activeSectionId, setActiveSectionId] = useState(
-    caseStudySections[0].id,
-  );
+  const caseStudy = slug ? caseStudies[slug] : undefined;
+  const sections = caseStudy?.sections ?? emptySections;
+  const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? "");
   const [activeSolutionStep, setActiveSolutionStep] = useState(0);
-  const currentSolutionStep = solutionSteps[activeSolutionStep];
+  const currentSolutionStep =
+    caseStudy?.walkthrough?.steps[activeSolutionStep] ??
+    caseStudy?.walkthrough?.steps[0];
+
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: "instant"});
+  }, [slug]);
 
   useEffect(() => {
     let animationFrameId = 0;
 
     function updateActiveSection() {
-      const sectionElements = caseStudySections
+      const sectionElements = sections
         .map((section) => document.getElementById(section.id))
         .filter((element): element is HTMLElement => Boolean(element));
 
@@ -194,7 +101,7 @@ function WorkDetailPage() {
       window.removeEventListener("scroll", requestActiveSectionUpdate);
       window.removeEventListener("resize", requestActiveSectionUpdate);
     };
-  }, []);
+  }, [sections]);
 
   function scrollToSection(sectionId: string) {
     document.getElementById(sectionId)?.scrollIntoView({
@@ -203,12 +110,21 @@ function WorkDetailPage() {
     });
   }
 
-  if (!workItem) {
+  if (!workItem || !caseStudy) {
     return <Navigate to="/work" replace />;
   }
 
+  const accentStyle: ProjectAccentStyle = {
+    "--project-accent": caseStudy.accent.color,
+    "--project-accent-soft": caseStudy.accent.soft,
+    "--project-accent-text": caseStudy.accent.text,
+    "--project-accent-rgb": caseStudy.accent.rgb,
+    "--project-collage-bg": caseStudy.accent.collageBackground,
+    "--project-shadow-rgb": caseStudy.accent.shadow,
+  };
+
   return (
-    <main className="work-detail-page">
+    <main className="work-detail-page" style={accentStyle}>
       <aside className="work-detail-sidebar" aria-label="Case study navigation">
         <Link className="work-detail-sidebar__home" to="/work">
           {"<- Work"}
@@ -217,7 +133,7 @@ function WorkDetailPage() {
         <nav className="work-detail-toc" aria-label="Table of contents">
           <p>Table of contents</p>
           <ol>
-            {caseStudySections.map((section, index) => (
+            {sections.map((section, index) => (
               <li key={section.id}>
                 <button
                   className={
@@ -252,81 +168,17 @@ function WorkDetailPage() {
 
           <div className="work-detail-snapshot__body">
             <div className="work-detail-snapshot__column">
-              <div className="work-detail-snapshot__item">
-                <h3>Client</h3>
-                <p>Self-initiated startup project</p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Product</h3>
-                <p>Photify - AI-powered event photo discovery platform</p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Duration</h3>
-                <p>2026</p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Capacity</h3>
-                <p>Product Design, Frontend Development, Backend Development</p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Team Model</h3>
-                <p>Built with one collaborator</p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Status</h3>
-                <p>Launched MVP</p>
-              </div>
+              {caseStudy.snapshot.left.map(renderSnapshotItem)}
             </div>
 
             <div className="work-detail-snapshot__column">
-              <div className="work-detail-snapshot__item">
-                <h3>In a Nutshell</h3>
-                <p>
-                  Photify helps event attendees instantly find photos of
-                  themselves using facial recognition. Instead of manually
-                  searching through hundreds of event photos, users upload a
-                  selfie and receive a personalized gallery of matched images.
-                </p>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Impact</h3>
-                <ul>
-                  <li>
-                    Reduced photo discovery from hundreds of images to a
-                    personalized selection
-                  </li>
-                  <li>
-                    Released a production-ready mobile application on the App
-                    Store
-                  </li>
-                  <li>
-                    Shipped and owned a complete product from concept to
-                    deployment
-                  </li>
-                </ul>
-              </div>
-              <div className="work-detail-snapshot__item">
-                <h3>Tags</h3>
-                <div className="work-detail-snapshot__tags">
-                  {[
-                    "Product Design",
-                    "Mobile App",
-                    "AI",
-                    "Facial Recognition",
-                    "React Native",
-                    "Django",
-                    "UX Design",
-                  ].map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </div>
+              {caseStudy.snapshot.right.map(renderSnapshotItem)}
             </div>
           </div>
         </section>
 
         <div className="work-detail-sections">
-          {caseStudySections.map((section, index) => (
+          {sections.map((section, index) => (
             <section
               className="work-detail-section"
               id={section.id}
@@ -336,93 +188,87 @@ function WorkDetailPage() {
                 {String(index + 1).padStart(2, "0")}. {section.title}
               </p>
               <h2>{section.heading}</h2>
-              {section.id === "solution-walkthrough" ? (
+              {section.variant === "walkthrough" && caseStudy.walkthrough ? (
                 <div className="solution-walkthrough">
                   <p className="solution-walkthrough__intro">
-                    The goal was to create a flow simple enough for any event
-                    attendee to complete in under a minute. Each step was
-                    designed to reduce friction while building trust around the
-                    use of facial recognition technology.
+                    {caseStudy.walkthrough.intro}
                   </p>
 
-                  <div
-                    className="solution-walkthrough__steps"
-                    aria-label="Photify solution steps"
-                  >
-                    {solutionSteps.map((step, stepIndex) => (
-                      <button
-                        className={
-                          stepIndex === activeSolutionStep
-                            ? "solution-step solution-step--active"
-                            : "solution-step"
-                        }
-                        key={step.number}
-                        type="button"
-                        onClick={() => setActiveSolutionStep(stepIndex)}
+                  {caseStudy.walkthrough.steps.length > 0 ? (
+                    <>
+                      <div
+                        className="solution-walkthrough__steps"
+                        aria-label={caseStudy.walkthrough.ariaLabel}
                       >
-                        <span>{step.number}</span>
-                        <div>
-                          <strong>{step.label}</strong>
-                          <p>{step.screenBody}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="solution-phone" aria-live="polite">
-                    <div className="solution-phone__device">
-                      <div className="solution-phone__screen">
-                        <div className="solution-phone__island" />
-                        <img
-                          src={currentSolutionStep.image}
-                          alt={`${currentSolutionStep.screenTitle} screen`}
-                        />
+                        {caseStudy.walkthrough.steps.map((step, stepIndex) => (
+                          <button
+                            className={
+                              stepIndex === activeSolutionStep
+                                ? "solution-step solution-step--active"
+                                : "solution-step"
+                            }
+                            key={step.number}
+                            type="button"
+                            onClick={() => setActiveSolutionStep(stepIndex)}
+                          >
+                            <span>{step.number}</span>
+                            <div>
+                              <strong>{step.label}</strong>
+                              <p>{step.screenBody}</p>
+                            </div>
+                          </button>
+                        ))}
                       </div>
-                    </div>
-                  </div>
+
+                      {currentSolutionStep ? (
+                        <div className="solution-phone" aria-live="polite">
+                          <div className="solution-phone__device">
+                            <div className="solution-phone__screen">
+                              <div className="solution-phone__island" />
+                              <img
+                                src={currentSolutionStep.image}
+                                alt={`${currentSolutionStep.screenTitle} screen`}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+                    </>
+                  ) : null}
                 </div>
-              ) : section.id === "solution" ? (
+              ) : section.variant === "overview" &&
+                caseStudy.solutionOverview ? (
                 <div className="solution-overview">
-                  {section.body
-                    .split("\n\n")
-                    .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  {renderParagraphs(section.body)}
 
                   <figure className="solution-collage">
                     <img
-                      src={photifySolution}
-                      alt="Photify app screens showing selfie upload, event access, and personalized photo results"
+                      src={caseStudy.solutionOverview.image}
+                      alt={caseStudy.solutionOverview.imageAlt}
                     />
                     <figcaption className="solution-collage__copy">
-                      <span>From digital clutter</span>
-                      <strong>to custom gallery</strong>
+                      <span>{caseStudy.solutionOverview.captionKicker}</span>
+                      <strong>{caseStudy.solutionOverview.captionTitle}</strong>
                     </figcaption>
                   </figure>
                 </div>
-              ) : section.id === "interaction-design" ? (
+              ) : section.variant === "role" && caseStudy.roleSections ? (
                 <div className="role-section-list">
-                  {section.body
-                    .split("\n\n")
-                    .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  {renderParagraphs(section.body)}
 
                   <div className="role-subsections">
-                    {roleSections.map((roleSection, roleSectionIndex) => (
-                      <div
-                        className="role-subsection"
-                        key={
-                          typeof roleSection === "string"
-                            ? roleSection
-                            : roleSection.title
-                        }
-                      >
-                        <h3>
-                          <span className="role-subsection__pill">
-                            <span>{roleSectionIndex + 1}</span>
-                            {typeof roleSection === "string"
-                              ? roleSection
-                              : roleSection.title}
-                          </span>
-                        </h3>
-                        {typeof roleSection !== "string" ? (
+                    {caseStudy.roleSections.map(
+                      (roleSection, roleSectionIndex) => (
+                        <div
+                          className="role-subsection"
+                          key={roleSection.title}
+                        >
+                          <h3>
+                            <span className="role-subsection__pill">
+                              <span>{roleSectionIndex + 1}</span>
+                              {roleSection.title}
+                            </span>
+                          </h3>
                           <div className="role-subsection__content">
                             {roleSection.paragraphs.map((paragraph) => (
                               <p key={paragraph}>{paragraph}</p>
@@ -444,26 +290,23 @@ function WorkDetailPage() {
                               </aside>
                             ) : null}
                           </div>
-                        ) : null}
-                      </div>
-                    ))}
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
-              ) : section.id === "reflection" ? (
+              ) : section.variant === "reflection" &&
+                caseStudy.reflectionCards ? (
                 <div className="reflection-card-grid">
-                  {reflectionCards.map((card) => (
+                  {caseStudy.reflectionCards.map((card) => (
                     <article className="reflection-card" key={card.title}>
                       <h3>{card.title}</h3>
-                      {card.body
-                        .split("\n\n")
-                        .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                      {renderParagraphs(card.body)}
                     </article>
                   ))}
                 </div>
               ) : (
-                section.body
-                  .split("\n\n")
-                  .map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+                renderParagraphs(section.body)
               )}
             </section>
           ))}

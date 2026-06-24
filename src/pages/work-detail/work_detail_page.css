@@ -3,6 +3,8 @@
   --project-accent-soft: #fff3bf;
   --project-accent-text: #7a5c00;
   --project-accent-rgb: 247, 217, 107;
+  --project-collage-bg: #f8edc6;
+  --project-shadow-rgb: 122, 92, 0;
 
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
@@ -248,9 +250,9 @@
   display: grid;
   margin: 24px 0 0;
   border-radius: 34px;
-  background: #f8edc6;
+  background: var(--project-collage-bg);
   box-shadow:
-    0 22px 54px rgba(122, 92, 0, 0.12),
+    0 22px 54px rgba(var(--project-shadow-rgb), 0.12),
     inset 0 0 0 1px rgba(var(--project-accent-rgb), 0.58);
 }
 
