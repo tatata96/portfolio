@@ -3,11 +3,16 @@
 }
 
 .home-hero {
+  position: relative;
   min-height: calc(100svh - 74px);
   padding: 56px 44px 64px;
   box-sizing: border-box;
   background: var(--bg);
   color: var(--text-h);
+}
+
+.home-hero--cursor-active {
+  cursor: none;
 }
 
 .home-hero__inner {
@@ -29,10 +34,17 @@
   font-weight: 800;
   letter-spacing: 0;
   line-height: 0.9;
+  animation: homeHeroTextIn 850ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
 }
 
 .home-hero__portrait {
+  align-self: start;
+  justify-self: end;
+  display: block;
   width: min(100%, 420px);
+  height: auto;
+  transform: translateY(-24px);
+  animation: homeHeroPortraitIn 850ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
 }
 
 .home-hero h1 em {
@@ -59,6 +71,7 @@
   font-size: 18px;
   line-height: 1.45;
   color: var(--text-h);
+  animation: homeHeroCopyIn 700ms cubic-bezier(0.22, 1, 0.36, 1) 520ms both;
 }
 
 .home-hero__copy-right {
@@ -69,6 +82,99 @@
   line-height: 1.22;
   color: var(--text-h);
   transform: translateY(-20px);
+  animation: homeHeroCopyRightIn 700ms cubic-bezier(0.22, 1, 0.36, 1) 640ms both;
+}
+
+.home-cursor {
+  position: fixed;
+  z-index: 100;
+  width: 38px;
+  height: 70px;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(12deg);
+  animation: homeCursorPop 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: #fff;
+  clip-path: polygon(
+    58% 0,
+    7% 44%,
+    38% 44%,
+    22% 100%,
+    96% 34%,
+    58% 34%
+  );
+  mix-blend-mode: difference;
+}
+
+@keyframes homeHeroTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes homeHeroPortraitIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-24px) scale(1);
+  }
+}
+
+@keyframes homeHeroPortraitInTablet {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-12px) scale(1);
+  }
+}
+
+@keyframes homeHeroCopyIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes homeHeroCopyRightIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes homeCursorPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(12deg) scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(12deg) scale(1);
+  }
 }
 
 @media (max-width: 1120px) {
@@ -83,6 +189,7 @@
   .home-hero__portrait {
     width: min(100%, 320px);
     transform: translateY(-12px);
+    animation-name: homeHeroPortraitInTablet;
   }
 
   .home-hero__copy {
@@ -93,6 +200,7 @@
   .home-hero__copy-right {
     max-width: 820px;
     transform: translateY(0);
+    animation-name: homeHeroCopyIn;
   }
 }
 
@@ -120,6 +228,7 @@
     width: min(220px, 72vw);
     margin-bottom: 0;
     transform: translateY(0);
+    animation-name: homeHeroCopyIn;
   }
 
   .home-hero__copy-left {
@@ -129,5 +238,24 @@
   .home-hero__copy-right {
     font-size: 24px;
     line-height: 1.25;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .home-hero--cursor-active {
+    cursor: auto;
+  }
+
+  .home-cursor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero h1,
+  .home-hero__portrait,
+  .home-hero__copy-left,
+  .home-hero__copy-right {
+    animation: none;
   }
 }

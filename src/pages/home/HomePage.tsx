@@ -1,11 +1,31 @@
+import { useState, type PointerEvent } from 'react'
 import './home_page.css'
 import meImage from '../../assets/me.png'
 import WorkPage from '../work/WorkPage'
 
 function HomePage() {
+  const [cursorPosition, setCursorPosition] = useState<{
+    x: number
+    y: number
+  } | null>(null)
+
+  function handleHeroPointerMove(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType !== 'mouse') return
+
+    setCursorPosition({
+      x: event.clientX,
+      y: event.clientY,
+    })
+  }
+
   return (
     <main className="home-page">
-      <section className="home-hero" aria-labelledby="home-heading">
+      <section
+        className={`home-hero${cursorPosition ? ' home-hero--cursor-active' : ''}`}
+        aria-labelledby="home-heading"
+        onPointerMove={handleHeroPointerMove}
+        onPointerLeave={() => setCursorPosition(null)}
+      >
         <div className="home-hero__inner">
           <h1 id="home-heading">
             hi, i'm <em>tamara.</em>
@@ -25,6 +45,13 @@ function HomePage() {
             </p>
           </div>
         </div>
+        {cursorPosition && (
+          <div
+            className="home-cursor"
+            style={{ left: cursorPosition.x, top: cursorPosition.y }}
+            aria-hidden="true"
+          />
+        )}
       </section>
       <WorkPage />
     </main>
