@@ -8,6 +8,8 @@ import algorandLogo from "../../assets/algo/algo-logo.webp";
 import algorandDeveloperPortal from "../../assets/algo/dev.webp";
 import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
 import algorandGovernance from "../../assets/algo/gov.png";
+import algorandMetrics from "../../assets/algo/metrics.webp";
+import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
@@ -574,8 +576,41 @@ const algorandCaseStudy: CaseStudy = {
     {
       id: "metrics-dashboard",
       title: "Metrics Dashboard",
-      heading: "Metrics dashboard details will live here.",
-      body: "This section will describe dashboard design and implementation work for surfacing key metrics and platform activity.",
+      heading: "Turning ecosystem activity into insight.",
+      body: "The Algorand Metrics Dashboard provides an overview of activity across the ecosystem, helping users monitor network growth, transaction volume, participation, and other key indicators.\n\nThe challenge was not collecting data, but presenting large amounts of information in a way that felt clear, meaningful, and easy to explore.",
+      variant: "role",
+      images: [
+        {
+          src: algorandMetrics,
+          alt: "Algorand Metrics Dashboard overview interface",
+        },
+        {
+          src: algorandMetricsDetail,
+          alt: "Algorand Metrics Dashboard detail interface",
+        },
+      ],
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I contributed to the frontend development of the Metrics Dashboard, helping transform complex blockchain data into accessible visualizations and user-friendly experiences.",
+          ],
+          bullets: [
+            "Developed dashboard interfaces and data visualizations",
+            "Built reusable components for presenting network metrics",
+            "Integrated APIs and real-time data sources",
+            "Collaborated with design and product teams on information architecture",
+            "Maintained and expanded the frontend application",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Working on the Metrics Dashboard reinforced the importance of information hierarchy and visual communication. Even accurate data loses value if users cannot quickly understand what it means or identify the insights most relevant to them.",
+          ],
+          bullets: [],
+        },
+      ],
     },
     {
       id: "wallet-integrations",
