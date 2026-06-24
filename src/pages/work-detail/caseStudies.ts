@@ -1,4 +1,9 @@
 import brikLogo from "../../assets/brik/brik-logo.jpg";
+import brikScreen1 from "../../assets/brik/brik_screen_1.png";
+import brikScreen2 from "../../assets/brik/brik_screen_2.png";
+import brikScreen3 from "../../assets/brik/brik_screen_3.png";
+import brikScreen4 from "../../assets/brik/brik_screen_4.png";
+import brikScreen5 from "../../assets/brik/brik_screen_5.png";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
@@ -334,21 +339,21 @@ const brikCaseStudy: CaseStudy = {
   sections: [
     {
       id: "overview",
-      title: "Overview",
-      heading: "Brik case study coming soon.",
-      body: "This section will introduce the product, context, and the problem space behind Brik.",
+      title: "Context",
+      heading: "Knowledge is available. Learning is the challenge.",
+      body: "Traditional onboarding and training materials are often time-consuming and difficult to revisit. Employees may struggle to stay motivated, while organizations have limited visibility into learning progress and knowledge retention.",
     },
     {
       id: "challenge",
-      title: "Challenge",
-      heading: "The core problem will live here.",
-      body: "This section will describe the user need, business context, constraints, and key decisions that shaped the project.",
+      title: "Solution",
+      heading: "Short lessons, lasting knowledge.",
+      body: "Brik transforms workplace training into short, interactive learning experiences. Through bite-sized content, gamification, and progress tracking, it helps employees learn more consistently and stay engaged.",
       variant: "overview",
     },
     {
       id: "approach",
-      title: "Approach",
-      heading: "The process and solution direction will live here.",
+      title: "Features",
+      heading: "Built around daily learning habits.",
       body: "",
       variant: "walkthrough",
     },
@@ -361,7 +366,7 @@ const brikCaseStudy: CaseStudy = {
     },
     {
       id: "outcome",
-      title: "Outcome",
+      title: "Reflection",
       heading: "Results and learnings will live here.",
       body: "",
       variant: "reflection",
@@ -375,9 +380,49 @@ const brikCaseStudy: CaseStudy = {
   },
   walkthrough: {
     intro:
-      "This area will use the same case-study structure as Photify, with Brik-specific steps or feature highlights once the details are ready.",
+      "Instead of asking employees to dedicate hours to training, Brik breaks learning into short, engaging sessions that fit naturally into the workday. Progress tracking and gamification help maintain motivation over time.",
     ariaLabel: "Brik approach steps",
-    steps: [],
+    steps: [
+      {
+        number: "1",
+        label: "Get Started",
+        screenTitle: "Get Started",
+        screenBody:
+          "Create your account and enter your personalized learning experience.",
+        image: brikScreen1,
+      },
+      {
+        number: "2",
+        label: "Follow Your Path",
+        screenTitle: "Follow Your Path",
+        screenBody:
+          "Discover courses tailored to your role and track your progress over time.",
+        image: brikScreen2,
+      },
+      {
+        number: "3",
+        label: "Learn in Minutes",
+        screenTitle: "Learn in Minutes",
+        screenBody: "Complete bite-sized lessons designed for busy workdays.",
+        image: brikScreen3,
+      },
+      {
+        number: "4",
+        label: "Put Knowledge Into Practice",
+        screenTitle: "Put Knowledge Into Practice",
+        screenBody:
+          "Take quizzes and challenges to reinforce what you've learned.",
+        image: brikScreen4,
+      },
+      {
+        number: "5",
+        label: "Stay Motivated",
+        screenTitle: "Stay Motivated",
+        screenBody:
+          "Earn badges, build streaks, and celebrate achievements along the way.",
+        image: brikScreen5,
+      },
+    ],
   },
   roleSections: [
     {

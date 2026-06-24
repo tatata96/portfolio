@@ -6,6 +6,7 @@ import {
   type CaseStudySection,
   type SnapshotItem,
 } from "./caseStudies";
+import FeatureWalkthrough from "./FeatureWalkthrough";
 import "./work_detail_page.css";
 
 type ProjectAccentStyle = CSSProperties & {
@@ -55,10 +56,6 @@ function WorkDetailPage() {
   const caseStudy = slug ? caseStudies[slug] : undefined;
   const sections = caseStudy?.sections ?? emptySections;
   const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? "");
-  const [activeSolutionStep, setActiveSolutionStep] = useState(0);
-  const currentSolutionStep =
-    caseStudy?.walkthrough?.steps[activeSolutionStep] ??
-    caseStudy?.walkthrough?.steps[0];
 
   useEffect(() => {
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
@@ -189,53 +186,7 @@ function WorkDetailPage() {
               </p>
               <h2>{section.heading}</h2>
               {section.variant === "walkthrough" && caseStudy.walkthrough ? (
-                <div className="solution-walkthrough">
-                  <p className="solution-walkthrough__intro">
-                    {caseStudy.walkthrough.intro}
-                  </p>
-
-                  {caseStudy.walkthrough.steps.length > 0 ? (
-                    <>
-                      <div
-                        className="solution-walkthrough__steps"
-                        aria-label={caseStudy.walkthrough.ariaLabel}
-                      >
-                        {caseStudy.walkthrough.steps.map((step, stepIndex) => (
-                          <button
-                            className={
-                              stepIndex === activeSolutionStep
-                                ? "solution-step solution-step--active"
-                                : "solution-step"
-                            }
-                            key={step.number}
-                            type="button"
-                            onClick={() => setActiveSolutionStep(stepIndex)}
-                          >
-                            <span>{step.number}</span>
-                            <div>
-                              <strong>{step.label}</strong>
-                              <p>{step.screenBody}</p>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-
-                      {currentSolutionStep ? (
-                        <div className="solution-phone" aria-live="polite">
-                          <div className="solution-phone__device">
-                            <div className="solution-phone__screen">
-                              <div className="solution-phone__island" />
-                              <img
-                                src={currentSolutionStep.image}
-                                alt={`${currentSolutionStep.screenTitle} screen`}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ) : null}
-                    </>
-                  ) : null}
-                </div>
+                <FeatureWalkthrough walkthrough={caseStudy.walkthrough} />
               ) : section.variant === "overview" &&
                 caseStudy.solutionOverview ? (
                 <div className="solution-overview">
