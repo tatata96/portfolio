@@ -11,6 +11,7 @@ import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
 import algorandGovernance from "../../assets/algo/gov.png";
 import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
+import personalExplorationsImage from "../../assets/personal/t.png";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
@@ -679,8 +680,81 @@ const algorandCaseStudy: CaseStudy = {
   ],
 };
 
+const personalExplorationsCaseStudy: CaseStudy = {
+  accent: {
+    color: "#ff00ff",
+    soft: "#ffe0ff",
+    text: "#8a008a",
+    rgb: "255, 0, 255",
+    collageBackground: "#ffd6ff",
+    shadow: "138, 0, 138",
+  },
+  snapshot: {
+    left: [
+      {label: "Client", value: "Self-directed"},
+      {label: "Work", value: "Personal Explorations"},
+      {label: "Duration", value: "Ongoing"},
+      {
+        label: "Capacity",
+        value: "Creative Direction, Visual Design, Prototyping",
+      },
+    ],
+    right: [
+      {
+        label: "In a Nutshell",
+        value:
+          "A collection of self-directed visual, interaction, and product experiments.",
+      },
+      {
+        label: "Tags",
+        tags: [
+          "Visual Design",
+          "Interaction",
+          "Creative Coding",
+          "Prototyping",
+        ],
+      },
+    ],
+  },
+  sections: [
+    {
+      id: "context",
+      title: "Context",
+      heading: "Self-directed space for visual and interaction ideas.",
+      body: "Personal Explorations brings together experiments that do not belong to a single client or product brief. The work is a place to test visual systems, interaction patterns, and product ideas with more room for intuition and play.",
+    },
+    {
+      id: "explorations",
+      title: "Explorations",
+      heading: "A growing archive of creative prototypes.",
+      body: "This section is intended to evolve over time as new experiments are added.",
+      variant: "overview",
+    },
+    {
+      id: "reflection",
+      title: "Reflection",
+      heading: "What this space is for.",
+      body: "",
+      variant: "reflection",
+    },
+  ],
+  solutionOverview: {
+    image: personalExplorationsImage,
+    imageAlt: "Personal Explorations visual artwork",
+    captionKicker: "Personal",
+    captionTitle: "explorations",
+  },
+  reflectionCards: [
+    {
+      title: "Creative Range",
+      body: "This work gives me a place to explore direction, mood, and interaction outside the constraints of production roadmaps. It keeps experimentation visible as part of my practice.",
+    },
+  ],
+};
+
 export const caseStudies: Record<string, CaseStudy> = {
   photify: photifyCaseStudy,
   brik: brikCaseStudy,
   algorand: algorandCaseStudy,
+  "personal-explorations": personalExplorationsCaseStudy,
 };

@@ -1,0 +1,382 @@
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent,
+} from "react";
+import { Link } from "react-router-dom";
+import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
+import "./personal_explorations_page.css";
+
+// Reference viewport — all asset x/y/width are in this coordinate space
+const STAGE_W = 1440;
+const STAGE_H = 900;
+
+// ── Scramble text ────────────────────────────────────────────────────────────
+
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?#@$%&";
+
+function rChar() {
+  return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+}
+
+function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
+  const [display, setDisplay] = useState(() =>
+    text.split("").map((c) => (c === " " ? " " : rChar())).join("")
+  );
+
+  useEffect(() => {
+    const DURATION = 900;
+    let raf: ReturnType<typeof setTimeout>;
+
+    const start = setTimeout(() => {
+      const t0 = Date.now();
+
+      function tick() {
+        const elapsed = Date.now() - t0;
+        const progress = Math.min(elapsed / DURATION, 1);
+        const revealed = Math.floor(progress * text.length);
+
+        setDisplay(
+          text
+            .split("")
+            .map((c, i) => {
+              if (c === " ") return " ";
+              return i < revealed ? c : rChar();
+            })
+            .join("")
+        );
+
+        if (progress < 1) raf = setTimeout(tick, 30);
+      }
+
+      tick();
+    }, delay);
+
+    return () => {
+      clearTimeout(start);
+      clearTimeout(raf);
+    };
+  }, [text, delay]);
+
+  return <>{display}</>;
+}
+
+// ── Live clock ────────────────────────────────────────────────────────────────
+
+function getTime() {
+  return new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
+function LiveClock() {
+  const [time, setTime] = useState(getTime);
+
+  useEffect(() => {
+    const id = setInterval(() => setTime(getTime()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return <>{time}</>;
+}
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+type FloatingStyle = CSSProperties & {
+  "--asset-left": string;
+  "--asset-top": string;
+  "--asset-width": string;
+  "--asset-float-x": string;
+  "--asset-float-y": string;
+  "--asset-rotate": string;
+};
+
+type CursorStyle = CSSProperties & {
+  "--cursor-x": string;
+  "--cursor-y": string;
+};
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function getAssetStyle(asset: DumpAsset, isActive: boolean): FloatingStyle {
+  return {
+    "--asset-left": `${((asset.x / STAGE_W) * 100).toFixed(2)}%`,
+    "--asset-top": `${((asset.y / STAGE_H) * 100).toFixed(2)}%`,
+    "--asset-width": `${((asset.width / STAGE_W) * 100).toFixed(2)}%`,
+    "--asset-float-x": isActive ? "var(--active-float-x)" : "0px",
+    "--asset-float-y": isActive ? "var(--active-float-y)" : "0px",
+    "--asset-rotate": isActive ? "var(--active-rotate)" : "0deg",
+  };
+}
+
+function getPrimaryTag(asset: DumpAsset) {
+  return asset.tags[0] ?? asset.type;
+}
+
+function renderDescription(description: string) {
+  return description.split("\n").map((line) => {
+    const markdownLink = line.match(/\[([^\]]+)\]\(([^)]+)\)/);
+    if (!markdownLink) return <p key={line}>{line}</p>;
+    const [rawLink, label, href] = markdownLink;
+    const [before, after] = line.split(rawLink);
+    return (
+      <p key={line}>
+        {before}
+        <a href={href} target="_blank" rel="noreferrer">
+          {label}
+        </a>
+        {after}
+      </p>
+    );
+  });
+}
+
+// ── Media preview ─────────────────────────────────────────────────────────────
+
+function MediaPreview({ asset }: { asset: DumpAsset }) {
+  if (asset.type === "video") {
+    return (
+      <video
+        src={asset.src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label={asset.title}
+      />
+    );
+  }
+  return (
+    <img
+      src={asset.coverSrc ?? asset.src}
+      alt={asset.alt ?? asset.title}
+      loading="lazy"
+    />
+  );
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+
+function AssetModal({
+  asset,
+  onClose,
+}: {
+  asset: DumpAsset;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.body.classList.add("personal-modal-open");
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.classList.remove("personal-modal-open");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div className="personal-modal" role="dialog" aria-modal="true">
+      <button
+        className="personal-modal__backdrop"
+        type="button"
+        aria-label="Close modal"
+        onClick={onClose}
+      />
+      <article className="personal-modal__panel">
+        <button
+          className="personal-modal__close"
+          type="button"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          ×
+        </button>
+        <div className="personal-modal__media">
+          {asset.type === "video" ? (
+            <video src={asset.src} autoPlay muted loop playsInline controls />
+          ) : asset.type === "pdf" ? (
+            <iframe src={asset.src} title={asset.title} />
+          ) : (
+            <img src={asset.src} alt={asset.alt ?? asset.title} />
+          )}
+        </div>
+        <div className="personal-modal__copy">
+          <p>{getPrimaryTag(asset)}</p>
+          <h2>{asset.title}</h2>
+          <div>{renderDescription(asset.description)}</div>
+          {asset.websiteUrl ? (
+            <a href={asset.websiteUrl} target="_blank" rel="noreferrer">
+              Visit project
+            </a>
+          ) : null}
+        </div>
+      </article>
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+function PersonalExplorationsPage() {
+  const [activeAssetId, setActiveAssetId] = useState<string | null>(null);
+  const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const stageRef = useRef<HTMLDivElement | null>(null);
+
+  function handlePointerMove(asset: DumpAsset, event: PointerEvent) {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const rx = (event.clientX - rect.left) / rect.width - 0.5;
+    const ry = (event.clientY - rect.top) / rect.height - 0.5;
+    target.style.setProperty("--active-float-x", `${rx * 28}px`);
+    target.style.setProperty("--active-float-y", `${ry * 22}px`);
+    target.style.setProperty("--active-rotate", `${rx * 2.2}deg`);
+    setActiveAssetId(asset.id);
+    setCursorPosition({ x: event.clientX, y: event.clientY });
+  }
+
+  function handleAssetClick(asset: DumpAsset) {
+    if (asset.websiteUrl) {
+      window.open(asset.websiteUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setSelectedAsset(asset);
+  }
+
+  return (
+    <main className="personal-page">
+      <div className="personal-curtain" aria-hidden="true" />
+
+      <div className="personal-stage" ref={stageRef}>
+
+        {/* ── Top-left: location + live clock ── */}
+        <div className="personal-corner personal-corner--tl">
+          <ScrambleText text="BARCELONA, (ES)" delay={1050} />
+          <span className="personal-corner__sep"> • </span>
+          <span className="personal-corner__time"><LiveClock /></span>
+        </div>
+
+        {/* ── Top-right: back link ── */}
+        <Link className="personal-corner personal-corner--tr" to="/work">
+          <ScrambleText text="← WORK" delay={1050} />
+        </Link>
+
+        {/* ── Assets ── */}
+        {dumpAssets.map((asset) => {
+          const isActive = activeAssetId === asset.id;
+
+          return (
+            <button
+              key={asset.id}
+              className={[
+                "personal-asset",
+                asset.className ?? "",
+                asset.websiteUrl ? "personal-asset--live" : "",
+                isActive ? "personal-asset--active" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              type="button"
+              style={getAssetStyle(asset, isActive)}
+              onClick={() => handleAssetClick(asset)}
+              onPointerEnter={(e) => handlePointerMove(asset, e)}
+              onPointerMove={(e) => handlePointerMove(asset, e)}
+              onPointerLeave={(e) => {
+                e.currentTarget.style.setProperty("--active-float-x", "0px");
+                e.currentTarget.style.setProperty("--active-float-y", "0px");
+                e.currentTarget.style.setProperty("--active-rotate", "0deg");
+                setActiveAssetId(null);
+              }}
+            >
+              <span className="personal-asset__float-wrapper">
+                <span className="personal-asset__media">
+                  <MediaPreview asset={asset} />
+                </span>
+                <span
+                  className="personal-asset__meta"
+                  aria-hidden={!isActive}
+                >
+                  <span>{getPrimaryTag(asset)}</span>
+                  <span>{asset.title}</span>
+                  <span>
+                    {asset.websiteUrl
+                      ? "↗ live"
+                      : asset.type === "pdf"
+                      ? `${asset.pageCount} pages`
+                      : "archived"}
+                  </span>
+                </span>
+              </span>
+            </button>
+          );
+        })}
+
+        {/* ── Center title ── */}
+        <div className="personal-title">
+          <h1 className="personal-title__line">
+            <ScrambleText text="Personal" delay={1100} />
+          </h1>
+          <h1 className="personal-title__line">
+            <ScrambleText text="Explorations" delay={1250} />
+          </h1>
+          <p className="personal-title__sub">
+            <ScrambleText text="Designer & Developer" delay={1550} />
+          </p>
+          <span className="personal-title__diamond" aria-hidden="true">
+            ◇
+          </span>
+          <p className="personal-title__byline">
+            <ScrambleText text="BUILT BY TAMARA" delay={1700} />
+          </p>
+        </div>
+
+        {/* ── Bottom-left: studio info ── */}
+        <div className="personal-corner personal-corner--bl">
+          <span>— TAMARA</span>
+          <span>— PERSONAL EXPLORATIONS</span>
+          <span>— DESIGN & DEVELOPMENT</span>
+          <span>©2026 ALL RIGHTS</span>
+        </div>
+
+        {/* ── Bottom-center: count ── */}
+        <div className="personal-count">
+          <span>({dumpAssets.length})</span>
+        </div>
+
+      </div>
+
+      {/* ── Custom cursor ── */}
+      {activeAssetId ? (
+        <span
+          className="personal-cursor"
+          style={
+            {
+              "--cursor-x": `${cursorPosition.x}px`,
+              "--cursor-y": `${cursorPosition.y}px`,
+            } as CursorStyle
+          }
+          aria-hidden="true"
+        >
+          ×
+        </span>
+      ) : null}
+
+      {/* ── Modal ── */}
+      {selectedAsset ? (
+        <AssetModal
+          asset={selectedAsset}
+          onClose={() => setSelectedAsset(null)}
+        />
+      ) : null}
+    </main>
+  );
+}
+
+export default PersonalExplorationsPage;
