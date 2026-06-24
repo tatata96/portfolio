@@ -28,7 +28,9 @@ function HomePage() {
       >
         <div className="home-hero__inner">
           <h1 id="home-heading">
-            hi, i'm <em>tamara.</em>
+            <span className="home-hero__title-word">hi,</span>{' '}
+            <span className="home-hero__title-word">i'm</span>{' '}
+            <em className="home-hero__title-word">tamara.</em>
           </h1>
           <img className="home-hero__portrait" src={meImage} alt="" />
           <div className="home-hero__copy" aria-label="Introduction">

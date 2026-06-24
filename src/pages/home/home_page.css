@@ -34,13 +34,26 @@
   font-weight: 800;
   letter-spacing: 0;
   line-height: 0.9;
-  animation: homeHeroTextIn 850ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+
+.home-hero__title-word {
+  display: inline-block;
+  animation: homeHeroAppear 1ms step-end 120ms both;
+}
+
+.home-hero__title-word:nth-child(2) {
+  animation-delay: 240ms;
+}
+
+.home-hero__title-word:nth-child(3) {
+  animation-delay: 360ms;
 }
 
 .home-hero__portrait {
   width: min(100%, 420px);
   height: auto;
-  animation: homeHeroPortraitIn 850ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
+  transform: translateY(-24px);
+  animation: homeHeroAppear 1ms step-end 760ms both;
 }
 
 .home-hero h1 em {
@@ -67,18 +80,18 @@
   font-size: 18px;
   line-height: 1.45;
   color: var(--text-h);
-  animation: homeHeroCopyIn 700ms cubic-bezier(0.22, 1, 0.36, 1) 520ms both;
+  animation: homeHeroAppear 1ms step-end 560ms both;
 }
 
 .home-hero__copy-right {
   max-width: 760px;
   font-family: "Syne", system-ui, sans-serif;
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 400;
   line-height: 1.22;
   color: var(--text-h);
   transform: translateY(-20px);
-  animation: homeHeroCopyRightIn 700ms cubic-bezier(0.22, 1, 0.36, 1) 640ms both;
+  animation: homeHeroAppear 1ms step-end 960ms both;
 }
 
 .home-cursor {
@@ -94,63 +107,13 @@
   mix-blend-mode: difference;
 }
 
-@keyframes homeHeroTextIn {
+@keyframes homeHeroAppear {
   from {
-    opacity: 0;
-    transform: translateY(34px);
+    visibility: hidden;
   }
 
   to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes homeHeroPortraitIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-24px) scale(1);
-  }
-}
-
-@keyframes homeHeroPortraitInTablet {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-12px) scale(1);
-  }
-}
-
-@keyframes homeHeroCopyIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes homeHeroCopyRightIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-20px);
+    visibility: visible;
   }
 }
 
@@ -178,7 +141,6 @@
   .home-hero__portrait {
     width: min(100%, 320px);
     transform: translateY(-12px);
-    animation-name: homeHeroPortraitInTablet;
   }
 
   .home-hero__copy {
@@ -189,7 +151,6 @@
   .home-hero__copy-right {
     max-width: 820px;
     transform: translateY(0);
-    animation-name: homeHeroCopyIn;
   }
 }
 
@@ -217,7 +178,6 @@
     width: min(220px, 72vw);
     margin-bottom: 0;
     transform: translateY(0);
-    animation-name: homeHeroCopyIn;
   }
 
   .home-hero__copy-left {
@@ -241,7 +201,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-hero h1,
+  .home-hero__title-word,
   .home-hero__portrait,
   .home-hero__copy-left,
   .home-hero__copy-right {
