@@ -120,6 +120,7 @@ export const dumpAssets: DumpAsset[] = [
     x: 230,
     y: 465,
     width: 222,
+    className: "personal-asset--cutout",
   },
   {
     id: "titresim",

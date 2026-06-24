@@ -90,6 +90,8 @@ type FloatingStyle = CSSProperties & {
   "--asset-left": string;
   "--asset-top": string;
   "--asset-width": string;
+  "--asset-parallax-x": string;
+  "--asset-parallax-y": string;
   "--asset-float-x": string;
   "--asset-float-y": string;
   "--asset-rotate": string;
@@ -102,11 +104,20 @@ type CursorStyle = CSSProperties & {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function getAssetStyle(asset: DumpAsset, isActive: boolean): FloatingStyle {
+function getAssetStyle(
+  asset: DumpAsset,
+  index: number,
+  isActive: boolean,
+  stageFloat: { x: number; y: number }
+): FloatingStyle {
+  const depth = 10 + (index % 5) * 4;
+
   return {
     "--asset-left": `${((asset.x / STAGE_W) * 100).toFixed(2)}%`,
     "--asset-top": `${((asset.y / STAGE_H) * 100).toFixed(2)}%`,
     "--asset-width": `${((asset.width / STAGE_W) * 100).toFixed(2)}%`,
+    "--asset-parallax-x": `${(stageFloat.x * depth).toFixed(2)}px`,
+    "--asset-parallax-y": `${(stageFloat.y * depth).toFixed(2)}px`,
     "--asset-float-x": isActive ? "var(--active-float-x)" : "0px",
     "--asset-float-y": isActive ? "var(--active-float-y)" : "0px",
     "--asset-rotate": isActive ? "var(--active-rotate)" : "0deg",
@@ -228,7 +239,15 @@ function PersonalExplorationsPage() {
   const [activeAssetId, setActiveAssetId] = useState<string | null>(null);
   const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [stageFloat, setStageFloat] = useState({ x: 0, y: 0 });
   const stageRef = useRef<HTMLDivElement | null>(null);
+
+  function handleStagePointerMove(event: PointerEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    setStageFloat({ x, y });
+  }
 
   function handlePointerMove(asset: DumpAsset, event: PointerEvent) {
     const target = event.currentTarget as HTMLElement;
@@ -254,7 +273,12 @@ function PersonalExplorationsPage() {
     <main className="personal-page">
       <div className="personal-curtain" aria-hidden="true" />
 
-      <div className="personal-stage" ref={stageRef}>
+      <div
+        className="personal-stage"
+        ref={stageRef}
+        onPointerMove={handleStagePointerMove}
+        onPointerLeave={() => setStageFloat({ x: 0, y: 0 })}
+      >
 
         {/* ── Top-left: back link ── */}
         <Link className="personal-corner personal-corner--tl" to="/work">
@@ -269,7 +293,7 @@ function PersonalExplorationsPage() {
         </div>
 
         {/* ── Assets ── */}
-        {dumpAssets.map((asset) => {
+        {dumpAssets.map((asset, index) => {
           const isActive = activeAssetId === asset.id;
 
           return (
@@ -284,7 +308,7 @@ function PersonalExplorationsPage() {
                 .filter(Boolean)
                 .join(" ")}
               type="button"
-              style={getAssetStyle(asset, isActive)}
+              style={getAssetStyle(asset, index, isActive, stageFloat)}
               onClick={() => handleAssetClick(asset)}
               onPointerEnter={(e) => handlePointerMove(asset, e)}
               onPointerMove={(e) => handlePointerMove(asset, e)}
