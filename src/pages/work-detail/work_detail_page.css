@@ -239,6 +239,23 @@
   font-size: 16px;
 }
 
+.work-detail-section__image {
+  overflow: hidden;
+  display: grid;
+  margin: 18px 0 8px;
+  border: 1px solid rgba(var(--project-accent-rgb), 0.58);
+  border-radius: 18px;
+  background: var(--project-collage-bg);
+  box-shadow: 0 18px 44px rgba(var(--project-shadow-rgb), 0.12);
+}
+
+.work-detail-section__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2656 / 1544;
+  object-fit: cover;
+}
+
 .solution-overview {
   display: grid;
   gap: 14px;

@@ -1,5 +1,6 @@
-import type { WorkCardData } from "../../components/WorkCard/WorkCard";
+import type {WorkCardData} from "../../components/WorkCard/WorkCard";
 import brikLogo from "../../assets/brik/brik-logo.jpg";
+import algorandLogo from "../../assets/algo/algo-logo.webp";
 import projectImage from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 
 export const workItems: WorkCardData[] = [
@@ -25,5 +26,16 @@ export const workItems: WorkCardData[] = [
     tags: ["Coming Soon"],
     cursorColor: "#118cf2",
     cursorTextColor: "#ffffff",
+  },
+  {
+    slug: "algorand",
+    title: "Algorand",
+    description: "Project details coming soon.",
+    role: "Details coming soon",
+    time: "TBD",
+    image: algorandLogo,
+    tags: ["Coming Soon"],
+    cursorColor: "rgb(185, 239, 238)",
+    cursorTextColor: "#111111",
   },
 ];

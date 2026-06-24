@@ -4,6 +4,7 @@ import {workItems} from "../work/workItems";
 import {
   caseStudies,
   type CaseStudySection,
+  type RoleSection,
   type SnapshotItem,
 } from "./caseStudies";
 import FeatureWalkthrough from "./FeatureWalkthrough";
@@ -47,6 +48,72 @@ function renderSnapshotItem(item: SnapshotItem) {
         </div>
       ) : null}
     </div>
+  );
+}
+
+function renderRoleSubsections(roleSections: RoleSection[]) {
+  if (roleSections.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="role-subsections">
+      {roleSections.map((roleSection, roleSectionIndex) => {
+        const hasContent =
+          roleSection.paragraphs.length > 0 ||
+          roleSection.bullets.length > 0 ||
+          Boolean(roleSection.callout) ||
+          Boolean(roleSection.insight);
+
+        return (
+          <div className="role-subsection" key={roleSection.title}>
+            <h3>
+              <span className="role-subsection__pill">
+                <span>{roleSectionIndex + 1}</span>
+                {roleSection.title}
+              </span>
+            </h3>
+            {hasContent ? (
+              <div className="role-subsection__content">
+                {roleSection.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {roleSection.bullets.length > 0 ? (
+                  <ul>
+                    {roleSection.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                {roleSection.callout ? (
+                  <p className="role-subsection__callout">
+                    {roleSection.callout}
+                  </p>
+                ) : null}
+                {roleSection.insight ? (
+                  <aside className="role-subsection__insight">
+                    <h4>{roleSection.insight.title}</h4>
+                    <div>{roleSection.insight.body}</div>
+                  </aside>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function renderSectionImage(section: CaseStudySection) {
+  if (!section.image) {
+    return null;
+  }
+
+  return (
+    <figure className="work-detail-section__image">
+      <img src={section.image.src} alt={section.image.alt} />
+    </figure>
   );
 }
 
@@ -206,47 +273,11 @@ function WorkDetailPage() {
               ) : section.variant === "role" && caseStudy.roleSections ? (
                 <div className="role-section-list">
                   {renderParagraphs(section.body)}
+                  {renderSectionImage(section)}
 
-                  {caseStudy.roleSections.length > 0 ? (
-                    <div className="role-subsections">
-                      {caseStudy.roleSections.map(
-                        (roleSection, roleSectionIndex) => (
-                          <div
-                            className="role-subsection"
-                            key={roleSection.title}
-                          >
-                            <h3>
-                              <span className="role-subsection__pill">
-                                <span>{roleSectionIndex + 1}</span>
-                                {roleSection.title}
-                              </span>
-                            </h3>
-                            <div className="role-subsection__content">
-                              {roleSection.paragraphs.map((paragraph) => (
-                                <p key={paragraph}>{paragraph}</p>
-                              ))}
-                              <ul>
-                                {roleSection.bullets.map((bullet) => (
-                                  <li key={bullet}>{bullet}</li>
-                                ))}
-                              </ul>
-                              {roleSection.callout ? (
-                                <p className="role-subsection__callout">
-                                  {roleSection.callout}
-                                </p>
-                              ) : null}
-                              {roleSection.insight ? (
-                                <aside className="role-subsection__insight">
-                                  <h4>{roleSection.insight.title}</h4>
-                                  <div>{roleSection.insight.body}</div>
-                                </aside>
-                              ) : null}
-                            </div>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  ) : null}
+                  {renderRoleSubsections(
+                    section.subsections ?? caseStudy.roleSections,
+                  )}
                 </div>
               ) : section.variant === "reflection" &&
                 caseStudy.reflectionCards ? (

@@ -4,6 +4,8 @@ import brikScreen2 from "../../assets/brik/brik_screen_2.png";
 import brikScreen3 from "../../assets/brik/brik_screen_3.png";
 import brikScreen4 from "../../assets/brik/brik_screen_4.png";
 import brikScreen5 from "../../assets/brik/brik_screen_5.png";
+import algorandLogo from "../../assets/algo/algo-logo.webp";
+import algorandGovernance from "../../assets/algo/gov.png";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
@@ -17,6 +19,11 @@ export type CaseStudySection = {
   heading: string;
   body: string;
   variant?: "overview" | "walkthrough" | "role" | "reflection";
+  image?: {
+    src: string;
+    alt: string;
+  };
+  subsections?: RoleSection[];
 };
 
 export type SnapshotItem = {
@@ -433,7 +440,142 @@ const brikCaseStudy: CaseStudy = {
   ],
 };
 
+const algorandCaseStudy: CaseStudy = {
+  accent: {
+    color: "rgb(185, 239, 238)",
+    soft: "#e8fbfb",
+    text: "#286766",
+    rgb: "185, 239, 238",
+    collageBackground: "#f1fcfc",
+    shadow: "40, 103, 102",
+  },
+  snapshot: {
+    left: [
+      {label: "Client", value: "Algorand Foundation"},
+      {label: "Product", value: "Algorand Ecosystem Products"},
+      {label: "Duration", value: "2020-2024"},
+      {label: "Capacity", value: "Frontend Development"},
+      {label: "Team Model", value: "Cross-functional product teams"},
+      {label: "Status", value: "Live Products"},
+    ],
+    right: [
+      {
+        label: "In a Nutshell",
+        value:
+          "As part of the frontend team at Hipo, I contributed to a range of products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations. My work focused on translating complex blockchain concepts into accessible user experiences while supporting millions of dollars in on-chain activity.",
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Contributed to multiple production products used across the Algorand ecosystem",
+          "Built and maintained governance, analytics, and developer-facing experiences",
+          "Participated in major platform upgrades, migrations, and feature releases",
+        ],
+      },
+      {
+        label: "Tags",
+        tags: [
+          "Blockchain",
+          "Web3",
+          "Frontend Development",
+          "React",
+          "TypeScript",
+          "Governance",
+          "Developer Tools",
+          "Wallet Integration",
+        ],
+      },
+    ],
+  },
+  sections: [
+    {
+      id: "context",
+      title: "Context",
+      heading: "Entering the World of Web3.",
+      body: "During my time at Hipo, I contributed to multiple products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.\n\nAlthough these products served different audiences, they shared a common challenge: translating complex blockchain concepts into experiences that felt understandable, trustworthy, and easy to use.",
+    },
+    {
+      id: "governance-platform",
+      title: "Governance Platform",
+      heading: "Helping users take part.",
+      body: "Algorand Governance allows token holders to participate in decisions that influence the future of the network. By committing their assets and fulfilling participation requirements, users can vote on proposals and earn governance rewards.\n\nHowever, participating in governance requires understanding unfamiliar concepts, managing wallet connections, and completing blockchain transactions-creating a significant barrier for many users.",
+      variant: "role",
+      image: {
+        src: algorandGovernance,
+        alt: "Algorand Governance platform interface",
+      },
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I took ownership of the Governance Platform frontend after inheriting the project from another engineer. I contributed to several areas of the governance platform, including governor discovery, activity tracking, wallet integrations, and governance participation flows.",
+          ],
+          bullets: [
+            "Built filtering and infinite scrolling experiences for the Governor List",
+            "Developed governance activity and history interfaces",
+            "Implemented wallet connection and transaction flows",
+            "Contributed to xGov participation experiences",
+            "Supported major platform upgrades and frontend migrations",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Working on governance products taught me that participation is often a design challenge rather than a technical one. Small improvements in clarity, feedback, and guidance can significantly reduce the friction users experience when interacting with complex systems.",
+          ],
+          bullets: [],
+        },
+      ],
+    },
+    {
+      id: "developer-portal",
+      title: "Developer Portal",
+      heading: "Developer portal details will live here.",
+      body: "This section will describe the developer portal work, including information architecture, interface patterns, and developer-facing workflows.",
+    },
+    {
+      id: "metrics-dashboard",
+      title: "Metrics Dashboard",
+      heading: "Metrics dashboard details will live here.",
+      body: "This section will describe dashboard design and implementation work for surfacing key metrics and platform activity.",
+    },
+    {
+      id: "wallet-integrations",
+      title: "Wallet Integrations",
+      heading: "Wallet integration details will live here.",
+      body: "This section will describe wallet integration flows, interaction states, and implementation considerations.",
+    },
+    {
+      id: "reflection",
+      title: "Reflection",
+      heading: "What I've learned.",
+      body: "",
+      variant: "reflection",
+    },
+  ],
+  solutionOverview: {
+    image: algorandLogo,
+    imageAlt: "Algorand logo",
+    captionKicker: "Algorand",
+    captionTitle: "case study",
+  },
+  walkthrough: {
+    intro:
+      "This area will use the same case-study structure as the other projects, with Algorand-specific feature highlights once the details are ready.",
+    ariaLabel: "Algorand feature steps",
+    steps: [],
+  },
+  roleSections: [],
+  reflectionCards: [
+    {
+      title: "Reflection",
+      body: "Reflection details coming soon.",
+    },
+  ],
+};
+
 export const caseStudies: Record<string, CaseStudy> = {
   photify: photifyCaseStudy,
   brik: brikCaseStudy,
+  algorand: algorandCaseStudy,
 };
