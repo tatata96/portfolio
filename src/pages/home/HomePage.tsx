@@ -1,13 +1,40 @@
-import { useState, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import './home_page.css'
 import meImage from '../../assets/me.png'
+import birdVideo from '../../assets/home/bird.mp4'
+import scribbleVideo from '../../assets/home/scribble.mp4'
 import WorkPage from '../work/WorkPage'
 
 function HomePage() {
+  const scribbleDelayRef = useRef<number | null>(null)
+  const [showBird, setShowBird] = useState(false)
+  const [showScribble, setShowScribble] = useState(false)
   const [cursorPosition, setCursorPosition] = useState<{
     x: number
     y: number
   } | null>(null)
+
+  useEffect(() => {
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (reducedMotionQuery.matches) {
+      const scribbleTimeoutId = window.setTimeout(() => {
+        setShowScribble(true)
+      }, 1500)
+
+      return () => window.clearTimeout(scribbleTimeoutId)
+    }
+
+    const birdTimeoutId = window.setTimeout(() => {
+      setShowBird(true)
+    }, 960)
+
+    return () => {
+      window.clearTimeout(birdTimeoutId)
+      if (scribbleDelayRef.current) {
+        window.clearTimeout(scribbleDelayRef.current)
+      }
+    }
+  }, [])
 
   function handleHeroPointerMove(event: PointerEvent<HTMLElement>) {
     if (event.pointerType !== 'mouse') return
@@ -32,6 +59,34 @@ function HomePage() {
             <span className="home-hero__title-word">i'm</span>{' '}
             <em className="home-hero__title-word">tamara.</em>
           </h1>
+          {showBird && (
+            <video
+              className="home-hero__bird"
+              src={birdVideo}
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+              onAnimationEnd={() => {
+                setShowBird(false)
+                scribbleDelayRef.current = window.setTimeout(() => {
+                  setShowScribble(true)
+                }, 350)
+              }}
+              aria-hidden="true"
+            />
+          )}
+          {showScribble && (
+            <video
+              className="home-hero__scribble"
+              src={scribbleVideo}
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+            />
+          )}
           <img className="home-hero__portrait" src={meImage} alt="" />
           <div className="home-hero__copy" aria-label="Introduction">
             <p className="home-hero__copy-left">
