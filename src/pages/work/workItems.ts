@@ -12,6 +12,8 @@ export const workItems: WorkCardData[] = [
     time: "2026",
     image: projectImage,
     tags: ["Mobile App", "AI", "Facial Recognition", "React Native", "Django"],
+    cursorColor: "#f7d96b",
+    cursorTextColor: "#2a2312",
   },
   {
     slug: "brik",
@@ -21,5 +23,7 @@ export const workItems: WorkCardData[] = [
     time: "TBD",
     image: brikLogo,
     tags: ["Coming Soon"],
+    cursorColor: "#118cf2",
+    cursorTextColor: "#ffffff",
   },
 ];

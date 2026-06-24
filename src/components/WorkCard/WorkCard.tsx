@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from "react";
+import { useState, type CSSProperties, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import "./work_card.css";
 
@@ -10,11 +10,18 @@ export type WorkCardData = {
   time: string;
   image: string;
   tags: string[];
+  cursorColor?: string;
+  cursorTextColor?: string;
 };
 
 type WorkCardProps = {
   item: WorkCardData;
   number: number;
+};
+
+type CursorStyle = CSSProperties & {
+  "--work-card-cursor-bg"?: string;
+  "--work-card-cursor-color"?: string;
 };
 
 function WorkCard({ item, number }: WorkCardProps) {
@@ -30,6 +37,15 @@ function WorkCard({ item, number }: WorkCardProps) {
       y: event.clientY,
     });
   }
+
+  const cursorStyle: CursorStyle | undefined = cursorPosition
+    ? {
+        left: cursorPosition.x,
+        top: cursorPosition.y,
+        "--work-card-cursor-bg": item.cursorColor,
+        "--work-card-cursor-color": item.cursorTextColor,
+      }
+    : undefined;
 
   return (
     <Link
@@ -75,10 +91,7 @@ function WorkCard({ item, number }: WorkCardProps) {
       {cursorPosition && (
         <span
           className="work-card__cursor"
-          style={{
-            left: cursorPosition.x,
-            top: cursorPosition.y,
-          }}
+          style={cursorStyle}
           aria-hidden="true"
         >
           VIEW CASE STUDY
