@@ -256,17 +256,17 @@ function PersonalExplorationsPage() {
 
       <div className="personal-stage" ref={stageRef}>
 
-        {/* ── Top-left: location + live clock ── */}
-        <div className="personal-corner personal-corner--tl">
-          <ScrambleText text="BARCELONA, (ES)" delay={1050} />
+        {/* ── Top-left: back link ── */}
+        <Link className="personal-corner personal-corner--tl" to="/work">
+          <ScrambleText text="← WORK" delay={1050} />
+        </Link>
+
+        {/* ── Top-right: location + live clock ── */}
+        <div className="personal-corner personal-corner--tr">
+          <ScrambleText text="ISTANBUL, (TR)" delay={1050} />
           <span className="personal-corner__sep"> • </span>
           <span className="personal-corner__time"><LiveClock /></span>
         </div>
-
-        {/* ── Top-right: back link ── */}
-        <Link className="personal-corner personal-corner--tr" to="/work">
-          <ScrambleText text="← WORK" delay={1050} />
-        </Link>
 
         {/* ── Assets ── */}
         {dumpAssets.map((asset) => {
