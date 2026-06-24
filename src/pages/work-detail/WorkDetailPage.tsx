@@ -106,14 +106,18 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
 }
 
 function renderSectionImage(section: CaseStudySection) {
-  if (!section.image) {
+  if (!section.images || section.images.length === 0) {
     return null;
   }
 
   return (
-    <figure className="work-detail-section__image">
-      <img src={section.image.src} alt={section.image.alt} />
-    </figure>
+    <div className="work-detail-section__image-grid">
+      {section.images.map((image) => (
+        <figure className="work-detail-section__image" key={image.src}>
+          <img src={image.src} alt={image.alt} />
+        </figure>
+      ))}
+    </div>
   );
 }
 

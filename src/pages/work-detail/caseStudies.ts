@@ -5,6 +5,8 @@ import brikScreen3 from "../../assets/brik/brik_screen_3.png";
 import brikScreen4 from "../../assets/brik/brik_screen_4.png";
 import brikScreen5 from "../../assets/brik/brik_screen_5.png";
 import algorandLogo from "../../assets/algo/algo-logo.webp";
+import algorandDeveloperPortal from "../../assets/algo/dev.webp";
+import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
 import algorandGovernance from "../../assets/algo/gov.png";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
@@ -19,10 +21,10 @@ export type CaseStudySection = {
   heading: string;
   body: string;
   variant?: "overview" | "walkthrough" | "role" | "reflection";
-  image?: {
+  images?: {
     src: string;
     alt: string;
-  };
+  }[];
   subsections?: RoleSection[];
 };
 
@@ -500,10 +502,12 @@ const algorandCaseStudy: CaseStudy = {
       heading: "Helping users take part.",
       body: "Algorand Governance allows token holders to participate in decisions that influence the future of the network. By committing their assets and fulfilling participation requirements, users can vote on proposals and earn governance rewards.\n\nHowever, participating in governance requires understanding unfamiliar concepts, managing wallet connections, and completing blockchain transactions-creating a significant barrier for many users.",
       variant: "role",
-      image: {
-        src: algorandGovernance,
-        alt: "Algorand Governance platform interface",
-      },
+      images: [
+        {
+          src: algorandGovernance,
+          alt: "Algorand Governance platform interface",
+        },
+      ],
       subsections: [
         {
           title: "My Role",
@@ -530,8 +534,42 @@ const algorandCaseStudy: CaseStudy = {
     {
       id: "developer-portal",
       title: "Developer Portal",
-      heading: "Developer portal details will live here.",
-      body: "This section will describe the developer portal work, including information architecture, interface patterns, and developer-facing workflows.",
+      heading: "Helping developers build with confidence.",
+      body: "The Algorand Developer Portal serves as the primary learning and documentation hub for developers building applications on the Algorand blockchain. It provides technical guides, tutorials, API references, and educational resources designed to help developers understand the ecosystem and build with confidence.",
+      variant: "role",
+      images: [
+        {
+          src: algorandDeveloperPortal,
+          alt: "Algorand Developer Portal homepage interface",
+        },
+        {
+          src: algorandDeveloperPortalDocs,
+          alt: "Algorand Developer Portal documentation interface",
+        },
+      ],
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I contributed to the frontend development of the Developer Portal, working on experiences that helped developers discover, consume, and engage with technical content more effectively.",
+            "Beyond presenting documentation, the goal was to create an environment that encouraged continued exploration of the Algorand ecosystem and reduced the friction of learning unfamiliar concepts.",
+          ],
+          bullets: [
+            "Developed new portal features and content experiences",
+            "Improved navigation and content discoverability",
+            "Built interactive and educational experiences to increase engagement",
+            "Collaborated with developer relations teams on learning initiatives",
+            "Maintained and expanded the frontend architecture",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Working on the Developer Portal introduced me to server-side rendering and the unique challenges of content-driven products. I learned that technical decisions are often product decisions, influencing everything from discoverability and performance to how users engage with information.",
+          ],
+          bullets: [],
+        },
+      ],
     },
     {
       id: "metrics-dashboard",

@@ -239,10 +239,16 @@
   font-size: 16px;
 }
 
+.work-detail-section__image-grid {
+  display: grid;
+  gap: 18px;
+  margin: 18px 0 8px;
+}
+
 .work-detail-section__image {
   overflow: hidden;
   display: grid;
-  margin: 18px 0 8px;
+  margin: 0;
   border: 1px solid rgba(var(--project-accent-rgb), 0.58);
   border-radius: 18px;
   background: var(--project-collage-bg);
@@ -252,8 +258,8 @@
 .work-detail-section__image img {
   display: block;
   width: 100%;
-  aspect-ratio: 2656 / 1544;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
 .solution-overview {
