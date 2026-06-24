@@ -113,7 +113,14 @@ function renderSectionImage(section: CaseStudySection) {
   return (
     <div className="work-detail-section__image-grid">
       {section.images.map((image) => (
-        <figure className="work-detail-section__image" key={image.src}>
+        <figure
+          className={
+            image.size === "compact"
+              ? "work-detail-section__image work-detail-section__image--compact"
+              : "work-detail-section__image"
+          }
+          key={image.src}
+        >
           <img src={image.src} alt={image.alt} />
         </figure>
       ))}

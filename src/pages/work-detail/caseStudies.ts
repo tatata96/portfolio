@@ -5,6 +5,7 @@ import brikScreen3 from "../../assets/brik/brik_screen_3.png";
 import brikScreen4 from "../../assets/brik/brik_screen_4.png";
 import brikScreen5 from "../../assets/brik/brik_screen_5.png";
 import algorandLogo from "../../assets/algo/algo-logo.webp";
+import algorandConnect from "../../assets/algo/connect.webp";
 import algorandDeveloperPortal from "../../assets/algo/dev.webp";
 import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
 import algorandGovernance from "../../assets/algo/gov.png";
@@ -26,6 +27,7 @@ export type CaseStudySection = {
   images?: {
     src: string;
     alt: string;
+    size?: "default" | "compact";
   }[];
   subsections?: RoleSection[];
 };
@@ -615,8 +617,38 @@ const algorandCaseStudy: CaseStudy = {
     {
       id: "wallet-integrations",
       title: "Wallet Integrations",
-      heading: "Wallet integration details will live here.",
-      body: "This section will describe wallet integration flows, interaction states, and implementation considerations.",
+      heading: "Connecting users to the ecosystem.",
+      body: "Digital wallets are the primary way users interact with blockchain applications. They enable authentication, transaction signing, and asset management, making them a critical part of the overall user experience.\n\nUnlike a standalone feature, wallet connectivity was embedded throughout the ecosystem. As a result, I worked on wallet integrations across multiple products, helping users authenticate, sign transactions, and interact with blockchain applications through a consistent and reliable experience.",
+      variant: "role",
+      images: [
+        {
+          src: algorandConnect,
+          alt: "Algorand wallet connection interface",
+          size: "compact",
+        },
+      ],
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I contributed to the integration of several wallet providers across Algorand products, including Pera Wallet, Defly Wallet, Exodus Wallet, and some more.",
+            "Each integration introduced unique technical requirements and user experience considerations.",
+          ],
+          bullets: [
+            "Implemented wallet connection flows",
+            "Developed transaction signing experiences",
+            "Resolved compatibility and user experience issues",
+            "Maintained and improved wallet-related infrastructure",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Wallet interactions often involve sensitive actions with real financial consequences. This experience reinforced the importance of clear feedback, confirmation states, and transparent communication, helping users feel confident throughout the transaction journey.",
+          ],
+          bullets: [],
+        },
+      ],
     },
     {
       id: "reflection",
@@ -641,8 +673,8 @@ const algorandCaseStudy: CaseStudy = {
   roleSections: [],
   reflectionCards: [
     {
-      title: "Reflection",
-      body: "Reflection details coming soon.",
+      title: "Professional Foundation",
+      body: "Hipo was where I built my professional foundation. It introduced me to modern development practices, scalable frontend architecture, code quality standards, and the collaborative processes behind successful digital products.\n\nWorking with international teams and contributing to products used by a global audience broadened my perspective beyond implementation alone. More importantly, it taught me how design, engineering, and communication work together to make complex technologies accessible to people.\n\nMany of the principles I still rely on today-from building reusable systems to simplifying complexity for users-were shaped during this experience.",
     },
   ],
 };
