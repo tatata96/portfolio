@@ -202,11 +202,10 @@ function WorkDetailPage() {
     <main className="work-detail-page" style={accentStyle}>
       <aside className="work-detail-sidebar" aria-label="Case study navigation">
         <Link className="work-detail-sidebar__home" to="/#work">
-          {"<- Work"}
+          {"← WORK"}
         </Link>
 
         <nav className="work-detail-toc" aria-label="Table of contents">
-          <p>Table of contents</p>
           <ol>
             {sections.map((section, index) => (
               <li key={section.id}>
@@ -231,7 +230,7 @@ function WorkDetailPage() {
           type="button"
           onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
         >
-          ^ Back to top
+          ↑ TOP
         </button>
       </aside>
 
