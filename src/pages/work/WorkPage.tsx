@@ -4,7 +4,7 @@ import { workItems } from "./workItems";
 
 function WorkPage() {
   return (
-    <main className="work-page">
+    <section className="work-page" id="work" aria-labelledby="work-heading">
       <section className="work-intro" aria-labelledby="work-heading">
         <h1 id="work-heading">Work</h1>
         <p>
@@ -18,7 +18,7 @@ function WorkPage() {
           <WorkCard item={item} key={item.title} />
         ))}
       </section>
-    </main>
+    </section>
   );
 }
 

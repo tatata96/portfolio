@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import './navbar.css'
 
 function Navbar() {
@@ -9,7 +9,7 @@ function Navbar() {
       </NavLink>
       <div className="nav-links" aria-label="Primary navigation">
         <a href="#cv">CV</a>
-        <NavLink to="/work">Work</NavLink>
+        <Link to="/#work">Work</Link>
         <a href="#contact">Contact</a>
       </div>
     </nav>

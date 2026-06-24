@@ -186,7 +186,7 @@ function WorkDetailPage() {
   }
 
   if (!workItem || !caseStudy) {
-    return <Navigate to="/work" replace />;
+    return <Navigate to="/#work" replace />;
   }
 
   const accentStyle: ProjectAccentStyle = {
@@ -201,7 +201,7 @@ function WorkDetailPage() {
   return (
     <main className="work-detail-page" style={accentStyle}>
       <aside className="work-detail-sidebar" aria-label="Case study navigation">
-        <Link className="work-detail-sidebar__home" to="/work">
+        <Link className="work-detail-sidebar__home" to="/#work">
           {"<- Work"}
         </Link>
 

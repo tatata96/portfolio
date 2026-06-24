@@ -1,4 +1,8 @@
 .home-page {
+  min-height: 100svh;
+}
+
+.home-hero {
   display: flex;
   flex-direction: column;
   gap: 16px;

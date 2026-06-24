@@ -283,7 +283,7 @@ function PersonalExplorationsPage() {
       >
 
         {/* ── Top-left: back link ── */}
-        <Link className="personal-corner personal-corner--tl" to="/work">
+        <Link className="personal-corner personal-corner--tl" to="/#work">
           <ScrambleText text="← WORK" delay={1050} />
         </Link>
 
