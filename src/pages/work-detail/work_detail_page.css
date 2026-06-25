@@ -599,6 +599,411 @@
   line-height: 1.5;
 }
 
+.role-subsection--product-design .role-subsection__content {
+  max-width: none;
+}
+
+.product-design-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(280px, 0.98fr);
+  gap: 18px;
+}
+
+.product-design-layout__intro {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid rgba(8, 6, 13, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 34px rgba(var(--project-shadow-rgb), 0.08);
+}
+
+.product-design-layout__callout {
+  display: grid;
+  align-content: center;
+  min-height: 170px;
+  padding: 24px;
+  border-radius: 8px;
+  background: var(--text-h);
+  color: #fff;
+  font-family: var(--heading);
+  font-size: clamp(21px, 2.4vw, 30px);
+  font-weight: 550;
+  line-height: 1.12;
+}
+
+.product-design-principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  grid-column: 1 / -1;
+}
+
+.product-design-principle,
+.product-design-action {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(var(--project-accent-rgb), 0.5);
+  border-radius: 8px;
+  background: rgba(var(--project-accent-rgb), 0.13);
+}
+
+.product-design-principle span,
+.product-design-action span {
+  color: var(--project-accent-text);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.product-design-principle p,
+.product-design-action p {
+  color: var(--text-h);
+  font-size: 16px;
+  line-height: 1.42;
+}
+
+.product-design-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  grid-column: 1 / -1;
+}
+
+.product-design-action {
+  background: #fff;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.product-design-action:hover {
+  border-color: var(--project-accent);
+  box-shadow: 0 14px 28px rgba(var(--project-shadow-rgb), 0.12);
+  transform: translateY(-3px);
+}
+
+.product-design-layout__insight {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.role-subsection__insight.product-design-layout__insight {
+  overflow: hidden;
+  grid-template-columns: minmax(0, 0.9fr) minmax(330px, 1.1fr);
+  gap: 28px;
+  align-items: center;
+  min-height: 520px;
+  padding: clamp(32px, 5vw, 54px);
+  border: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: var(--project-accent);
+  box-shadow:
+    0 24px 54px rgba(var(--project-shadow-rgb), 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.48);
+  clip-path: polygon(
+    0% 4%,
+    2% 0%,
+    4% 4%,
+    6% 0%,
+    8% 4%,
+    10% 0%,
+    12% 4%,
+    14% 0%,
+    16% 4%,
+    18% 0%,
+    20% 4%,
+    22% 0%,
+    24% 4%,
+    26% 0%,
+    28% 4%,
+    30% 0%,
+    32% 4%,
+    34% 0%,
+    36% 4%,
+    38% 0%,
+    40% 4%,
+    42% 0%,
+    44% 4%,
+    46% 0%,
+    48% 4%,
+    50% 0%,
+    52% 4%,
+    54% 0%,
+    56% 4%,
+    58% 0%,
+    60% 4%,
+    62% 0%,
+    64% 4%,
+    66% 0%,
+    68% 4%,
+    70% 0%,
+    72% 4%,
+    74% 0%,
+    76% 4%,
+    78% 0%,
+    80% 4%,
+    82% 0%,
+    84% 4%,
+    86% 0%,
+    88% 4%,
+    90% 0%,
+    92% 4%,
+    94% 0%,
+    96% 4%,
+    98% 0%,
+    100% 4%,
+    96% 6%,
+    100% 8%,
+    96% 10%,
+    100% 12%,
+    96% 14%,
+    100% 16%,
+    96% 18%,
+    100% 20%,
+    96% 22%,
+    100% 24%,
+    96% 26%,
+    100% 28%,
+    96% 30%,
+    100% 32%,
+    96% 34%,
+    100% 36%,
+    96% 38%,
+    100% 40%,
+    96% 42%,
+    100% 44%,
+    96% 46%,
+    100% 48%,
+    96% 50%,
+    100% 52%,
+    96% 54%,
+    100% 56%,
+    96% 58%,
+    100% 60%,
+    96% 62%,
+    100% 64%,
+    96% 66%,
+    100% 68%,
+    96% 70%,
+    100% 72%,
+    96% 74%,
+    100% 76%,
+    96% 78%,
+    100% 80%,
+    96% 82%,
+    100% 84%,
+    96% 86%,
+    100% 88%,
+    96% 90%,
+    100% 92%,
+    96% 94%,
+    100% 96%,
+    98% 100%,
+    96% 96%,
+    94% 100%,
+    92% 96%,
+    90% 100%,
+    88% 96%,
+    86% 100%,
+    84% 96%,
+    82% 100%,
+    80% 96%,
+    78% 100%,
+    76% 96%,
+    74% 100%,
+    72% 96%,
+    70% 100%,
+    68% 96%,
+    66% 100%,
+    64% 96%,
+    62% 100%,
+    60% 96%,
+    58% 100%,
+    56% 96%,
+    54% 100%,
+    52% 96%,
+    50% 100%,
+    48% 96%,
+    46% 100%,
+    44% 96%,
+    42% 100%,
+    40% 96%,
+    38% 100%,
+    36% 96%,
+    34% 100%,
+    32% 96%,
+    30% 100%,
+    28% 96%,
+    26% 100%,
+    24% 96%,
+    22% 100%,
+    20% 96%,
+    18% 100%,
+    16% 96%,
+    14% 100%,
+    12% 96%,
+    10% 100%,
+    8% 96%,
+    6% 100%,
+    4% 96%,
+    2% 100%,
+    0% 96%,
+    4% 94%,
+    0% 92%,
+    4% 90%,
+    0% 88%,
+    4% 86%,
+    0% 84%,
+    4% 82%,
+    0% 80%,
+    4% 78%,
+    0% 76%,
+    4% 74%,
+    0% 72%,
+    4% 70%,
+    0% 68%,
+    4% 66%,
+    0% 64%,
+    4% 62%,
+    0% 60%,
+    4% 58%,
+    0% 56%,
+    4% 54%,
+    0% 52%,
+    4% 50%,
+    0% 48%,
+    4% 46%,
+    0% 44%,
+    4% 42%,
+    0% 40%,
+    4% 38%,
+    0% 36%,
+    4% 34%,
+    0% 32%,
+    4% 30%,
+    0% 28%,
+    4% 26%,
+    0% 24%,
+    4% 22%,
+    0% 20%,
+    4% 18%,
+    0% 16%,
+    4% 14%,
+    0% 12%,
+    4% 10%,
+    0% 8%,
+    4% 6%
+  );
+}
+
+.product-design-insight__copy {
+  display: grid;
+  gap: 16px;
+  color: #2a2312;
+}
+
+.product-design-insight__copy span {
+  width: max-content;
+  padding: 8px 10px;
+  border: 1px solid rgba(42, 35, 18, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.34);
+  color: #2a2312;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.role-subsection__insight .product-design-insight__copy h4 {
+  max-width: 420px;
+  color: #2a2312;
+  font-size: clamp(34px, 4.8vw, 58px);
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 0.94;
+}
+
+.product-design-insight__copy p {
+  max-width: 500px;
+  color: #3f3210;
+  font-size: 16px;
+  line-height: 1.52;
+}
+
+.product-design-insight__visuals {
+  position: relative;
+  min-height: 420px;
+}
+
+.product-design-insight__visual {
+  position: absolute;
+  overflow: hidden;
+  display: grid;
+  margin: 0;
+  border: 1px solid rgba(42, 35, 18, 0.16);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow:
+    0 18px 36px rgba(42, 35, 18, 0.18),
+    0 2px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
+.product-design-insight__visual:nth-child(1) {
+  z-index: 1;
+  top: 44px;
+  left: 0;
+  width: 66%;
+  transform: rotate(-4deg);
+}
+
+.product-design-insight__visual:nth-child(2) {
+  z-index: 3;
+  top: 0;
+  right: 8%;
+  width: 32%;
+  transform: rotate(6deg);
+}
+
+.product-design-insight__visual:nth-child(3) {
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  width: 44%;
+  transform: rotate(-2deg);
+}
+
+.product-design-insight__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1.1;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.product-design-insight__visual figcaption {
+  padding: 9px 11px 10px;
+  color: var(--text-h);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .reflection-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -837,6 +1242,44 @@
     grid-template-columns: 1fr;
   }
 
+  .product-design-layout,
+  .product-design-principles,
+  .product-design-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .product-design-layout__callout {
+    min-height: auto;
+  }
+
+  .role-subsection__insight.product-design-layout__insight {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 36px 30px;
+  }
+
+  .product-design-insight__copy p {
+    max-width: none;
+  }
+
+  .product-design-insight__visuals {
+    min-height: 500px;
+  }
+
+  .product-design-insight__visual:nth-child(1) {
+    top: 34px;
+    width: 62%;
+  }
+
+  .product-design-insight__visual:nth-child(2) {
+    right: 0;
+    width: 34%;
+  }
+
+  .product-design-insight__visual:nth-child(3) {
+    width: 42%;
+  }
+
   .solution-polaroids {
     width: 100%;
     height: clamp(290px, 50vw, 370px);
@@ -969,6 +1412,156 @@
     width: 26px;
     height: 26px;
     font-size: 12px;
+  }
+
+  .product-design-layout {
+    gap: 14px;
+  }
+
+  .product-design-layout__intro,
+  .product-design-layout__callout,
+  .product-design-principle,
+  .product-design-action,
+  .product-design-layout__insight {
+    padding: 18px;
+  }
+
+  .product-design-layout__callout {
+    font-size: 21px;
+  }
+
+  .role-subsection__insight.product-design-layout__insight {
+    gap: 22px;
+    padding: 32px 22px;
+    clip-path: polygon(
+      0% 3%,
+      4% 0%,
+      8% 3%,
+      12% 0%,
+      16% 3%,
+      20% 0%,
+      24% 3%,
+      28% 0%,
+      32% 3%,
+      36% 0%,
+      40% 3%,
+      44% 0%,
+      48% 3%,
+      52% 0%,
+      56% 3%,
+      60% 0%,
+      64% 3%,
+      68% 0%,
+      72% 3%,
+      76% 0%,
+      80% 3%,
+      84% 0%,
+      88% 3%,
+      92% 0%,
+      96% 3%,
+      100% 0%,
+      97% 4%,
+      100% 8%,
+      97% 12%,
+      100% 16%,
+      97% 20%,
+      100% 24%,
+      97% 28%,
+      100% 32%,
+      97% 36%,
+      100% 40%,
+      97% 44%,
+      100% 48%,
+      97% 52%,
+      100% 56%,
+      97% 60%,
+      100% 64%,
+      97% 68%,
+      100% 72%,
+      97% 76%,
+      100% 80%,
+      97% 84%,
+      100% 88%,
+      97% 92%,
+      100% 96%,
+      96% 100%,
+      92% 97%,
+      88% 100%,
+      84% 97%,
+      80% 100%,
+      76% 97%,
+      72% 100%,
+      68% 97%,
+      64% 100%,
+      60% 97%,
+      56% 100%,
+      52% 97%,
+      48% 100%,
+      44% 97%,
+      40% 100%,
+      36% 97%,
+      32% 100%,
+      28% 97%,
+      24% 100%,
+      20% 97%,
+      16% 100%,
+      12% 97%,
+      8% 100%,
+      4% 97%,
+      0% 100%,
+      3% 96%,
+      0% 92%,
+      3% 88%,
+      0% 84%,
+      3% 80%,
+      0% 76%,
+      3% 72%,
+      0% 68%,
+      3% 64%,
+      0% 60%,
+      3% 56%,
+      0% 52%,
+      3% 48%,
+      0% 44%,
+      3% 40%,
+      0% 36%,
+      3% 32%,
+      0% 28%,
+      3% 24%,
+      0% 20%,
+      3% 16%,
+      0% 12%,
+      3% 8%,
+      0% 4%
+    );
+  }
+
+  .role-subsection__insight .product-design-insight__copy h4 {
+    font-size: 34px;
+  }
+
+  .product-design-insight__copy p {
+    font-size: 15px;
+  }
+
+  .product-design-insight__visuals {
+    min-height: 460px;
+  }
+
+  .product-design-insight__visual:nth-child(1) {
+    top: 42px;
+    width: 78%;
+  }
+
+  .product-design-insight__visual:nth-child(2) {
+    top: 0;
+    right: -2%;
+    width: 42%;
+  }
+
+  .product-design-insight__visual:nth-child(3) {
+    right: 3%;
+    width: 54%;
   }
 
   .solution-walkthrough {

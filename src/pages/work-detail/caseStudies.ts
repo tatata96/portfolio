@@ -12,7 +12,9 @@ import algorandGovernance from "../../assets/algo/gov.png";
 import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import personalExplorationsImage from "../../assets/personal/t.png";
+import photifyColors from "../../assets/photify/colors.png";
 import photifyCamera from "../../assets/photify/camera.png";
+import photifyFigma from "../../assets/photify/figma.png";
 import photifyLogo from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 import photifyPolo1 from "../../assets/photify/polo/1.jpeg";
 import photifyPolo2 from "../../assets/photify/polo/2.jpeg";
@@ -21,6 +23,7 @@ import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
 import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
 import photifyScreen4 from "../../assets/photify/photify_screen_4.jpeg";
 import photifyScreen5 from "../../assets/photify/photify_screen_5.jpeg";
+import photifyTypography from "../../assets/photify/typo.png";
 
 export type CaseStudySection = {
   id: string;
@@ -59,6 +62,11 @@ export type RoleSection = {
   insight?: {
     title: string;
     body: string;
+    images?: {
+      src: string;
+      alt: string;
+      label: string;
+    }[];
   };
 };
 
@@ -279,7 +287,24 @@ const photifyCaseStudy: CaseStudy = {
         "The primary challenge was not the matching technology itself, but creating an experience that felt simple, trustworthy, and accessible to first-time users.",
       insight: {
         title: "Designing Through Prototyping",
-        body: "Rather than following a traditional workflow of fully designing screens in Figma before implementation, I adopted a more iterative approach. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
+        body: "I used Figma to explore early directions, map the basic user flows, and define the wireframes before moving into implementation. Once the foundation was clear, I avoided spending too much time polishing static screens and shifted into a more iterative prototyping process. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
+        images: [
+          {
+            src: photifyFigma,
+            alt: "Photify Figma board with wireframes and product flows",
+            label: "Figma flows",
+          },
+          {
+            src: photifyColors,
+            alt: "Photify color tokens in code",
+            label: "Color system",
+          },
+          {
+            src: photifyTypography,
+            alt: "Photify typography tokens in code",
+            label: "Type scale",
+          },
+        ],
       },
     },
     {

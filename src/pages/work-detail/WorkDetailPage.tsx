@@ -64,9 +64,23 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
           roleSection.bullets.length > 0 ||
           Boolean(roleSection.callout) ||
           Boolean(roleSection.insight);
+        const isProductDesignSection = roleSection.title === "Product & Design";
+        const introParagraphs = isProductDesignSection
+          ? roleSection.paragraphs.slice(0, 2)
+          : roleSection.paragraphs;
+        const principleParagraphs = isProductDesignSection
+          ? roleSection.paragraphs.slice(2)
+          : [];
 
         return (
-          <div className="role-subsection" key={roleSection.title}>
+          <div
+            className={
+              isProductDesignSection
+                ? "role-subsection role-subsection--product-design"
+                : "role-subsection"
+            }
+            key={roleSection.title}
+          >
             <h3>
               <span className="role-subsection__pill">
                 <span>{roleSectionIndex + 1}</span>
@@ -75,27 +89,106 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
             </h3>
             {hasContent ? (
               <div className="role-subsection__content">
-                {roleSection.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-                {roleSection.bullets.length > 0 ? (
-                  <ul>
-                    {roleSection.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
+                {isProductDesignSection ? (
+                  <div className="product-design-layout">
+                    <div className="product-design-layout__intro">
+                      {introParagraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+
+                    {roleSection.callout ? (
+                      <p className="product-design-layout__callout">
+                        {roleSection.callout}
+                      </p>
+                    ) : null}
+
+                    {principleParagraphs.length > 0 ? (
+                      <div
+                        className="product-design-principles"
+                        aria-label="Product and design principles"
+                      >
+                        {principleParagraphs.map((paragraph, index) => (
+                          <article
+                            className="product-design-principle"
+                            key={paragraph}
+                          >
+                            <span>{index === 0 ? "Principle" : "Identity"}</span>
+                            <p>{paragraph}</p>
+                          </article>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {roleSection.bullets.length > 0 ? (
+                      <div
+                        className="product-design-actions"
+                        aria-label="Product and design responsibilities"
+                      >
+                        {roleSection.bullets.map((bullet, index) => (
+                          <article
+                            className="product-design-action"
+                            key={bullet}
+                          >
+                            <span>{String(index + 1).padStart(2, "0")}</span>
+                            <p>{bullet}</p>
+                          </article>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {roleSection.insight ? (
+                      <aside className="role-subsection__insight product-design-layout__insight">
+                        <div className="product-design-insight__copy">
+                          <span>Process note</span>
+                          <h4>{roleSection.insight.title}</h4>
+                          <p>{roleSection.insight.body}</p>
+                        </div>
+
+                        {roleSection.insight.images ? (
+                          <div
+                            className="product-design-insight__visuals"
+                            aria-label="Design and implementation artifacts"
+                          >
+                            {roleSection.insight.images.map((image) => (
+                              <figure
+                                className="product-design-insight__visual"
+                                key={image.src}
+                              >
+                                <img src={image.src} alt={image.alt} />
+                                <figcaption>{image.label}</figcaption>
+                              </figure>
+                            ))}
+                          </div>
+                        ) : null}
+                      </aside>
+                    ) : null}
+                  </div>
+                ) : (
+                  <>
+                    {introParagraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
                     ))}
-                  </ul>
-                ) : null}
-                {roleSection.callout ? (
-                  <p className="role-subsection__callout">
-                    {roleSection.callout}
-                  </p>
-                ) : null}
-                {roleSection.insight ? (
-                  <aside className="role-subsection__insight">
-                    <h4>{roleSection.insight.title}</h4>
-                    <div>{roleSection.insight.body}</div>
-                  </aside>
-                ) : null}
+                    {roleSection.bullets.length > 0 ? (
+                      <ul>
+                        {roleSection.bullets.map((bullet) => (
+                          <li key={bullet}>{bullet}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                    {roleSection.callout ? (
+                      <p className="role-subsection__callout">
+                        {roleSection.callout}
+                      </p>
+                    ) : null}
+                    {roleSection.insight ? (
+                      <aside className="role-subsection__insight">
+                        <h4>{roleSection.insight.title}</h4>
+                        <div>{roleSection.insight.body}</div>
+                      </aside>
+                    ) : null}
+                  </>
+                )}
               </div>
             ) : null}
           </div>
