@@ -12,6 +12,7 @@ import algorandGovernance from "../../assets/algo/gov.png";
 import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import personalExplorationsImage from "../../assets/personal/t.png";
+import photifyCamera from "../../assets/photify/camera.png";
 import photifySolution from "../../assets/photify/photify-solution.png";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
@@ -85,6 +86,11 @@ export type CaseStudy = {
     imageAlt: string;
     captionKicker: string;
     captionTitle: string;
+  };
+  floatingVisual?: {
+    image: string;
+    imageAlt: string;
+    revealSectionId: string;
   };
   walkthrough?: {
     intro: string;
@@ -189,6 +195,11 @@ const photifyCaseStudy: CaseStudy = {
       "Photify app screens showing selfie upload, event access, and personalized photo results",
     captionKicker: "From digital clutter",
     captionTitle: "to custom gallery",
+  },
+  floatingVisual: {
+    image: photifyCamera,
+    imageAlt: "",
+    revealSectionId: "context",
   },
   walkthrough: {
     intro:

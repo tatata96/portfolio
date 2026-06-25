@@ -134,6 +134,7 @@ function WorkDetailPage() {
   const caseStudy = slug ? caseStudies[slug] : undefined;
   const sections = caseStudy?.sections ?? emptySections;
   const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? "");
+  const [floatingVisualVisible, setFloatingVisualVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
@@ -177,6 +178,39 @@ function WorkDetailPage() {
       window.removeEventListener("resize", requestActiveSectionUpdate);
     };
   }, [sections]);
+
+  useEffect(() => {
+    const revealSectionId = caseStudy?.floatingVisual?.revealSectionId;
+
+    if (!revealSectionId) {
+      setFloatingVisualVisible(false);
+      return;
+    }
+
+    const revealSection = document.getElementById(revealSectionId);
+
+    if (!revealSection) {
+      setFloatingVisualVisible(false);
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      setFloatingVisualVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setFloatingVisualVisible(entry.isIntersecting),
+      {
+        rootMargin: "0px 0px -18% 0px",
+        threshold: 0.12,
+      },
+    );
+
+    observer.observe(revealSection);
+
+    return () => observer.disconnect();
+  }, [caseStudy?.floatingVisual?.revealSectionId, slug]);
 
   function scrollToSection(sectionId: string) {
     document.getElementById(sectionId)?.scrollIntoView({
@@ -262,6 +296,21 @@ function WorkDetailPage() {
                 {String(index + 1).padStart(2, "0")}. {section.title}
               </p>
               <h2>{section.heading}</h2>
+              {caseStudy.floatingVisual?.revealSectionId === section.id ? (
+                <div
+                  className={
+                    floatingVisualVisible
+                      ? "work-detail-section__floating-visual work-detail-section__floating-visual--visible"
+                      : "work-detail-section__floating-visual"
+                  }
+                  aria-hidden="true"
+                >
+                  <img
+                    src={caseStudy.floatingVisual.image}
+                    alt={caseStudy.floatingVisual.imageAlt}
+                  />
+                </div>
+              ) : null}
               {section.variant === "walkthrough" && caseStudy.walkthrough ? (
                 <FeatureWalkthrough walkthrough={caseStudy.walkthrough} />
               ) : section.variant === "overview" &&
