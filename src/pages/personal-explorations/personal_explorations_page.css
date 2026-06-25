@@ -96,9 +96,6 @@
 .personal-corner--bl span:nth-child(3) {
   animation: fadeIn 0.4s ease 1.6s both;
 }
-.personal-corner--bl span:nth-child(4) {
-  animation: fadeIn 0.4s ease 1.7s both;
-}
 
 .personal-count {
   position: absolute;
@@ -145,31 +142,6 @@
   margin: 0;
 }
 
-.personal-title__sub {
-  font-family: var(--sans-page);
-  font-size: 15px;
-  font-weight: 400;
-  font-style: italic;
-  color: rgba(13, 10, 16, 0.55);
-  margin: 18px 0 0;
-  letter-spacing: 0.01em;
-}
-
-.personal-title__diamond {
-  display: block;
-  font-size: 14px;
-  color: rgba(13, 10, 16, 0.35);
-  margin: 10px 0;
-}
-
-.personal-title__byline {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(13, 10, 16, 0.4);
-  margin: 0;
-}
 
 /* ── Asset ───────────────────────────────────────────────── */
 
@@ -386,6 +358,10 @@
   background: #0d0a10;
 }
 
+.personal-modal__media:has(video) {
+  min-height: unset;
+}
+
 .personal-modal__media img,
 .personal-modal__media video,
 .personal-modal__media iframe {
@@ -395,6 +371,12 @@
   min-height: 520px;
   border: 0;
   object-fit: contain;
+}
+
+.personal-modal__media video {
+  height: auto;
+  min-height: unset;
+  max-height: 70vh;
 }
 
 .personal-modal__copy {
@@ -547,9 +529,12 @@
 
   .personal-modal__media,
   .personal-modal__media img,
-  .personal-modal__media video,
   .personal-modal__media iframe {
     min-height: 320px;
+  }
+
+  .personal-modal__media video {
+    min-height: unset;
   }
 
   .personal-modal__copy {

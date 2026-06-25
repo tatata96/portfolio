@@ -211,7 +211,7 @@ function AssetModal({
         </button>
         <div className="personal-modal__media">
           {asset.type === "video" ? (
-            <video src={asset.src} autoPlay muted loop playsInline controls />
+            <video src={asset.src} autoPlay muted loop playsInline />
           ) : asset.type === "pdf" ? (
             <iframe src={asset.src} title={asset.title} />
           ) : (
@@ -352,15 +352,6 @@ function PersonalExplorationsPage() {
           <h1 className="personal-title__line">
             <ScrambleText text="Explorations" delay={1250} />
           </h1>
-          <p className="personal-title__sub">
-            <ScrambleText text="Designer & Developer" delay={1550} />
-          </p>
-          <span className="personal-title__diamond" aria-hidden="true">
-            ◇
-          </span>
-          <p className="personal-title__byline">
-            <ScrambleText text="BUILT BY TAMARA" delay={1700} />
-          </p>
         </div>
 
         {/* ── Bottom-left: studio info ── */}
@@ -368,7 +359,6 @@ function PersonalExplorationsPage() {
           <span>— TAMARA</span>
           <span>— PERSONAL EXPLORATIONS</span>
           <span>— DESIGN & DEVELOPMENT</span>
-          <span>©2026 ALL RIGHTS</span>
         </div>
 
         {/* ── Bottom-center: count ── */}
