@@ -1,4 +1,12 @@
 import brikLogo from "../../assets/brik/brik-logo.jpg";
+import brikBadgeBackInTheGame from "../../assets/brik/badges/Back in the Game.png";
+import brikBadgeBrikPro from "../../assets/brik/badges/Brik pro.png";
+import brikBadgeCuriousMind from "../../assets/brik/badges/Curious Mind.png";
+import brikBadgeFirstLight from "../../assets/brik/badges/First Light.png";
+import brikBadgeJedi from "../../assets/brik/badges/Jedi.png";
+import brikBadgeMorningCoffee from "../../assets/brik/badges/Morning Coffee.png";
+import brikBadgeNightOwl from "../../assets/brik/badges/Night Owl.png";
+import brikBadgeTrophy from "../../assets/brik/badges/trophy.png";
 import brikScreen1 from "../../assets/brik/brik_screen_1.png";
 import brikScreen2 from "../../assets/brik/brik_screen_2.png";
 import brikScreen3 from "../../assets/brik/brik_screen_3.png";
@@ -31,6 +39,7 @@ export type CaseStudySection = {
   title: string;
   heading: string;
   body: string;
+  callout?: string;
   variant?: "overview" | "walkthrough" | "role" | "reflection";
   images?: {
     src: string;
@@ -109,6 +118,10 @@ export type CaseStudy = {
     captionTitle: string;
   };
   solutionPolaroids?: {
+    src: string;
+    alt: string;
+  }[];
+  solutionBadges?: {
     src: string;
     alt: string;
   }[];
@@ -426,7 +439,7 @@ const brikCaseStudy: CaseStudy = {
       id: "challenge",
       title: "Solution",
       heading: "Short lessons, lasting knowledge.",
-      body: "Brik transforms workplace training into short, interactive learning experiences. Through bite-sized content, gamification, and progress tracking, it helps employees learn more consistently and stay engaged.",
+      body: "Instead of asking employees to dedicate hours to training, Brik breaks learning into short, engaging sessions that fit naturally into the workday. Progress tracking and gamification help maintain motivation over time.",
       variant: "overview",
     },
     {
@@ -440,7 +453,9 @@ const brikCaseStudy: CaseStudy = {
       id: "role",
       title: "My Role",
       heading: "Mobile development with a product mindset.",
-      body: "Although I joined Brik as a mobile developer, working in an early-stage startup meant responsibilities often extended beyond implementation. Product decisions were highly collaborative, and everyone on the team had the opportunity to contribute ideas, challenge assumptions, and influence the direction of the product.\n\nThis environment gave me valuable exposure to product thinking and allowed me to participate in conversations around user experience, feature prioritization, and long-term product strategy while remaining primarily responsible for the mobile application.",
+      body: "Although I joined Brik as a mobile developer, working in an early-stage startup meant responsibilities often extended beyond implementation. Product decisions were highly collaborative, and everyone on the team had the opportunity to contribute ideas, challenge assumptions, and influence the direction of the product.",
+      callout:
+        "Gained valuable exposure to product thinking and participated in conversations around\nuser experience\nfeature prioritization\nlong-term product strategy.",
       variant: "role",
     },
     {
@@ -457,9 +472,19 @@ const brikCaseStudy: CaseStudy = {
     captionKicker: "Brik",
     captionTitle: "case study",
   },
+  solutionBadges: [
+    {src: brikBadgeFirstLight, alt: "First Light achievement badge"},
+    {src: brikBadgeTrophy, alt: "Trophy achievement badge"},
+    {src: brikBadgeCuriousMind, alt: "Curious Mind achievement badge"},
+    {src: brikBadgeMorningCoffee, alt: "Morning Coffee achievement badge"},
+    {src: brikBadgeBrikPro, alt: "Brik Pro achievement badge"},
+    {src: brikBadgeNightOwl, alt: "Night Owl achievement badge"},
+    {src: brikBadgeBackInTheGame, alt: "Back in the Game achievement badge"},
+    {src: brikBadgeJedi, alt: "Jedi achievement badge"},
+  ],
   walkthrough: {
     intro:
-      "Instead of asking employees to dedicate hours to training, Brik breaks learning into short, engaging sessions that fit naturally into the workday. Progress tracking and gamification help maintain motivation over time.",
+      "Each feature was designed to support repeat engagement: helping users start quickly, return regularly, understand their progress, and feel rewarded as they build knowledge over time.",
     ariaLabel: "Brik approach steps",
     steps: [
       {

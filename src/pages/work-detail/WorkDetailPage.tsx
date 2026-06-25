@@ -28,6 +28,27 @@ function renderParagraphs(body: string) {
     .map((paragraph) => <p key={paragraph}>{paragraph}</p>);
 }
 
+function renderSectionCallout(callout?: string) {
+  if (!callout) {
+    return null;
+  }
+
+  const [intro, ...items] = callout.split("\n").filter(Boolean);
+
+  return (
+    <aside className="work-detail-section__callout">
+      <p>{intro}</p>
+      {items.length > 0 ? (
+        <div className="work-detail-section__callout-items">
+          {items.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      ) : null}
+    </aside>
+  );
+}
+
 function renderSnapshotItem(item: SnapshotItem) {
   return (
     <div className="work-detail-snapshot__item" key={item.label}>
@@ -382,6 +403,38 @@ function renderSolutionPolaroids(
   );
 }
 
+function renderSolutionBadges(
+  badges?: {
+    src: string;
+    alt: string;
+  }[],
+) {
+  if (!badges || badges.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="solution-badges" aria-label="Brik achievement badges">
+      <div className="solution-badges__track">
+        <div className="solution-badges__group">
+          {badges.map((badge) => (
+            <figure className="solution-badge" key={badge.src}>
+              <img src={badge.src} alt={badge.alt} />
+            </figure>
+          ))}
+        </div>
+        <div className="solution-badges__group" aria-hidden="true">
+          {badges.map((badge) => (
+            <figure className="solution-badge" key={`repeat-${badge.src}`}>
+              <img src={badge.src} alt="" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WorkDetailPage() {
   const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
@@ -600,7 +653,9 @@ function WorkDetailPage() {
 
                   {renderSolutionPolaroids(caseStudy.solutionPolaroids)}
 
-                  {caseStudy.solutionOverview ? (
+                  {renderSolutionBadges(caseStudy.solutionBadges)}
+
+                  {caseStudy.solutionOverview && !caseStudy.solutionBadges ? (
                     <figure className="solution-collage">
                       <img
                         src={caseStudy.solutionOverview.image}
@@ -617,7 +672,14 @@ function WorkDetailPage() {
                 </div>
               ) : section.variant === "role" && caseStudy.roleSections ? (
                 <div className="role-section-list">
-                  {renderParagraphs(section.body)}
+                  {section.callout ? (
+                    <div className="role-section-list__intro">
+                      <div>{renderParagraphs(section.body)}</div>
+                      {renderSectionCallout(section.callout)}
+                    </div>
+                  ) : (
+                    renderParagraphs(section.body)
+                  )}
                   {renderSectionImage(section)}
 
                   {renderRoleSubsections(
