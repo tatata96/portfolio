@@ -51,6 +51,51 @@ function renderSnapshotItem(item: SnapshotItem) {
   );
 }
 
+function renderDevelopmentRoleCard(
+  roleSection: RoleSection,
+  includeVisual = true,
+) {
+  return (
+    <div
+      className={
+        includeVisual && roleSection.visual
+          ? "development-role-card development-role-card--with-visual"
+          : "development-role-card"
+      }
+    >
+      <div className="development-role-card__copy">
+        {roleSection.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+
+        {roleSection.bullets.length > 0 ? (
+          <div
+            className="development-role-card__tasks"
+            aria-label={`${roleSection.title} responsibilities`}
+          >
+            {roleSection.bullets.map((bullet) => (
+              <span key={bullet}>{bullet}</span>
+            ))}
+          </div>
+        ) : null}
+
+        {roleSection.callout ? (
+          <p className="development-role-card__callout">
+            {roleSection.callout}
+          </p>
+        ) : null}
+      </div>
+
+      {includeVisual && roleSection.visual ? (
+        <figure className="development-role-card__visual">
+          <img src={roleSection.visual.src} alt={roleSection.visual.alt} />
+          <figcaption>{roleSection.visual.label}</figcaption>
+        </figure>
+      ) : null}
+    </div>
+  );
+}
+
 function renderRoleSubsections(roleSections: RoleSection[]) {
   if (roleSections.length === 0) {
     return null;
@@ -59,12 +104,26 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
   return (
     <div className="role-subsections">
       {roleSections.map((roleSection, roleSectionIndex) => {
+        const nextRoleSection = roleSections[roleSectionIndex + 1];
+        const previousRoleSection = roleSections[roleSectionIndex - 1];
+        const isFrontendSection = roleSection.title === "Frontend Development";
+        const isBackendSection =
+          roleSection.title === "Backend & Infrastructure";
+        const isDevelopmentPairStart =
+          isFrontendSection &&
+          nextRoleSection?.title === "Backend & Infrastructure";
+        const isDevelopmentPairContinuation =
+          isBackendSection &&
+          previousRoleSection?.title === "Frontend Development";
         const hasContent =
           roleSection.paragraphs.length > 0 ||
           roleSection.bullets.length > 0 ||
           Boolean(roleSection.callout) ||
           Boolean(roleSection.insight);
         const isProductDesignSection = roleSection.title === "Product & Design";
+        const isDevelopmentSection =
+          roleSection.title === "Frontend Development" ||
+          roleSection.title === "Backend & Infrastructure";
         const introParagraphs = isProductDesignSection
           ? roleSection.paragraphs.slice(0, 2)
           : roleSection.paragraphs;
@@ -72,11 +131,71 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
           ? roleSection.paragraphs.slice(2)
           : [];
 
+        if (isDevelopmentPairContinuation) {
+          return null;
+        }
+
+        if (isDevelopmentPairStart && nextRoleSection) {
+          const developmentVisuals =
+            roleSection.visuals ??
+            nextRoleSection.visuals ??
+            [roleSection.visual ?? nextRoleSection.visual].filter(
+              (visual): visual is NonNullable<RoleSection["visual"]> =>
+                Boolean(visual),
+            );
+
+          return (
+            <div
+              className="role-subsection role-subsection--development-group"
+              key="development-role-group"
+            >
+              <div className="development-role-pair">
+                <div className="development-role-pair__content">
+                  {[roleSection, nextRoleSection].map(
+                    (developmentSection, developmentIndex) => (
+                      <div
+                        className="role-subsection role-subsection--development"
+                        key={developmentSection.title}
+                      >
+                        <h3>
+                          <span className="role-subsection__pill">
+                            <span>{roleSectionIndex + developmentIndex + 1}</span>
+                            {developmentSection.title}
+                          </span>
+                        </h3>
+                        <div className="role-subsection__content">
+                          {renderDevelopmentRoleCard(developmentSection, false)}
+                        </div>
+                      </div>
+                    ),
+                  )}
+                </div>
+
+                {developmentVisuals.length > 0 ? (
+                  <div className="development-role-pair__visuals">
+                    {developmentVisuals.map((visual) => (
+                      <figure
+                        className="development-role-pair__visual"
+                        key={visual.src}
+                      >
+                        <img src={visual.src} alt={visual.alt} />
+                        <figcaption>{visual.label}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          );
+        }
+
         return (
           <div
             className={
               isProductDesignSection
                 ? "role-subsection role-subsection--product-design"
+                : isDevelopmentSection
+                  ? "role-subsection role-subsection--development"
                 : "role-subsection"
             }
             key={roleSection.title}
@@ -164,6 +283,8 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                       </aside>
                     ) : null}
                   </div>
+                ) : isDevelopmentSection ? (
+                  renderDevelopmentRoleCard(roleSection)
                 ) : (
                   <>
                     {introParagraphs.map((paragraph) => (

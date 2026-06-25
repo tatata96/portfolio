@@ -14,6 +14,8 @@ import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import personalExplorationsImage from "../../assets/personal/t.png";
 import photifyColors from "../../assets/photify/colors.png";
 import photifyCamera from "../../assets/photify/camera.png";
+import photifyDisplayFlow from "../../assets/photify/display.png";
+import photifyEnterEventFlow from "../../assets/photify/enter-event.png";
 import photifyFigma from "../../assets/photify/figma.png";
 import photifyLogo from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 import photifyPolo1 from "../../assets/photify/polo/1.jpeg";
@@ -68,6 +70,16 @@ export type RoleSection = {
       label: string;
     }[];
   };
+  visual?: {
+    src: string;
+    alt: string;
+    label: string;
+  };
+  visuals?: {
+    src: string;
+    alt: string;
+    label: string;
+  }[];
 };
 
 export type ReflectionCard = {
@@ -318,6 +330,18 @@ const photifyCaseStudy: CaseStudy = {
         "User onboarding and event flows",
         "API integrations",
         "App Store deployment",
+      ],
+      visuals: [
+        {
+          src: photifyEnterEventFlow,
+          alt: "Photify enter event flow diagram used to plan implementation",
+          label: "Enter event flow",
+        },
+        {
+          src: photifyDisplayFlow,
+          alt: "Photify event display flow diagram used to plan implementation",
+          label: "Display flow",
+        },
       ],
     },
     {
