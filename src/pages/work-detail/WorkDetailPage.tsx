@@ -169,6 +169,8 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
         const isDevelopmentSection =
           roleSection.title === "Frontend Development" ||
           roleSection.title === "Backend & Infrastructure";
+        const isProjectRoleSection = roleSection.title === "My Role";
+        const isTakeawaySection = roleSection.title === "Key Takeaway";
         const introParagraphs = isProductDesignSection
           ? roleSection.paragraphs.slice(0, 2)
           : roleSection.paragraphs;
@@ -241,6 +243,10 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                 ? "role-subsection role-subsection--product-design"
                 : isDevelopmentSection
                   ? "role-subsection role-subsection--development"
+                  : isProjectRoleSection
+                    ? "role-subsection role-subsection--project-role"
+                    : isTakeawaySection
+                      ? "role-subsection role-subsection--takeaway"
                 : "role-subsection"
             }
             key={roleSection.title}
@@ -334,6 +340,14 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                   </div>
                 ) : isDevelopmentSection ? (
                   renderDevelopmentRoleCard(roleSection)
+                ) : isProjectRoleSection ? (
+                  renderDevelopmentRoleCard(roleSection, false)
+                ) : isTakeawaySection ? (
+                  <aside className="project-role-takeaway">
+                    {introParagraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </aside>
                 ) : (
                   <>
                     {introParagraphs.map((paragraph) => (
@@ -706,7 +720,10 @@ function WorkDetailPage() {
                   ))}
                 </div>
               ) : (
-                renderParagraphs(section.body)
+                <>
+                  {renderParagraphs(section.body)}
+                  {renderSectionImage(section)}
+                </>
               )}
             </section>
           ))}

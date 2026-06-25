@@ -1167,6 +1167,54 @@
   max-width: none;
 }
 
+.role-subsection--project-role .role-subsection__content,
+.role-subsection--takeaway .role-subsection__content {
+  max-width: none;
+}
+
+.role-subsection--project-role .development-role-card {
+  border-color: rgba(var(--project-accent-rgb), 0.38);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(var(--project-accent-rgb), 0.18) 0%,
+      #fff 48%,
+      rgba(var(--project-accent-rgb), 0.08) 100%
+    ),
+    #fff;
+}
+
+.role-subsection--project-role .development-role-card__tasks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.role-subsection--project-role .development-role-card__tasks span {
+  min-height: 48px;
+  justify-content: flex-start;
+  border-radius: 8px;
+  line-height: 1.25;
+}
+
+.project-role-takeaway {
+  display: grid;
+  gap: 12px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(var(--project-accent-rgb), 0.55);
+  border-radius: 8px;
+  background: rgba(var(--project-accent-rgb), 0.16);
+  box-shadow: 0 18px 36px rgba(var(--project-shadow-rgb), 0.12);
+  color: var(--text-h);
+}
+
+.project-role-takeaway p {
+  max-width: 920px;
+  color: inherit;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.42;
+}
+
 .development-role-card {
   display: grid;
   gap: 20px;
@@ -1653,6 +1701,10 @@
   }
 
   .development-role-card--with-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .role-subsection--project-role .development-role-card__tasks {
     grid-template-columns: 1fr;
   }
 

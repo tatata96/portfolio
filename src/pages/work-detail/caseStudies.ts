@@ -13,6 +13,7 @@ import brikScreen3 from "../../assets/brik/brik_screen_3.png";
 import brikScreen4 from "../../assets/brik/brik_screen_4.png";
 import brikScreen5 from "../../assets/brik/brik_screen_5.png";
 import algorandLogo from "../../assets/algo/algo-logo.webp";
+import algorandBanner from "../../assets/algo/banner.png";
 import algorandConnect from "../../assets/algo/connect.webp";
 import algorandDeveloperPortal from "../../assets/algo/dev.webp";
 import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
@@ -590,6 +591,12 @@ const algorandCaseStudy: CaseStudy = {
       title: "Context",
       heading: "Entering the World of Web3.",
       body: "During my time at Hipo, I contributed to multiple products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.\n\nAlthough these products served different audiences, they shared a common challenge: translating complex blockchain concepts into experiences that felt understandable, trustworthy, and easy to use.",
+      images: [
+        {
+          src: algorandBanner,
+          alt: "Algorand ecosystem product interfaces",
+        },
+      ],
     },
     {
       id: "governance-platform",
