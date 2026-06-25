@@ -42,7 +42,7 @@ export const dumpAssets: DumpAsset[] = [
     src: danielVideo,
     websiteUrl: "https://danieljaegermusic.com/",
     description:
-      "A freelance website for producer Daniel Jaeger, inspired by a DJ deck setup and built as a focused home for his music, production work, and booking contact: [danieljaegermusic.com](https://danieljaegermusic.com/).",
+      "A freelance website for producer Daniel Jaeger, inspired by a DJ deck setup and built as a focused home for his music, production work, and booking contact.",
     tags: ["interfaces", "digital"],
     x: 245,
     y: 240,
@@ -143,7 +143,7 @@ export const dumpAssets: DumpAsset[] = [
     src: websiteVideo,
     websiteUrl: "https://tamaraelf.xyz",
     description:
-      "My current portfolio website, still in progress. Built and designed by me: [tamaraelf.xyz](https://tamaraelf.xyz).",
+      "My current portfolio website, still in progress. Built and designed by me.",
     tags: ["interfaces", "digital"],
     x: 880,
     y: 150,
@@ -156,7 +156,7 @@ export const dumpAssets: DumpAsset[] = [
     src: galleryUniverseVideo,
     websiteUrl: "https://tamaraelf.xyz/writing/a03",
     description:
-      "A package I built to explore a different way of browsing large collections. The idea, process, and implementation are documented here: [tamaraelf.xyz/writing/a03](https://tamaraelf.xyz/writing/a03).",
+      "A package I built to explore a different way of browsing large collections. The idea, process, and implementation are documented in my writing.",
     tags: ["motion", "interfaces", "digital"],
     x: 880,
     y: 735,

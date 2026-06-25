@@ -210,7 +210,15 @@ function AssetModal({
           ×
         </button>
         <div className="personal-modal__media">
-          {asset.type === "video" ? (
+          {asset.websiteUrl ? (
+            <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__media-link">
+              {asset.type === "video" ? (
+                <video src={asset.src} autoPlay muted loop playsInline />
+              ) : (
+                <img src={asset.src} alt={asset.alt ?? asset.title} />
+              )}
+            </a>
+          ) : asset.type === "video" ? (
             <video src={asset.src} autoPlay muted loop playsInline />
           ) : asset.type === "pdf" ? (
             <iframe src={asset.src} title={asset.title} />
@@ -223,8 +231,8 @@ function AssetModal({
           <h2>{asset.title}</h2>
           <div>{renderDescription(asset.description)}</div>
           {asset.websiteUrl ? (
-            <a href={asset.websiteUrl} target="_blank" rel="noreferrer">
-              Visit project
+            <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__visit-btn">
+              Visit site ↗
             </a>
           ) : null}
         </div>
@@ -264,10 +272,6 @@ function PersonalExplorationsPage() {
   }
 
   function handleAssetClick(asset: DumpAsset) {
-    if (asset.websiteUrl) {
-      window.open(asset.websiteUrl, "_blank", "noopener,noreferrer");
-      return;
-    }
     setSelectedAsset(asset);
   }
 
