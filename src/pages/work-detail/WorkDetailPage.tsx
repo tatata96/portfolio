@@ -128,12 +128,34 @@ function renderSectionImage(section: CaseStudySection) {
   );
 }
 
+function renderSolutionPolaroids(
+  polaroids?: {
+    src: string;
+    alt: string;
+  }[],
+) {
+  if (!polaroids || polaroids.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="solution-polaroids" aria-label="Photify visual gallery">
+      {polaroids.map((polaroid) => (
+        <figure className="solution-polaroid" key={polaroid.src}>
+          <img src={polaroid.src} alt={polaroid.alt} />
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function WorkDetailPage() {
   const {slug} = useParams();
   const workItem = workItems.find((item) => item.slug === slug);
   const caseStudy = slug ? caseStudies[slug] : undefined;
   const sections = caseStudy?.sections ?? emptySections;
   const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? "");
+  const [composedSectionId, setComposedSectionId] = useState("");
   const [floatingVisualVisible, setFloatingVisualVisible] = useState(false);
 
   useEffect(() => {
@@ -155,10 +177,18 @@ function WorkDetailPage() {
             (element) => element.getBoundingClientRect().top <= activationLine,
           )
           .at(-1) ?? sectionElements[0];
+      const compositionLine = Math.min(120, window.innerHeight * 0.16);
+      const composedElement = sectionElements.find((element) => {
+        const rect = element.getBoundingClientRect();
+
+        return rect.top <= compositionLine && rect.bottom > compositionLine;
+      });
 
       if (activeElement) {
         setActiveSectionId(activeElement.id);
       }
+
+      setComposedSectionId(composedElement?.id ?? "");
     }
 
     function requestActiveSectionUpdate() {
@@ -181,22 +211,33 @@ function WorkDetailPage() {
 
   useEffect(() => {
     const revealSectionId = caseStudy?.floatingVisual?.revealSectionId;
+    let animationFrameId = 0;
+
+    function updateFloatingVisualVisible(visible: boolean) {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(() => {
+        setFloatingVisualVisible(visible);
+      });
+    }
 
     if (!revealSectionId) {
-      setFloatingVisualVisible(false);
-      return;
+      updateFloatingVisualVisible(false);
+
+      return () => window.cancelAnimationFrame(animationFrameId);
     }
 
     const revealSection = document.getElementById(revealSectionId);
 
     if (!revealSection) {
-      setFloatingVisualVisible(false);
-      return;
+      updateFloatingVisualVisible(false);
+
+      return () => window.cancelAnimationFrame(animationFrameId);
     }
 
     if (!("IntersectionObserver" in window)) {
-      setFloatingVisualVisible(true);
-      return;
+      updateFloatingVisualVisible(true);
+
+      return () => window.cancelAnimationFrame(animationFrameId);
     }
 
     const observer = new IntersectionObserver(
@@ -209,7 +250,10 @@ function WorkDetailPage() {
 
     observer.observe(revealSection);
 
-    return () => observer.disconnect();
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
+    };
   }, [caseStudy?.floatingVisual?.revealSectionId, slug]);
 
   function scrollToSection(sectionId: string) {
@@ -288,7 +332,11 @@ function WorkDetailPage() {
         <div className="work-detail-sections">
           {sections.map((section, index) => (
             <section
-              className="work-detail-section"
+              className={
+                section.id === composedSectionId
+                  ? "work-detail-section work-detail-section--composed"
+                  : "work-detail-section"
+              }
               id={section.id}
               key={section.id}
             >
@@ -313,21 +361,26 @@ function WorkDetailPage() {
               ) : null}
               {section.variant === "walkthrough" && caseStudy.walkthrough ? (
                 <FeatureWalkthrough walkthrough={caseStudy.walkthrough} />
-              ) : section.variant === "overview" &&
-                caseStudy.solutionOverview ? (
+              ) : section.variant === "overview" ? (
                 <div className="solution-overview">
                   {renderParagraphs(section.body)}
 
-                  <figure className="solution-collage">
-                    <img
-                      src={caseStudy.solutionOverview.image}
-                      alt={caseStudy.solutionOverview.imageAlt}
-                    />
-                    <figcaption className="solution-collage__copy">
-                      <span>{caseStudy.solutionOverview.captionKicker}</span>
-                      <strong>{caseStudy.solutionOverview.captionTitle}</strong>
-                    </figcaption>
-                  </figure>
+                  {renderSolutionPolaroids(caseStudy.solutionPolaroids)}
+
+                  {caseStudy.solutionOverview ? (
+                    <figure className="solution-collage">
+                      <img
+                        src={caseStudy.solutionOverview.image}
+                        alt={caseStudy.solutionOverview.imageAlt}
+                      />
+                      <figcaption className="solution-collage__copy">
+                        <span>{caseStudy.solutionOverview.captionKicker}</span>
+                        <strong>
+                          {caseStudy.solutionOverview.captionTitle}
+                        </strong>
+                      </figcaption>
+                    </figure>
+                  ) : null}
                 </div>
               ) : section.variant === "role" && caseStudy.roleSections ? (
                 <div className="role-section-list">

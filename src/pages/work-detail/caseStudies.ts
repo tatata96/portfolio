@@ -13,7 +13,9 @@ import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import personalExplorationsImage from "../../assets/personal/t.png";
 import photifyCamera from "../../assets/photify/camera.png";
-import photifySolution from "../../assets/photify/photify-solution.png";
+import photifyLogo from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
+import photifyPolo1 from "../../assets/photify/polo/1.jpeg";
+import photifyPolo2 from "../../assets/photify/polo/2.jpeg";
 import photifyScreen1 from "../../assets/photify/photify_screen_1.jpeg";
 import photifyScreen2 from "../../assets/photify/photify_screen_2.jpeg";
 import photifyScreen3 from "../../assets/photify/photify_screen_3.jpeg";
@@ -87,6 +89,10 @@ export type CaseStudy = {
     captionKicker: string;
     captionTitle: string;
   };
+  solutionPolaroids?: {
+    src: string;
+    alt: string;
+  }[];
   floatingVisual?: {
     image: string;
     imageAlt: string;
@@ -189,13 +195,20 @@ const photifyCaseStudy: CaseStudy = {
       variant: "reflection",
     },
   ],
-  solutionOverview: {
-    image: photifySolution,
-    imageAlt:
-      "Photify app screens showing selfie upload, event access, and personalized photo results",
-    captionKicker: "From digital clutter",
-    captionTitle: "to custom gallery",
-  },
+  solutionPolaroids: [
+    {
+      src: photifyPolo1,
+      alt: "Photify event photo displayed in a polaroid frame",
+    },
+    {
+      src: photifyLogo,
+      alt: "Photify logo displayed in a polaroid frame",
+    },
+    {
+      src: photifyPolo2,
+      alt: "Photify matched event photo displayed in a polaroid frame",
+    },
+  ],
   floatingVisual: {
     image: photifyCamera,
     imageAlt: "",
