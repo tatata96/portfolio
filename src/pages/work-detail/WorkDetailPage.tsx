@@ -48,7 +48,24 @@ function renderSnapshotItem(item: SnapshotItem) {
         </div>
       ) : null}
     </div>
-  );
+      );
+}
+
+function renderInsightParagraphs(body: string) {
+  const paragraphs = body.split("\n\n").filter(Boolean);
+
+  return paragraphs.map((paragraph, index) => (
+    <p
+      className={
+        index === paragraphs.length - 1
+          ? "product-design-insight__standalone"
+          : undefined
+      }
+      key={paragraph}
+    >
+      {paragraph}
+    </p>
+  ));
 }
 
 function renderDevelopmentRoleCard(
@@ -261,7 +278,9 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                         <div className="product-design-insight__copy">
                           <span>Process note</span>
                           <h4>{roleSection.insight.title}</h4>
-                          <p>{roleSection.insight.body}</p>
+                          <div className="product-design-insight__body">
+                            {renderInsightParagraphs(roleSection.insight.body)}
+                          </div>
                         </div>
 
                         {roleSection.insight.images ? (

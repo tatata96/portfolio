@@ -13,7 +13,6 @@ import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
 import personalExplorationsImage from "../../assets/personal/t.png";
 import photifyColors from "../../assets/photify/colors.png";
-import photifyCamera from "../../assets/photify/camera.png";
 import photifyDisplayFlow from "../../assets/photify/display.png";
 import photifyEnterEventFlow from "../../assets/photify/enter-event.png";
 import photifyFigma from "../../assets/photify/figma.png";
@@ -229,11 +228,6 @@ const photifyCaseStudy: CaseStudy = {
       alt: "Photify matched event photo displayed in a polaroid frame",
     },
   ],
-  floatingVisual: {
-    image: photifyCamera,
-    imageAlt: "",
-    revealSectionId: "context",
-  },
   walkthrough: {
     intro:
       "The goal was to create a flow simple enough for any event attendee to complete in under a minute. Each step was designed to reduce friction while building trust around the use of facial recognition technology.",
@@ -287,8 +281,6 @@ const photifyCaseStudy: CaseStudy = {
       paragraphs: [
         "I led the product and design process from concept to launch, marking the first time I was fully responsible for designing an entire product experience from scratch.",
         "Our goal was to create a product that could be comfortably used by a wide range of event attendees, regardless of age or technical familiarity.",
-        "Every design decision was guided by simplicity, clarity, and trust.",
-        "I tried to develop a visual identity that felt warm, and energetic. This direction influenced everything from the logo and branding to the interface language and interaction patterns.",
       ],
       bullets: [
         "Defined the end-to-end user journey",
@@ -296,10 +288,10 @@ const photifyCaseStudy: CaseStudy = {
         "Iterated on flows based on testing and real-world feedback",
       ],
       callout:
-        "The primary challenge was not the matching technology itself, but creating an experience that felt simple, trustworthy, and accessible to first-time users.",
+        "Every design decision was guided by simplicity, clarity, and trust.\n\nI tried to develop a visual identity that felt warm, and energetic. This direction influenced everything from the logo and branding to the interface language and interaction patterns.",
       insight: {
         title: "Designing Through Prototyping",
-        body: "I used Figma to explore early directions, map the basic user flows, and define the wireframes before moving into implementation. Once the foundation was clear, I avoided spending too much time polishing static screens and shifted into a more iterative prototyping process. Leveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment. Because our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation. This significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
+        body: "I used Figma to explore early directions, map the basic user flows, and define the wireframes before moving into implementation.\n\nOnce the foundation was clear, I avoided spending too much time polishing static screens and shifted into a more iterative prototyping process.\n\nLeveraging AI-assisted development tools and my experience building reusable design systems, I was able to rapidly prototype ideas directly in code and evaluate them in a real environment.\n\nBecause our component system, typography scales, spacing tokens, and color foundations were designed to be reusable, visual exploration could happen simultaneously with implementation.\n\nThis significantly shortened feedback loops and allowed design decisions to be validated through working prototypes rather than static mockups.",
         images: [
           {
             src: photifyFigma,
