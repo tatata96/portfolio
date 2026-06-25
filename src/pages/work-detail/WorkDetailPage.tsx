@@ -74,19 +74,26 @@ function renderSnapshotItem(item: SnapshotItem) {
 
 function renderInsightParagraphs(body: string) {
   const paragraphs = body.split("\n\n").filter(Boolean);
+  const bodyParagraphs = paragraphs.slice(0, -1);
 
-  return paragraphs.map((paragraph, index) => (
-    <p
-      className={
-        index === paragraphs.length - 1
-          ? "product-design-insight__standalone"
-          : undefined
-      }
-      key={paragraph}
-    >
-      {paragraph}
+  return (
+    <ol className="product-design-insight__list">
+      {bodyParagraphs.map((paragraph) => (
+        <li key={paragraph}>{paragraph}</li>
+      ))}
+    </ol>
+  );
+}
+
+function renderInsightStandalone(body: string) {
+  const paragraphs = body.split("\n\n").filter(Boolean);
+  if (paragraphs.length === 0) return null;
+  const last = paragraphs[paragraphs.length - 1];
+  return (
+    <p className="product-design-insight__standalone" key={last}>
+      {last}
     </p>
-  ));
+  );
 }
 
 function renderDevelopmentRoleCard(
@@ -320,6 +327,8 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                             ))}
                           </div>
                         ) : null}
+
+                        {renderInsightStandalone(roleSection.insight.body)}
                       </aside>
                     ) : null}
                   </div>
