@@ -249,6 +249,7 @@ function PersonalExplorationsPage() {
   const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isTextPreviewVisible, setIsTextPreviewVisible] = useState(false);
+  const [isTitleHovered, setIsTitleHovered] = useState(false);
   const [stageFloat, setStageFloat] = useState({ x: 0, y: 0 });
   const stageRef = useRef<HTMLDivElement | null>(null);
 
@@ -287,7 +288,12 @@ function PersonalExplorationsPage() {
       <div className="personal-curtain" aria-hidden="true" />
 
       <div
-        className="personal-stage"
+        className={[
+          "personal-stage",
+          isTitleHovered ? "personal-stage--blob-mode" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         ref={stageRef}
         onPointerMove={handleStagePointerMove}
         onPointerLeave={() => setStageFloat({ x: 0, y: 0 })}
@@ -358,16 +364,28 @@ function PersonalExplorationsPage() {
         {/* ── Center title ── */}
         <div
           className="personal-title personal-text-preview-trigger"
-          onPointerEnter={handleTextPreviewPointerMove}
+          onPointerEnter={(event) => {
+            setIsTitleHovered(true);
+            handleTextPreviewPointerMove(event);
+          }}
           onPointerMove={handleTextPreviewPointerMove}
-          onPointerLeave={() => setIsTextPreviewVisible(false)}
+          onPointerLeave={() => {
+            setIsTitleHovered(false);
+            setIsTextPreviewVisible(false);
+          }}
         >
           <h1 className="personal-title__line">
-            <ScrambleText text="Personal" delay={1100} />
+            {isTitleHovered ? (
+              <ScrambleText key="title-hover" text="Merhaba!" />
+            ) : (
+              <ScrambleText key="title-default-personal" text="Personal" delay={1100} />
+            )}
           </h1>
-          <h1 className="personal-title__line">
-            <ScrambleText text="Explorations" delay={1250} />
-          </h1>
+          {isTitleHovered ? null : (
+            <h1 className="personal-title__line">
+              <ScrambleText key="title-default-explorations" text="Explorations" delay={1250} />
+            </h1>
+          )}
         </div>
 
         {/* ── Bottom-left: studio info ── */}
