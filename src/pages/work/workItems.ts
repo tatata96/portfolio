@@ -20,9 +20,10 @@ export const workItems: WorkCardData[] = [
   {
     slug: "brik",
     title: "Brik",
-    description: "Project details coming soon.",
-    role: "Details coming soon",
-    time: "TBD",
+    description:
+      "An AI-powered workforce learning platform that helps frontline teams build skills through short, engaging lessons, progress tracking, and gamification mechanics.",
+    role: "Mobile Development, Product Development",
+    time: "2024–2025",
     image: brikLogo,
     tags: [
       "React Native",
@@ -39,9 +40,10 @@ export const workItems: WorkCardData[] = [
   {
     slug: "algorand",
     title: "Algorand",
-    description: "Project details coming soon.",
-    role: "Details coming soon",
-    time: "TBD",
+    description:
+      "Frontend development across the Algorand ecosystem — governance platforms, developer tools, analytics dashboards, and wallet integrations for a global blockchain audience.",
+    role: "Frontend Development",
+    time: "2020–2024",
     image: algorandLogo,
     tags: [
       "Blockchain",
@@ -66,6 +68,6 @@ export const workItems: WorkCardData[] = [
     image: personalExplorationsImage,
     tags: ["Visual Design", "Interaction", "Creative Coding", "Prototyping"],
     cursorColor: "#ff00ff",
-    cursorTextColor: "#111111",
+    cursorTextColor: "#ffffff",
   },
 ];

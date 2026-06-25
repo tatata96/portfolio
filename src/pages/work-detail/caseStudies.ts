@@ -309,7 +309,7 @@ const photifyCaseStudy: CaseStudy = {
           {
             src: photifyFigma,
             alt: "Photify Figma board with wireframes and product flows",
-            label: "Figma flows",
+            label: "Figma explorations",
           },
           {
             src: photifyColors,
