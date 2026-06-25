@@ -27,14 +27,16 @@ function AppRoutes() {
   }, [hash])
 
   return (
-    <>
+    <div className={`app-shell${isWorkDetailPage ? '' : ' app-shell--with-nav'}`}>
       {!isWorkDetailPage && <Navbar />}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/work" element={<Navigate to="/#work" replace />} />
-        <Route path="/work/:slug" element={<WorkDetailRoute />} />
-      </Routes>
-    </>
+      <div className="app-content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/work" element={<Navigate to="/#work" replace />} />
+          <Route path="/work/:slug" element={<WorkDetailRoute />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 
