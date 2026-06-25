@@ -1,14 +1,15 @@
 import apartmentoVideo from "./apartmento.mov";
 import brief2Video from "./brief2.mov";
-import briefnewVideo from "./briefnew.mov";
 import danielVideo from "./daniel.mov";
+import trainVideo from "../personal/train.mov";
 import galleryUniverseVideo from "./gallery-universe.mov";
 import istanbulVideo from "./istanbul.mov";
-import personalCover from "../personal/t.png";
+
 import titresimPdf from "./titresim.pdf";
 import titresimCover from "./titresim.png";
 import webVideo from "./web.mov";
 import webbVideo from "./webb.mov";
+import websiteVideo from "./website.mov";
 import workVideo from "./work.mov";
 
 export type DumpAsset = {
@@ -68,22 +69,9 @@ export const dumpAssets: DumpAsset[] = [
     description:
       "A landing page experiment for an agency website, built around Three.js interactions.\nThe page used falling interactive elements as a playful way to make the brief-building flow feel more physical.",
     tags: ["motion", "interfaces", "digital"],
-    x: 1040,
-    y: 190,
-    width: 172,
-  },
-  {
-    id: "briefnew",
-    title: "Brief Builder Motion",
-    type: "video",
-    src: briefnewVideo,
-    collectionId: "brief-builder",
-    description:
-      "A landing page experiment for an agency website, built around Three.js interactions.\nThe page used falling interactive elements as a playful way to make the brief-building flow feel more physical.",
-    tags: ["motion", "interfaces", "digital"],
     x: 1255,
     y: 165,
-    width: 298,
+    width: 172,
   },
   {
     id: "work",
@@ -112,15 +100,14 @@ export const dumpAssets: DumpAsset[] = [
   {
     id: "train",
     title: "Ink to Motion",
-    type: "image",
-    src: personalCover,
+    type: "video",
+    src: trainVideo,
     description:
       "A hand-drawn poster that I later tried to bring to life in After Effects.",
     tags: ["motion", "paper"],
-    x: 230,
-    y: 465,
-    width: 222,
-    className: "personal-asset--cutout",
+    x: 1070,
+    y: 155,
+    width: 278,
   },
   {
     id: "titresim",
@@ -148,6 +135,19 @@ export const dumpAssets: DumpAsset[] = [
     x: 515,
     y: 735,
     width: 332,
+  },
+  {
+    id: "website",
+    title: "tamaraelf.xyz",
+    type: "video",
+    src: websiteVideo,
+    websiteUrl: "https://tamaraelf.xyz",
+    description:
+      "My current portfolio website, still in progress. Built and designed by me: [tamaraelf.xyz](https://tamaraelf.xyz).",
+    tags: ["interfaces", "digital"],
+    x: 880,
+    y: 150,
+    width: 278,
   },
   {
     id: "gallery-universe",
