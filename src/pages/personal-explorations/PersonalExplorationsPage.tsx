@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
+import me2Image from "../../assets/me2.png";
 import "./personal_explorations_page.css";
 
 // Reference viewport — all asset x/y/width are in this coordinate space
@@ -247,6 +248,7 @@ function PersonalExplorationsPage() {
   const [activeAssetId, setActiveAssetId] = useState<string | null>(null);
   const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isTextPreviewVisible, setIsTextPreviewVisible] = useState(false);
   const [stageFloat, setStageFloat] = useState({ x: 0, y: 0 });
   const stageRef = useRef<HTMLDivElement | null>(null);
 
@@ -273,6 +275,11 @@ function PersonalExplorationsPage() {
 
   function handleAssetClick(asset: DumpAsset) {
     setSelectedAsset(asset);
+  }
+
+  function handleTextPreviewPointerMove(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType !== "mouse") return;
+    setIsTextPreviewVisible(true);
   }
 
   return (
@@ -349,7 +356,12 @@ function PersonalExplorationsPage() {
         })}
 
         {/* ── Center title ── */}
-        <div className="personal-title">
+        <div
+          className="personal-title personal-text-preview-trigger"
+          onPointerEnter={handleTextPreviewPointerMove}
+          onPointerMove={handleTextPreviewPointerMove}
+          onPointerLeave={() => setIsTextPreviewVisible(false)}
+        >
           <h1 className="personal-title__line">
             <ScrambleText text="Personal" delay={1100} />
           </h1>
@@ -359,7 +371,12 @@ function PersonalExplorationsPage() {
         </div>
 
         {/* ── Bottom-left: studio info ── */}
-        <div className="personal-corner personal-corner--bl">
+        <div
+          className="personal-corner personal-corner--bl personal-text-preview-trigger"
+          onPointerEnter={handleTextPreviewPointerMove}
+          onPointerMove={handleTextPreviewPointerMove}
+          onPointerLeave={() => setIsTextPreviewVisible(false)}
+        >
           <span>— TAMARA</span>
           <span>— PERSONAL EXPLORATIONS</span>
           <span>— DESIGN & DEVELOPMENT</span>
@@ -382,6 +399,15 @@ function PersonalExplorationsPage() {
               "--cursor-y": `${cursorPosition.y}px`,
             } as CursorStyle
           }
+          aria-hidden="true"
+        />
+      ) : null}
+
+      {isTextPreviewVisible ? (
+        <img
+          className="personal-text-preview"
+          src={me2Image}
+          alt=""
           aria-hidden="true"
         />
       ) : null}
