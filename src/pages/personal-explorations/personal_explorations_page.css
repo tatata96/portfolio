@@ -2,7 +2,22 @@
   position: relative;
   min-height: 100svh;
   overflow-x: clip;
-  background: #d8d8d6;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 45, 32, 0.16) 0,
+      rgba(255, 45, 32, 0.16) 1px,
+      transparent 1px,
+      transparent 44px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 45, 32, 0.16) 0,
+      rgba(255, 45, 32, 0.16) 1px,
+      transparent 1px,
+      transparent 44px
+    ),
+    #d8d8d6;
   color: #171717;
   --page-blue: #3451d1;
   --page-orange: #ff4a12;
@@ -78,89 +93,97 @@
   position: absolute;
   width: 38px;
   height: 38px;
+  --mark-color: var(--page-orange);
   background:
     radial-gradient(
       circle at 8px 8px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 19px 8px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 30px 8px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 8px 19px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 19px 19px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 30px 19px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 8px 30px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 19px 30px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     ),
     radial-gradient(
       circle at 30px 30px,
-      var(--page-orange) 0 7px,
+      var(--mark-color) 0 7px,
       transparent 8px
     );
 }
 
 .personal-fixed-mark--tl {
+  --mark-color: #ff4a12;
   left: -8px;
   top: -4px;
 }
 
 .personal-fixed-mark--tr {
+  --mark-color: #3451d1;
   right: -8px;
   top: -4px;
 }
 
 .personal-fixed-mark--ml {
+  --mark-color: #ff2fb3;
   left: -8px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .personal-fixed-mark--mr {
+  --mark-color: #00a7ff;
   right: -8px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .personal-fixed-mark--center {
+  --mark-color: #f2e600;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
 .personal-fixed-mark--bc {
+  --mark-color: #7a5cff;
   left: 50%;
   bottom: -10px;
   transform: translateX(-50%);
 }
 
 .personal-fixed-mark--br {
+  --mark-color: #00d084;
   right: -8px;
   bottom: -10px;
 }
@@ -214,8 +237,8 @@
 .personal-fixed-time {
   position: fixed;
   z-index: 0;
-  top: 22px;
-  right: 24px;
+  left: clamp(96px, 12vw, 220px);
+  top: 46%;
   pointer-events: none;
   color: var(--page-ink);
   font-family: var(--mono-page);
@@ -224,6 +247,7 @@
   letter-spacing: 0.1em;
   line-height: 1;
   text-transform: uppercase;
+  transform: translateY(-50%);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -258,6 +282,7 @@
 }
 
 .personal-enter {
+  position: relative;
   color: var(--page-ink);
   font-family: var(--mono-page);
   font-size: clamp(14px, 1.7vw, 22px);
@@ -265,6 +290,42 @@
   letter-spacing: 0.1em;
   line-height: 1;
   text-transform: uppercase;
+  text-shadow:
+    2px 0 0 #ff2fb3,
+    -2px 0 0 #00a7ff;
+  animation: enterPulse 1.6s steps(2, end) infinite;
+}
+
+.personal-enter::before,
+.personal-enter::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 38px;
+  height: 2px;
+  background: var(--page-orange);
+  transform: translateY(-50%);
+}
+
+.personal-enter::before {
+  right: calc(100% + 18px);
+}
+
+.personal-enter::after {
+  left: calc(100% + 18px);
+  background: #3451d1;
+}
+
+@keyframes enterPulse {
+  0%,
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+  50% {
+    opacity: 0.72;
+    filter: saturate(1.8);
+  }
 }
 
 .personal-projects {
@@ -819,6 +880,11 @@
     font-size: clamp(30px, 7.6vw, 58px);
   }
 
+  .personal-fixed-time {
+    left: clamp(46px, 12vw, 96px);
+    top: 36%;
+  }
+
   .personal-hero {
     min-height: calc(76svh - var(--nav-height, 0px));
     padding-top: 34px;
@@ -928,6 +994,11 @@
     right: 38px;
     width: min(6ch, 58vw);
     font-size: clamp(28px, 7.4vw, 44px);
+  }
+
+  .personal-fixed-time {
+    left: 38px;
+    top: 31%;
   }
 
   .personal-hero {
