@@ -1,7 +1,6 @@
 import type {WorkCardData} from "../../components/WorkCard/WorkCard";
 import brikLogo from "../../assets/brik/brik-logo.jpg";
 import algorandLogo from "../../assets/algo/algo-logo.webp";
-import personalExplorationsImage from "../../assets/personal/t.png";
 import projectImage from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 
 export const workItems: WorkCardData[] = [
@@ -57,17 +56,5 @@ export const workItems: WorkCardData[] = [
     ],
     cursorColor: "rgb(185, 239, 238)",
     cursorTextColor: "#111111",
-  },
-  {
-    slug: "personal-explorations",
-    title: "Personal Explorations",
-    description:
-      "A collection of self-directed visual, interaction, and product experiments.",
-    role: "Creative Direction, Visual Design, Prototyping",
-    time: "Ongoing",
-    image: personalExplorationsImage,
-    tags: ["Visual Design", "Interaction", "Creative Coding", "Prototyping"],
-    cursorColor: "#ff00ff",
-    cursorTextColor: "#ffffff",
   },
 ];

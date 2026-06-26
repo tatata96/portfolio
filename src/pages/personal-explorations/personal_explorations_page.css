@@ -14,7 +14,7 @@
 /* ── Curtain reveal ─────────────────────────────────────── */
 
 .personal-curtain {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 200;
   background: #0d0a10;

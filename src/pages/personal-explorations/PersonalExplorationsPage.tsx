@@ -284,7 +284,7 @@ function PersonalExplorationsPage() {
   }
 
   return (
-    <main className="personal-page">
+    <section className="personal-page" id="playground" aria-label="Playground">
       <div className="personal-curtain" aria-hidden="true" />
 
       <div
@@ -375,17 +375,8 @@ function PersonalExplorationsPage() {
           }}
         >
           <h1 className="personal-title__line">
-            {isTitleHovered ? (
-              <ScrambleText key="title-hover" text="Merhaba!" />
-            ) : (
-              <ScrambleText key="title-default-personal" text="Personal" delay={1100} />
-            )}
+            {isTitleHovered ? "Merhaba!" : "Playground"}
           </h1>
-          {isTitleHovered ? null : (
-            <h1 className="personal-title__line">
-              <ScrambleText key="title-default-explorations" text="Explorations" delay={1250} />
-            </h1>
-          )}
         </div>
 
         {/* ── Bottom-left: studio info ── */}
@@ -396,7 +387,7 @@ function PersonalExplorationsPage() {
           onPointerLeave={() => setIsTextPreviewVisible(false)}
         >
           <span>— TAMARA</span>
-          <span>— PERSONAL EXPLORATIONS</span>
+          <span>— PLAYGROUND</span>
           <span>— DESIGN & DEVELOPMENT</span>
         </div>
 
@@ -437,7 +428,7 @@ function PersonalExplorationsPage() {
           onClose={() => setSelectedAsset(null)}
         />
       ) : null}
-    </main>
+    </section>
   );
 }
 

@@ -27,6 +27,16 @@ function Navbar() {
     })
   }
 
+  function handlePlaygroundClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    if (pathname !== '/') return
+
+    event.preventDefault()
+    document.getElementById('playground')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
+
   function handleNameClick(event: React.MouseEvent<HTMLAnchorElement>) {
     if (pathname !== '/') return
 
@@ -45,6 +55,7 @@ function Navbar() {
       <div className="nav-links" aria-label="Primary navigation">
         <a href="#cv">CV</a>
         <Link to="/#work" onClick={handleWorkClick}>Work</Link>
+        <Link to="/#playground" onClick={handlePlaygroundClick}>Playground</Link>
         <a href="#contact">Contact</a>
       </div>
     </nav>
