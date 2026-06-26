@@ -30,10 +30,6 @@ function WorkCard({ item }: WorkCardProps) {
     y: number;
   } | null>(null);
 
-  const cardStyle: CardStyle = {
-    "--work-card-project-bg": item.cursorColor,
-    "--work-card-project-color": item.cursorTextColor,
-  };
   const cursorStyle: CardStyle = {
     "--work-card-project-bg": item.cursorColor,
     "--work-card-project-color": item.cursorTextColor,
@@ -54,7 +50,6 @@ function WorkCard({ item }: WorkCardProps) {
       <Link
         to={`/work/${item.slug}`}
         className={`work-card${cursorPosition ? " work-card--cursor-active" : ""}`}
-        style={cardStyle}
         onPointerMove={handlePointerMove}
         onPointerLeave={() => setCursorPosition(null)}
       >
@@ -86,7 +81,7 @@ function WorkCard({ item }: WorkCardProps) {
             }}
             aria-hidden="true"
           >
-            View project
+            View case
           </div>,
           document.body,
         )}
