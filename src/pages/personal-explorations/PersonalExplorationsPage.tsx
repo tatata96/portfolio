@@ -5,9 +5,7 @@ import {
   type CSSProperties,
   type PointerEvent,
 } from "react";
-import { Link } from "react-router-dom";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
-import me2Image from "../../assets/me2.png";
 import "./personal_explorations_page.css";
 
 // Reference viewport — all asset x/y/width are in this coordinate space
@@ -248,7 +246,6 @@ function PersonalExplorationsPage() {
   const [activeAssetId, setActiveAssetId] = useState<string | null>(null);
   const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isTextPreviewVisible, setIsTextPreviewVisible] = useState(false);
   const [isTitleHovered, setIsTitleHovered] = useState(false);
   const [stageFloat, setStageFloat] = useState({ x: 0, y: 0 });
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -278,11 +275,6 @@ function PersonalExplorationsPage() {
     setSelectedAsset(asset);
   }
 
-  function handleTextPreviewPointerMove(event: PointerEvent<HTMLElement>) {
-    if (event.pointerType !== "mouse") return;
-    setIsTextPreviewVisible(true);
-  }
-
   return (
     <section className="personal-page" id="playground" aria-label="Playground">
       <div className="personal-curtain" aria-hidden="true" />
@@ -298,12 +290,6 @@ function PersonalExplorationsPage() {
         onPointerMove={handleStagePointerMove}
         onPointerLeave={() => setStageFloat({ x: 0, y: 0 })}
       >
-
-        {/* ── Top-left: back link ── */}
-        <Link className="personal-corner personal-corner--tl" to="/#work">
-          <ScrambleText text="← WORK" delay={1050} />
-        </Link>
-
         {/* ── Top-right: location + live clock ── */}
         <div className="personal-corner personal-corner--tr">
           <ScrambleText text="ISTANBUL, (TR)" delay={1050} />
@@ -364,26 +350,17 @@ function PersonalExplorationsPage() {
         {/* ── Center title ── */}
         <button
           type="button"
-          className="personal-title personal-text-preview-trigger"
+          className="personal-title"
           aria-pressed={isTitleHovered}
           onClick={() => {
             setIsTitleHovered(true);
-            setIsTextPreviewVisible(true);
           }}
           onFocus={() => setIsTitleHovered(true)}
           onBlur={() => {
             setIsTitleHovered(false);
-            setIsTextPreviewVisible(false);
           }}
-          onPointerEnter={(event) => {
-            setIsTitleHovered(true);
-            handleTextPreviewPointerMove(event);
-          }}
-          onPointerMove={handleTextPreviewPointerMove}
-          onPointerLeave={() => {
-            setIsTitleHovered(false);
-            setIsTextPreviewVisible(false);
-          }}
+          onPointerEnter={() => setIsTitleHovered(true)}
+          onPointerLeave={() => setIsTitleHovered(false)}
         >
           <h1 className="personal-title__line">
             {isTitleHovered ? "Merhaba!" : "Playground"}
@@ -392,10 +369,7 @@ function PersonalExplorationsPage() {
 
         {/* ── Bottom-left: studio info ── */}
         <div
-          className="personal-corner personal-corner--bl personal-text-preview-trigger"
-          onPointerEnter={handleTextPreviewPointerMove}
-          onPointerMove={handleTextPreviewPointerMove}
-          onPointerLeave={() => setIsTextPreviewVisible(false)}
+          className="personal-corner personal-corner--bl"
         >
           <span>— TAMARA</span>
           <span>— PLAYGROUND</span>
@@ -418,15 +392,6 @@ function PersonalExplorationsPage() {
               "--cursor-y": `${cursorPosition.y}px`,
             } as CursorStyle
           }
-          aria-hidden="true"
-        />
-      ) : null}
-
-      {isTextPreviewVisible ? (
-        <img
-          className="personal-text-preview"
-          src={me2Image}
-          alt=""
           aria-hidden="true"
         />
       ) : null}
