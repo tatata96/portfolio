@@ -53,10 +53,10 @@ function Navbar() {
         Tamara Kozok
       </NavLink>
       <div className="nav-links" aria-label="Primary navigation">
-        <a href="#cv">CV</a>
         <Link to="/#work" onClick={handleWorkClick}>Work</Link>
         <Link to="/#playground" onClick={handlePlaygroundClick}>Playground</Link>
         <a href="#contact">Contact</a>
+        <a href="#cv">CV</a>
       </div>
     </nav>
   )

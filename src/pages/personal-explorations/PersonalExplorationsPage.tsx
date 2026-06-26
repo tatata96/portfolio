@@ -362,8 +362,19 @@ function PersonalExplorationsPage() {
         })}
 
         {/* ── Center title ── */}
-        <div
+        <button
+          type="button"
           className="personal-title personal-text-preview-trigger"
+          aria-pressed={isTitleHovered}
+          onClick={() => {
+            setIsTitleHovered(true);
+            setIsTextPreviewVisible(true);
+          }}
+          onFocus={() => setIsTitleHovered(true)}
+          onBlur={() => {
+            setIsTitleHovered(false);
+            setIsTextPreviewVisible(false);
+          }}
           onPointerEnter={(event) => {
             setIsTitleHovered(true);
             handleTextPreviewPointerMove(event);
@@ -377,7 +388,7 @@ function PersonalExplorationsPage() {
           <h1 className="personal-title__line">
             {isTitleHovered ? "Merhaba!" : "Playground"}
           </h1>
-        </div>
+        </button>
 
         {/* ── Bottom-left: studio info ── */}
         <div
