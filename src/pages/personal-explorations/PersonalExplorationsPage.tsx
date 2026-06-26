@@ -1,16 +1,6 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type PointerEvent,
-} from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
 import "./personal_explorations_page.css";
-
-// Reference viewport — all asset x/y/width are in this coordinate space
-const STAGE_W = 1440;
-const STAGE_H = 900;
 
 // ── Scramble text ────────────────────────────────────────────────────────────
 
@@ -83,45 +73,7 @@ function LiveClock() {
   return <>{time}</>;
 }
 
-// ── Types ─────────────────────────────────────────────────────────────────────
-
-type FloatingStyle = CSSProperties & {
-  "--asset-left": string;
-  "--asset-top": string;
-  "--asset-width": string;
-  "--asset-parallax-x": string;
-  "--asset-parallax-y": string;
-  "--asset-float-x": string;
-  "--asset-float-y": string;
-  "--asset-rotate": string;
-};
-
-type CursorStyle = CSSProperties & {
-  "--cursor-x": string;
-  "--cursor-y": string;
-};
-
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function getAssetStyle(
-  asset: DumpAsset,
-  index: number,
-  isActive: boolean,
-  stageFloat: { x: number; y: number }
-): FloatingStyle {
-  const depth = 10 + (index % 5) * 4;
-
-  return {
-    "--asset-left": `${((asset.x / STAGE_W) * 100).toFixed(2)}%`,
-    "--asset-top": `${((asset.y / STAGE_H) * 100).toFixed(2)}%`,
-    "--asset-width": `${((asset.width / STAGE_W) * 100).toFixed(2)}%`,
-    "--asset-parallax-x": `${(stageFloat.x * depth).toFixed(2)}px`,
-    "--asset-parallax-y": `${(stageFloat.y * depth).toFixed(2)}px`,
-    "--asset-float-x": isActive ? "var(--active-float-x)" : "0px",
-    "--asset-float-y": isActive ? "var(--active-float-y)" : "0px",
-    "--asset-rotate": isActive ? "var(--active-rotate)" : "0deg",
-  };
-}
 
 function getPrimaryTag(asset: DumpAsset) {
   return asset.tags[0] ?? asset.type;
@@ -168,6 +120,21 @@ function MediaPreview({ asset }: { asset: DumpAsset }) {
       loading="lazy"
     />
   );
+}
+
+function getStatusLabel(asset: DumpAsset) {
+  if (asset.websiteUrl) return "live";
+  if (asset.type === "pdf") return `${asset.pageCount} pages`;
+  return "archive";
+}
+
+type ProjectStyle = CSSProperties & {
+  "--project-color": string;
+};
+
+function getProjectColor(index: number) {
+  const colors = ["#3451d1", "#ff4a12", "#171717", "#ebe7dc", "#7a5cff"];
+  return colors[index % colors.length];
 }
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
@@ -243,158 +210,173 @@ function AssetModal({
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 function PersonalExplorationsPage() {
-  const [activeAssetId, setActiveAssetId] = useState<string | null>(null);
   const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isTitleHovered, setIsTitleHovered] = useState(false);
-  const [stageFloat, setStageFloat] = useState({ x: 0, y: 0 });
-  const stageRef = useRef<HTMLDivElement | null>(null);
+  const [isChromeVisible, setIsChromeVisible] = useState(false);
+  const [visibleProjectIds, setVisibleProjectIds] = useState<Set<string>>(
+    () => new Set()
+  );
+  const pageRef = useRef<HTMLElement | null>(null);
+  const projectsRef = useRef<HTMLElement | null>(null);
+  const projectRefs = useRef<Map<string, HTMLElement>>(new Map());
 
-  function handleStagePointerMove(event: PointerEvent<HTMLDivElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    setStageFloat({ x, y });
-  }
+  useEffect(() => {
+    let frameId = 0;
 
-  function handlePointerMove(asset: DumpAsset, event: PointerEvent) {
-    const target = event.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    const rx = (event.clientX - rect.left) / rect.width - 0.5;
-    const ry = (event.clientY - rect.top) / rect.height - 0.5;
-    target.style.setProperty("--active-float-x", `${rx * 28}px`);
-    target.style.setProperty("--active-float-y", `${ry * 22}px`);
-    target.style.setProperty("--active-rotate", `${rx * 2.2}deg`);
-    target.style.setProperty("--asset-meta-x", `${event.clientX - rect.left}px`);
-    target.style.setProperty("--asset-meta-y", `${event.clientY - rect.top}px`);
-    setActiveAssetId(asset.id);
-    setCursorPosition({ x: event.clientX, y: event.clientY });
-  }
+    function updateChromeVisibility() {
+      const page = pageRef.current;
+      if (!page) return;
+
+      const rect = page.getBoundingClientRect();
+      setIsChromeVisible(rect.top <= 0 && rect.bottom > 0);
+    }
+
+    function scheduleChromeVisibilityUpdate() {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateChromeVisibility);
+    }
+
+    updateChromeVisibility();
+    window.addEventListener("scroll", scheduleChromeVisibilityUpdate, { passive: true });
+    window.addEventListener("resize", scheduleChromeVisibilityUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", scheduleChromeVisibilityUpdate);
+      window.removeEventListener("resize", scheduleChromeVisibilityUpdate);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisibleProjectIds((currentIds) => {
+          const nextIds = new Set(currentIds);
+
+          entries.forEach((entry) => {
+            const id = (entry.target as HTMLElement).dataset.projectId;
+            if (!id) return;
+
+            if (entry.isIntersecting) {
+              nextIds.add(id);
+            } else {
+              nextIds.delete(id);
+            }
+          });
+
+          return nextIds;
+        });
+      },
+      { rootMargin: "-18% 0px -22% 0px", threshold: 0.16 }
+    );
+
+    projectRefs.current.forEach((project) => observer.observe(project));
+    return () => observer.disconnect();
+  }, []);
 
   function handleAssetClick(asset: DumpAsset) {
     setSelectedAsset(asset);
   }
 
   return (
-    <section className="personal-page" id="playground" aria-label="Playground">
+    <section
+      className={[
+        "personal-page",
+        isChromeVisible ? "personal-page--chrome-visible" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      id="playground"
+      aria-label="Playground"
+      ref={pageRef}
+    >
       <div className="personal-curtain" aria-hidden="true" />
-
-      <div
-        className={[
-          "personal-stage",
-          isTitleHovered ? "personal-stage--blob-mode" : "",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        ref={stageRef}
-        onPointerMove={handleStagePointerMove}
-        onPointerLeave={() => setStageFloat({ x: 0, y: 0 })}
-      >
-        {/* ── Top-right: location + live clock ── */}
-        <div className="personal-corner personal-corner--tr">
-          <ScrambleText text="ISTANBUL, (TR)" delay={1050} />
-          <span className="personal-corner__sep"> • </span>
-          <span className="personal-corner__time"><LiveClock /></span>
-        </div>
-
-        {/* ── Assets ── */}
-        {dumpAssets.map((asset, index) => {
-          const isActive = activeAssetId === asset.id;
-
-          return (
-            <button
-              key={asset.id}
-              className={[
-                "personal-asset",
-                asset.className ?? "",
-                asset.websiteUrl ? "personal-asset--live" : "",
-                isActive ? "personal-asset--active" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              type="button"
-              style={getAssetStyle(asset, index, isActive, stageFloat)}
-              onClick={() => handleAssetClick(asset)}
-              onPointerEnter={(e) => handlePointerMove(asset, e)}
-              onPointerMove={(e) => handlePointerMove(asset, e)}
-              onPointerLeave={(e) => {
-                e.currentTarget.style.setProperty("--active-float-x", "0px");
-                e.currentTarget.style.setProperty("--active-float-y", "0px");
-                e.currentTarget.style.setProperty("--active-rotate", "0deg");
-                setActiveAssetId(null);
-              }}
-            >
-              <span className="personal-asset__float-wrapper">
-                <span className="personal-asset__media">
-                  <MediaPreview asset={asset} />
-                </span>
-                <span
-                  className="personal-asset__meta"
-                  aria-hidden={!isActive}
-                >
-                  <span>{getPrimaryTag(asset)}</span>
-                  <span>{asset.title}</span>
-                  <span>
-                    {asset.websiteUrl
-                      ? "↗ live"
-                      : asset.type === "pdf"
-                      ? `${asset.pageCount} pages`
-                      : "archived"}
-                  </span>
-                </span>
-              </span>
-            </button>
-          );
-        })}
-
-        {/* ── Center title ── */}
-        <button
-          type="button"
-          className="personal-title"
-          aria-pressed={isTitleHovered}
-          onClick={() => {
-            setIsTitleHovered(true);
-          }}
-          onFocus={() => setIsTitleHovered(true)}
-          onBlur={() => {
-            setIsTitleHovered(false);
-          }}
-          onPointerEnter={() => setIsTitleHovered(true)}
-          onPointerLeave={() => setIsTitleHovered(false)}
-        >
-          <h1 className="personal-title__line">
-            {isTitleHovered ? "Merhaba!" : "Playground"}
-          </h1>
-        </button>
-
-        {/* ── Bottom-left: studio info ── */}
-        <div
-          className="personal-corner personal-corner--bl"
-        >
-          <span>— TAMARA</span>
-          <span>— PLAYGROUND</span>
-          <span>— DESIGN & DEVELOPMENT</span>
-        </div>
-
-        {/* ── Bottom-center: count ── */}
-        <div className="personal-count">
-          <span>({dumpAssets.length})</span>
-        </div>
-
+      <h1 className="personal-bg-title">
+        <span>play</span>
+        <span>ground</span>
+      </h1>
+      <div className="personal-fixed-marks" aria-hidden="true">
+        <span className="personal-fixed-mark personal-fixed-mark--tl" />
+        <span className="personal-fixed-mark personal-fixed-mark--tr" />
+        <span className="personal-fixed-mark personal-fixed-mark--ml" />
+        <span className="personal-fixed-mark personal-fixed-mark--mr" />
+        <span className="personal-fixed-mark personal-fixed-mark--center" />
+        <span className="personal-fixed-mark personal-fixed-mark--bc" />
+        <span className="personal-fixed-mark personal-fixed-mark--br" />
       </div>
-      {/* ── Hover cursor ── */}
-      {activeAssetId ? (
-        <span
-          className="personal-cursor"
-          style={
-            {
-              "--cursor-x": `${cursorPosition.x}px`,
-              "--cursor-y": `${cursorPosition.y}px`,
-            } as CursorStyle
-          }
-          aria-hidden="true"
-        />
-      ) : null}
+      <div className="personal-fixed-copy personal-fixed-copy--tl">
+        <span>The Curious Archive</span>
+        <span>Personal experiments, motion, interfaces</span>
+      </div>
+      <div className="personal-fixed-copy personal-fixed-copy--bl">
+        <span>Tamara</span>
+        <span>Playground</span>
+        <span>Design & development</span>
+      </div>
+      <div className="personal-fixed-time">
+        <ScrambleText text="ISTANBUL, (TR)" delay={1050} />
+        <span className="personal-fixed-time__sep"> • </span>
+        <span className="personal-fixed-time__clock"><LiveClock /></span>
+      </div>
+
+      <header className="personal-hero">
+        <div className="personal-enter">
+          <ScrambleText text="ENTER PLAYGROUND" delay={350} />
+        </div>
+      </header>
+
+      <main
+        className="personal-projects"
+        aria-label="Playground projects"
+        ref={projectsRef}
+      >
+        {dumpAssets.map((asset, index) => (
+          <article
+            className={[
+              "personal-project",
+              `personal-project--layout-${(index % 6) + 1}`,
+              visibleProjectIds.has(asset.id) ? "personal-project--visible" : "",
+              index % 2 ? "personal-project--reverse" : "",
+              getProjectColor(index) === "#ebe7dc" ? "personal-project--light" : "",
+              getProjectColor(index) === "#121212" ? "personal-project--dark" : "",
+              asset.websiteUrl ? "personal-project--live" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            key={asset.id}
+            data-project-id={asset.id}
+            ref={(node) => {
+              if (node) {
+                projectRefs.current.set(asset.id, node);
+              } else {
+                projectRefs.current.delete(asset.id);
+              }
+            }}
+            style={{ "--project-color": getProjectColor(index) } as ProjectStyle}
+          >
+            <button
+              className="personal-project__media"
+              type="button"
+              onClick={() => handleAssetClick(asset)}
+              aria-label={`Open ${asset.title}`}
+            >
+              <MediaPreview asset={asset} />
+            </button>
+
+            <button
+              className="personal-project__scroll-meta"
+              type="button"
+              onClick={() => handleAssetClick(asset)}
+              aria-label={`Open ${asset.title}`}
+            >
+              <span>{String(index + 1).padStart(2, "0")} / {getPrimaryTag(asset)}</span>
+              <span>{asset.title}</span>
+              <span>{getStatusLabel(asset)}</span>
+              <span>{asset.tags.join(" / ")}</span>
+              <span>Open project</span>
+            </button>
+          </article>
+        ))}
+      </main>
 
       {/* ── Modal ── */}
       {selectedAsset ? (
