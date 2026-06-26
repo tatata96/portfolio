@@ -22,10 +22,6 @@
   }
 }
 
-html {
-  scroll-padding-top: var(--nav-height);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -41,10 +37,6 @@ html {
 body {
   margin: 0;
   scroll-behavior: smooth;
-}
-
-:target {
-  scroll-margin-top: var(--nav-height);
 }
 
 .app-shell--with-nav .app-content {
