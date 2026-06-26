@@ -17,17 +17,6 @@
   cursor: none;
 }
 
-.contact-page__dot {
-  position: absolute;
-  z-index: 2;
-  top: clamp(88px, 10vw, 150px);
-  left: 29vw;
-  width: clamp(18px, 2.2vw, 34px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #f5f4ef;
-}
-
 .contact-page__copy {
   position: relative;
   z-index: 3;
@@ -60,11 +49,18 @@
   transform: rotate(-4deg);
 }
 
+.contact-page__headline-line {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .contact-page__preview-trigger {
   cursor: default;
 }
 
-.contact-page__preview-trigger:focus-visible {
+.contact-page__preview-trigger:focus-visible,
+.contact-page__copy h1:focus-visible {
   outline: 2px solid #fff500;
   outline-offset: 10px;
 }
@@ -163,12 +159,6 @@
 @media (max-width: 900px) {
   .contact-page {
     min-height: 100svh;
-  }
-
-  .contact-page__dot {
-    top: 98px;
-    left: 18%;
-    width: 18px;
   }
 
   .contact-page__copy {

@@ -45,19 +45,27 @@ function ContactPage() {
       onPointerMove={handlePointerMove}
       onPointerLeave={() => setCursorPosition(null)}
     >
-      <div className="contact-page__dot" aria-hidden="true" />
-
       <div className="contact-page__copy">
         <p className="contact-page__eyebrow">contact</p>
         <h1
-          className="contact-page__preview-trigger"
           tabIndex={0}
           onFocus={showTextPreview}
           onBlur={hideTextPreview}
-          onPointerEnter={showTextPreview}
-          onPointerLeave={hideTextPreview}
         >
-          Write me, maybe?
+          <span
+            className="contact-page__headline-line contact-page__preview-trigger"
+            onPointerEnter={showTextPreview}
+            onPointerLeave={hideTextPreview}
+          >
+            Write me,
+          </span>
+          <span
+            className="contact-page__headline-line contact-page__preview-trigger"
+            onPointerEnter={showTextPreview}
+            onPointerLeave={hideTextPreview}
+          >
+            maybe?
+          </span>
         </h1>
         <a
           href="mailto:tamarakozok@gmail.com"
