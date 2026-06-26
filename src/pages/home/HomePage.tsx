@@ -3,6 +3,7 @@ import './home_page.css'
 import meImage from '../../assets/me.png'
 import birdVideo from '../../assets/home/bird.mp4'
 import scribbleVideo from '../../assets/home/scribble.mp4'
+import ContactPage from '../contact/ContactPage'
 import PersonalExplorationsPage from '../personal-explorations/PersonalExplorationsPage'
 import WorkPage from '../work/WorkPage'
 
@@ -111,6 +112,7 @@ function HomePage() {
       </section>
       <WorkPage />
       <PersonalExplorationsPage />
+      <ContactPage />
     </main>
   )
 }

@@ -16,7 +16,7 @@ function WorkDetailRoute() {
 }
 
 function AppRoutes() {
-  const { hash } = useLocation()
+  const { hash, pathname } = useLocation()
   const isWorkDetailPage = useMatch('/work/:slug')
 
   useEffect(() => {
@@ -25,6 +25,11 @@ function AppRoutes() {
     const element = document.getElementById(hash.slice(1))
     element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [hash])
+
+  useEffect(() => {
+    if (hash) return
+    window.scrollTo({ top: 0, left: 0 })
+  }, [hash, pathname])
 
   return (
     <div className={`app-shell${isWorkDetailPage ? '' : ' app-shell--with-nav'}`}>

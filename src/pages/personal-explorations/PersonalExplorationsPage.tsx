@@ -408,7 +408,6 @@ function PersonalExplorationsPage() {
         </div>
 
       </div>
-
       {/* ── Hover cursor ── */}
       {activeAssetId ? (
         <span
