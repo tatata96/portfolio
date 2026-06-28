@@ -4,8 +4,10 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type SyntheticEvent,
   type VideoHTMLAttributes,
 } from "react";
+import "./lazy_hover_video.css";
 
 type LazyHoverVideoProps = Omit<
   VideoHTMLAttributes<HTMLVideoElement>,
@@ -43,13 +45,51 @@ function LazyHoverVideo({
   onMouseLeave,
   onFocus,
   onBlur,
+  onLoadedData,
+  onCanPlay,
+  onError,
   style,
   ...videoProps
 }: LazyHoverVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const canLoad = loadImmediately || shouldLoad;
+  const videoState = hasError
+    ? "error"
+    : isReady
+      ? "ready"
+      : canLoad
+        ? "loading"
+        : "idle";
+
+  const markReady = useCallback(
+    (event: SyntheticEvent<HTMLVideoElement>) => {
+      setIsReady(true);
+      setHasError(false);
+      onLoadedData?.(event);
+    },
+    [onLoadedData],
+  );
+
+  const markCanPlay = useCallback(
+    (event: SyntheticEvent<HTMLVideoElement>) => {
+      setIsReady(true);
+      setHasError(false);
+      onCanPlay?.(event);
+    },
+    [onCanPlay],
+  );
+
+  const markError = useCallback(
+    (event: SyntheticEvent<HTMLVideoElement>) => {
+      setHasError(true);
+      onError?.(event);
+    },
+    [onError],
+  );
 
   const pauseAndReset = useCallback(() => {
     const video = videoRef.current;
@@ -95,7 +135,7 @@ function LazyHoverVideo({
     if (!playOnHover) return;
 
     const video = videoRef.current;
-    const parent = video?.parentElement;
+    const parent = video?.closest("button") ?? video?.parentElement;
     if (!parent) return;
 
     parent.addEventListener("mouseenter", play);
@@ -145,39 +185,61 @@ function LazyHoverVideo({
     }
 
     play();
-  }, [canLoad, isVisible, pauseAndReset, play, playImmediately, playOnVisibleTouch]);
+  }, [
+    canLoad,
+    isVisible,
+    pauseAndReset,
+    play,
+    playImmediately,
+    playOnVisibleTouch,
+  ]);
 
   useEffect(() => pauseAndReset, [pauseAndReset]);
 
   return (
-    <video
-      {...videoProps}
-      ref={videoRef}
-      src={canLoad ? src : undefined}
-      poster={poster}
-      muted
-      playsInline
-      loop
-      autoPlay={playImmediately}
-      preload={preloadMode ?? (loadImmediately ? "auto" : "none")}
-      style={aspectRatio ? {...style, aspectRatio} : style}
-      onMouseEnter={(event) => {
-        onMouseEnter?.(event);
-        if (playOnHover) play();
-      }}
-      onMouseLeave={(event) => {
-        onMouseLeave?.(event);
-        if (playOnHover) pauseAndReset();
-      }}
-      onFocus={(event) => {
-        onFocus?.(event);
-        if (playOnHover) play();
-      }}
-      onBlur={(event) => {
-        onBlur?.(event);
-        if (playOnHover) pauseAndReset();
-      }}
-    />
+    <span
+      className="lazy-hover-video"
+      data-video-state={videoState}
+      style={aspectRatio ? {aspectRatio} : undefined}
+    >
+      <video
+        {...videoProps}
+        ref={videoRef}
+        src={canLoad ? src : undefined}
+        poster={poster}
+        muted
+        playsInline
+        loop
+        autoPlay={playImmediately}
+        preload={preloadMode ?? (loadImmediately ? "auto" : "none")}
+        style={style}
+        onLoadedData={markReady}
+        onCanPlay={markCanPlay}
+        onError={markError}
+        onMouseEnter={(event) => {
+          onMouseEnter?.(event);
+          if (playOnHover) play();
+        }}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          if (playOnHover) pauseAndReset();
+        }}
+        onFocus={(event) => {
+          onFocus?.(event);
+          if (playOnHover) play();
+        }}
+        onBlur={(event) => {
+          onBlur?.(event);
+          if (playOnHover) pauseAndReset();
+        }}
+      />
+      <span className="lazy-hover-video__indicator" aria-hidden="true">
+        <span className="lazy-hover-video__mark" />
+        <span className="lazy-hover-video__label">
+          {hasError ? "MEDIA UNAVAILABLE" : "LOADING"}
+        </span>
+      </span>
+    </span>
   );
 }
 

@@ -791,6 +791,7 @@
 }
 
 .personal-modal__media img,
+.personal-modal__media .lazy-hover-video,
 .personal-modal__media video,
 .personal-modal__media iframe {
   display: block;
@@ -799,6 +800,12 @@
   min-height: 520px;
   border: 0;
   object-fit: contain;
+}
+
+.personal-modal__media .lazy-hover-video {
+  display: grid;
+  place-items: center;
+  background-color: #171717;
 }
 
 .personal-modal__media video {
@@ -815,6 +822,7 @@
 }
 
 .personal-modal__media-link img,
+.personal-modal__media-link .lazy-hover-video,
 .personal-modal__media-link video {
   display: block;
   width: 100%;
@@ -984,6 +992,7 @@
     min-height: 320px;
   }
 
+  .personal-modal__media .lazy-hover-video,
   .personal-modal__media video {
     min-height: unset;
   }
