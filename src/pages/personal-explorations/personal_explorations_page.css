@@ -81,6 +81,7 @@
   position: fixed;
   z-index: 1000;
   inset: 0;
+  --fixed-mark-inset: 12px;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -144,26 +145,26 @@
 
 .personal-fixed-mark--tl {
   --mark-color: #ff4a12;
-  left: -8px;
-  top: -4px;
+  left: var(--fixed-mark-inset);
+  top: var(--fixed-mark-inset);
 }
 
 .personal-fixed-mark--tr {
   --mark-color: #3451d1;
-  right: -8px;
-  top: -4px;
+  right: var(--fixed-mark-inset);
+  top: var(--fixed-mark-inset);
 }
 
 .personal-fixed-mark--ml {
   --mark-color: #ff2fb3;
-  left: -8px;
+  left: var(--fixed-mark-inset);
   top: 50%;
   transform: translateY(-50%);
 }
 
 .personal-fixed-mark--mr {
   --mark-color: #00a7ff;
-  right: -8px;
+  right: var(--fixed-mark-inset);
   top: 50%;
   transform: translateY(-50%);
 }
@@ -178,14 +179,14 @@
 .personal-fixed-mark--bc {
   --mark-color: #7a5cff;
   left: 50%;
-  bottom: -10px;
+  bottom: var(--fixed-mark-inset);
   transform: translateX(-50%);
 }
 
 .personal-fixed-mark--br {
   --mark-color: #00d084;
-  right: -8px;
-  bottom: -10px;
+  right: var(--fixed-mark-inset);
+  bottom: var(--fixed-mark-inset);
 }
 
 .personal-fixed-copy {
