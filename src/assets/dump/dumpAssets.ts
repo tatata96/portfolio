@@ -10,7 +10,7 @@ import titresimCover from "./titresim.png";
 import webVideo from "./web.mov";
 import webbVideo from "./webb.mov";
 import websiteVideo from "./website.mov";
-import workVideo from "./work.mov";
+import workVideo from "./drawings.mp4";
 
 export type DumpAsset = {
   id: string;
