@@ -1,7 +1,7 @@
-import { useState, type PointerEvent } from "react";
-import cursorTextImage from "../../assets/cursor1.png";
-import cursorImage from "../../assets/cursor2.png";
-import phoneImage from "../../assets/contact/phone.png";
+import {useState, type PointerEvent} from "react";
+import cursorTextImage from "../../assets/contact/cursor1.png";
+import cursorImage from "../../assets/contact/cursor2.png";
+import phoneImage from "../../assets/contact/phone.webp";
 import me2Image from "../../assets/me2.png";
 import "./contact_page.css";
 
@@ -47,11 +47,7 @@ function ContactPage() {
     >
       <div className="contact-page__copy">
         <p className="contact-page__eyebrow">contact</p>
-        <h1
-          tabIndex={0}
-          onFocus={showTextPreview}
-          onBlur={hideTextPreview}
-        >
+        <h1 tabIndex={0} onFocus={showTextPreview} onBlur={hideTextPreview}>
           <span
             className="contact-page__headline-line contact-page__preview-trigger"
             onPointerEnter={showTextPreview}
@@ -126,7 +122,7 @@ function ContactPage() {
             .join(" ")}
           src={isTextCursorVisible ? cursorTextImage : cursorImage}
           alt=""
-          style={{ left: cursorPosition.x, top: cursorPosition.y }}
+          style={{left: cursorPosition.x, top: cursorPosition.y}}
           aria-hidden="true"
         />
       ) : null}
