@@ -2194,4 +2194,37 @@
   .project-role-takeaway {
     break-inside: avoid;
   }
+
+  /* ── Polaroids — static with fixed rotations, no transitions ── */
+  .solution-polaroids {
+    height: clamp(300px, 36vw, 400px);
+  }
+
+  .solution-polaroid {
+    transition: none;
+  }
+
+  .solution-polaroid:nth-child(1) {
+    --polaroid-top: 38px;
+    --polaroid-left: 0%;
+    --polaroid-x: 0;
+    --polaroid-y: 0;
+    --polaroid-rotate: -5deg;
+  }
+
+  .solution-polaroid:nth-child(2) {
+    --polaroid-top: 76px;
+    --polaroid-left: 50%;
+    --polaroid-x: -50%;
+    --polaroid-y: 0;
+    --polaroid-rotate: -12deg;
+  }
+
+  .solution-polaroid:nth-child(3) {
+    --polaroid-top: 38px;
+    --polaroid-left: calc(100% - clamp(160px, 22vw, 240px));
+    --polaroid-x: 0;
+    --polaroid-y: 0;
+    --polaroid-rotate: 15deg;
+  }
 }
