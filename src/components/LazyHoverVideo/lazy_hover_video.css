@@ -63,9 +63,8 @@
   text-align: center;
 }
 
-.lazy-hover-video[data-video-state="error"] .lazy-hover-video__mark {
-  background: #ff4a12;
-  animation: none;
+.lazy-hover-video[data-video-state="error"] .lazy-hover-video__indicator {
+  display: none;
 }
 
 @keyframes lazyHoverVideoSpin {
