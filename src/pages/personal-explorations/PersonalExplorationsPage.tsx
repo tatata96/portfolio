@@ -176,13 +176,29 @@ function AssetModal({
           {asset.websiteUrl ? (
             <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__media-link">
               {asset.type === "video" ? (
-                <LazyHoverVideo src={asset.src} poster={asset.coverSrc} aria-label={asset.title} />
+                <LazyHoverVideo
+                  src={asset.src}
+                  poster={asset.coverSrc}
+                  aria-label={asset.title}
+                  loadImmediately
+                  playImmediately
+                  playOnHover={false}
+                  playOnVisibleTouch={false}
+                />
               ) : (
                 <img src={asset.src} alt={asset.alt ?? asset.title} />
               )}
             </a>
           ) : asset.type === "video" ? (
-            <LazyHoverVideo src={asset.src} poster={asset.coverSrc} aria-label={asset.title} />
+            <LazyHoverVideo
+              src={asset.src}
+              poster={asset.coverSrc}
+              aria-label={asset.title}
+              loadImmediately
+              playImmediately
+              playOnHover={false}
+              playOnVisibleTouch={false}
+            />
           ) : asset.type === "pdf" ? (
             <iframe src={asset.src} title={asset.title} />
           ) : (

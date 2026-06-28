@@ -14,6 +14,10 @@ type LazyHoverVideoProps = Omit<
   src: string;
   poster?: string;
   aspectRatio?: CSSProperties["aspectRatio"];
+  loadImmediately?: boolean;
+  playImmediately?: boolean;
+  playOnHover?: boolean;
+  preloadMode?: VideoHTMLAttributes<HTMLVideoElement>["preload"];
   rootMargin?: string;
   playOnVisibleTouch?: boolean;
 };
@@ -29,6 +33,10 @@ function LazyHoverVideo({
   src,
   poster,
   aspectRatio,
+  loadImmediately = false,
+  playImmediately = false,
+  playOnHover = true,
+  preloadMode,
   rootMargin = "600px",
   playOnVisibleTouch = true,
   onMouseEnter,
@@ -41,6 +49,7 @@ function LazyHoverVideo({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const canLoad = loadImmediately || shouldLoad;
 
   const pauseAndReset = useCallback(() => {
     const video = videoRef.current;
@@ -54,12 +63,12 @@ function LazyHoverVideo({
 
   const play = useCallback(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad) return;
+    if (!video || !canLoad) return;
 
     void video.play().catch(() => {
       // Browsers can reject play() when user activation rules change.
     });
-  }, [shouldLoad]);
+  }, [canLoad]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -83,6 +92,8 @@ function LazyHoverVideo({
   }, [rootMargin]);
 
   useEffect(() => {
+    if (!playOnHover) return;
+
     const video = videoRef.current;
     const parent = video?.parentElement;
     if (!parent) return;
@@ -98,11 +109,33 @@ function LazyHoverVideo({
       parent.removeEventListener("focusin", play);
       parent.removeEventListener("focusout", pauseAndReset);
     };
-  }, [pauseAndReset, play]);
+  }, [pauseAndReset, play, playOnHover]);
 
   useEffect(() => {
+    if (!canLoad || !playImmediately) return;
+    play();
+  }, [canLoad, play, playImmediately]);
+
+  useEffect(() => {
+    if (!playImmediately) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.addEventListener("loadeddata", play);
+    video.addEventListener("canplay", play);
+
+    return () => {
+      video.removeEventListener("loadeddata", play);
+      video.removeEventListener("canplay", play);
+    };
+  }, [play, playImmediately]);
+
+  useEffect(() => {
+    if (playImmediately) return;
+
     if (
-      !shouldLoad ||
+      !canLoad ||
       !playOnVisibleTouch ||
       !isVisible ||
       !isTouchPreferred()
@@ -112,7 +145,7 @@ function LazyHoverVideo({
     }
 
     play();
-  }, [isVisible, pauseAndReset, play, playOnVisibleTouch, shouldLoad]);
+  }, [canLoad, isVisible, pauseAndReset, play, playImmediately, playOnVisibleTouch]);
 
   useEffect(() => pauseAndReset, [pauseAndReset]);
 
@@ -120,28 +153,29 @@ function LazyHoverVideo({
     <video
       {...videoProps}
       ref={videoRef}
-      src={shouldLoad ? src : undefined}
+      src={canLoad ? src : undefined}
       poster={poster}
       muted
       playsInline
       loop
-      preload="none"
+      autoPlay={playImmediately}
+      preload={preloadMode ?? (loadImmediately ? "auto" : "none")}
       style={aspectRatio ? {...style, aspectRatio} : style}
       onMouseEnter={(event) => {
         onMouseEnter?.(event);
-        play();
+        if (playOnHover) play();
       }}
       onMouseLeave={(event) => {
         onMouseLeave?.(event);
-        pauseAndReset();
+        if (playOnHover) pauseAndReset();
       }}
       onFocus={(event) => {
         onFocus?.(event);
-        play();
+        if (playOnHover) play();
       }}
       onBlur={(event) => {
         onBlur?.(event);
-        pauseAndReset();
+        if (playOnHover) pauseAndReset();
       }}
     />
   );
