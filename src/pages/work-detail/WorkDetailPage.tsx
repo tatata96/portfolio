@@ -586,7 +586,10 @@ function WorkDetailPage() {
   };
 
   return (
-    <main className="work-detail-page" style={accentStyle}>
+    <main
+      className={`work-detail-page work-detail-page--${slug}`}
+      style={accentStyle}
+    >
       <aside className="work-detail-sidebar" aria-label="Case study navigation">
         <Link className="work-detail-sidebar__home" to="/#work">
           {"← WORK"}

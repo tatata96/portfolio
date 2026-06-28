@@ -52,6 +52,20 @@ function FeatureWalkthrough({walkthrough}: FeatureWalkthroughProps) {
               </div>
             </div>
           ) : null}
+
+          <div
+            className="solution-walkthrough__print-screens"
+            aria-label={`${walkthrough.ariaLabel} screens`}
+          >
+            {walkthrough.steps.map((step) => (
+              <figure key={step.image}>
+                <img src={step.image} alt={`${step.screenTitle} screen`} />
+                <figcaption>
+                  {step.number}. {step.label}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </>
       ) : null}
     </div>
