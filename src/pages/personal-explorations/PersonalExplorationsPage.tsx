@@ -308,7 +308,6 @@ function PersonalExplorationsPage() {
         <span>ground</span>
       </h1>
       <div className="personal-fixed-marks" aria-hidden="true">
-        <span className="personal-fixed-mark personal-fixed-mark--tl" />
         <span className="personal-fixed-mark personal-fixed-mark--tr" />
         <span className="personal-fixed-mark personal-fixed-mark--ml" />
         <span className="personal-fixed-mark personal-fixed-mark--mr" />
