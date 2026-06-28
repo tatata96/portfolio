@@ -1,6 +1,6 @@
-import apartmentoVideo from "./apartmento.mov";
-import brief2Video from "./brief2.mov";
-import danielVideo from "./daniel.mov";
+import apartmentoVideo from "./apartmento.mp4";
+import brief2Video from "./brief2.mp4";
+import danielVideo from "./daniel.mp4";
 import trainVideo from "../personal/train.mp4";
 import galleryUniverseVideo from "./gallery-universe.mp4";
 import istanbulVideo from "./istanbul.mp4";
@@ -9,7 +9,7 @@ import titresimPdf from "./titresim.pdf";
 import titresimCover from "./titresim.png";
 import oldWebsiteVideo from "./old-website.mp4";
 import mouseInteractVideo from "./mouse-interact.mp4";
-import websiteVideo from "./website.mov";
+import websiteVideo from "./website.mp4";
 import workVideo from "./drawings.mp4";
 
 export type DumpAsset = {
