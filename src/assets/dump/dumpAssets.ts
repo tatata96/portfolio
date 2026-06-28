@@ -1,14 +1,14 @@
 import apartmentoVideo from "./apartmento.mov";
 import brief2Video from "./brief2.mov";
 import danielVideo from "./daniel.mov";
-import trainVideo from "../personal/train.mov";
-import galleryUniverseVideo from "./gallery-universe.mov";
-import istanbulVideo from "./istanbul.mov";
+import trainVideo from "../personal/train.mp4";
+import galleryUniverseVideo from "./gallery-universe.mp4";
+import istanbulVideo from "./istanbul.mp4";
 
 import titresimPdf from "./titresim.pdf";
 import titresimCover from "./titresim.png";
-import webVideo from "./web.mov";
-import webbVideo from "./webb.mov";
+import oldWebsiteVideo from "./old-website.mp4";
+import mouseInteractVideo from "./mouse-interact.mp4";
 import websiteVideo from "./website.mov";
 import workVideo from "./drawings.mp4";
 
@@ -128,7 +128,7 @@ export const dumpAssets: DumpAsset[] = [
     id: "web",
     title: "Old Website Landing Page",
     type: "video",
-    src: webVideo,
+    src: oldWebsiteVideo,
     description:
       "A recording of my old website's landing page. It used p5.js to make the typography react to the mouse, shifting the page from a static portfolio intro into a small interactive type experiment.",
     tags: ["motion", "interfaces", "digital"],
@@ -166,7 +166,7 @@ export const dumpAssets: DumpAsset[] = [
     id: "webb",
     title: "Web Landing Interaction",
     type: "video",
-    src: webbVideo,
+    src: mouseInteractVideo,
     description:
       "A landing page experiment built around interaction. The piece was a quick study in making the first screen feel more alive through motion and responsive interface behavior.",
     tags: ["motion", "interfaces", "digital"],
