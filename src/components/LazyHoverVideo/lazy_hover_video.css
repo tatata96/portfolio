@@ -42,12 +42,12 @@
 }
 
 .lazy-hover-video__mark {
-  width: 34px;
-  height: 34px;
-  background:
-    radial-gradient(circle, #ffe600 48%, transparent 52%) 0 0 / 11px 11px;
-  filter: drop-shadow(0 0 10px rgba(255, 230, 0, 0.38));
-  animation: lazyHoverVideoPulse 900ms steps(2, end) infinite;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(23, 23, 23, 0.15);
+  border-top-color: #171717;
+  animation: lazyHoverVideoSpin 700ms linear infinite;
 }
 
 .lazy-hover-video__label {
@@ -56,7 +56,7 @@
   background: #f0ede8;
   color: #171717;
   font-family: var(--mono-page, monospace);
-  font-size: 11px;
+  font-size: 16px;
   line-height: 1;
   letter-spacing: 0.04em;
   padding: 5px 8px 6px;
@@ -68,15 +68,15 @@
   animation: none;
 }
 
-@keyframes lazyHoverVideoPulse {
-  50% {
-    opacity: 0.48;
-    transform: scale(0.92);
+@keyframes lazyHoverVideoSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lazy-hover-video__mark {
     animation: none;
+    border-top-color: #171717;
   }
 }
