@@ -142,6 +142,27 @@
   box-sizing: border-box;
 }
 
+.work-detail-print-btn {
+  justify-self: end;
+  padding: 9px 16px;
+  border: 1px solid var(--project-accent);
+  border-radius: 6px;
+  background: var(--project-accent-soft);
+  color: var(--project-accent-text);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: box-shadow 160ms ease;
+}
+
+.work-detail-print-btn:hover {
+  box-shadow: 0 6px 18px rgba(var(--project-shadow-rgb), 0.18);
+}
+
 .work-detail-snapshot {
   overflow: hidden;
   border: 1.5px solid var(--project-accent);
@@ -2120,5 +2141,57 @@
 
   .solution-badges__track {
     animation: none;
+  }
+}
+
+@media print {
+  /* ── Layout ── */
+  .work-detail-page {
+    --work-detail-sidebar-width: 0px;
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .work-detail-content {
+    --work-detail-content-x: 40px;
+    padding: 32px 40px 64px;
+  }
+
+  /* ── Sidebar ── */
+  .work-detail-sidebar {
+    display: none;
+  }
+
+  /* ── Print button ── */
+  .work-detail-print-btn {
+    display: none;
+  }
+
+  /* ── Floating visual ── */
+  .work-detail-section__floating-visual,
+  .work-detail-section__floating-visual--visible {
+    display: none;
+  }
+
+  /* ── Sticky removal ── */
+  .development-role-pair__visuals {
+    position: relative;
+    top: auto;
+  }
+
+  /* ── Page breaks ── */
+  .work-detail-snapshot {
+    break-before: page;
+  }
+
+  .work-detail-section {
+    break-before: page;
+  }
+
+  .reflection-card,
+  .development-role-card,
+  .product-design-insight__standalone,
+  .project-role-takeaway {
+    break-inside: avoid;
   }
 }

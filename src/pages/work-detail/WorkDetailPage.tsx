@@ -622,6 +622,14 @@ function WorkDetailPage() {
       </aside>
 
       <div className="work-detail-content">
+        <button
+          className="work-detail-print-btn"
+          type="button"
+          onClick={() => window.print()}
+        >
+          Print / Save as PDF
+        </button>
+
         <section className="work-detail-snapshot" aria-label="Project snapshot">
           <header className="work-detail-snapshot__header">
             <h2>Project Snapshot</h2>
