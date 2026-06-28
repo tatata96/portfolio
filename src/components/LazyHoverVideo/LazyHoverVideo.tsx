@@ -4,7 +4,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type SyntheticEvent,
   type VideoHTMLAttributes,
 } from "react";
 import "./lazy_hover_video.css";
@@ -39,57 +38,19 @@ function LazyHoverVideo({
   playImmediately = false,
   playOnHover = true,
   preloadMode,
-  rootMargin = "600px",
+  rootMargin = "300px",
   playOnVisibleTouch = true,
   onMouseEnter,
   onMouseLeave,
   onFocus,
   onBlur,
-  onLoadedData,
-  onCanPlay,
-  onError,
   style,
   ...videoProps
 }: LazyHoverVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const canLoad = loadImmediately || shouldLoad;
-  const videoState = hasError
-    ? "error"
-    : isReady
-      ? "ready"
-      : canLoad
-        ? "loading"
-        : "idle";
-
-  const markReady = useCallback(
-    (event: SyntheticEvent<HTMLVideoElement>) => {
-      setIsReady(true);
-      setHasError(false);
-      onLoadedData?.(event);
-    },
-    [onLoadedData],
-  );
-
-  const markCanPlay = useCallback(
-    (event: SyntheticEvent<HTMLVideoElement>) => {
-      setIsReady(true);
-      setHasError(false);
-      onCanPlay?.(event);
-    },
-    [onCanPlay],
-  );
-
-  const markError = useCallback(
-    (event: SyntheticEvent<HTMLVideoElement>) => {
-      setHasError(true);
-      onError?.(event);
-    },
-    [onError],
-  );
 
   const pauseAndReset = useCallback(() => {
     const video = videoRef.current;
@@ -105,9 +66,7 @@ function LazyHoverVideo({
     const video = videoRef.current;
     if (!video || !canLoad) return;
 
-    void video.play().catch(() => {
-      // Browsers can reject play() when user activation rules change.
-    });
+    void video.play().catch(() => {});
   }, [canLoad]);
 
   useEffect(() => {
@@ -174,12 +133,7 @@ function LazyHoverVideo({
   useEffect(() => {
     if (playImmediately) return;
 
-    if (
-      !canLoad ||
-      !playOnVisibleTouch ||
-      !isVisible ||
-      !isTouchPreferred()
-    ) {
+    if (!canLoad || !playOnVisibleTouch || !isVisible || !isTouchPreferred()) {
       if (!isVisible) pauseAndReset();
       return;
     }
@@ -199,7 +153,6 @@ function LazyHoverVideo({
   return (
     <span
       className="lazy-hover-video"
-      data-video-state={videoState}
       style={aspectRatio ? {aspectRatio} : undefined}
     >
       <video
@@ -213,9 +166,6 @@ function LazyHoverVideo({
         autoPlay={playImmediately}
         preload={preloadMode ?? (loadImmediately ? "auto" : "none")}
         style={style}
-        onLoadedData={markReady}
-        onCanPlay={markCanPlay}
-        onError={markError}
         onMouseEnter={(event) => {
           onMouseEnter?.(event);
           if (playOnHover) play();
@@ -233,12 +183,6 @@ function LazyHoverVideo({
           if (playOnHover) pauseAndReset();
         }}
       />
-      <span className="lazy-hover-video__indicator" aria-hidden="true">
-        <span className="lazy-hover-video__mark" />
-        <span className="lazy-hover-video__label">
-          {hasError ? "MEDIA UNAVAILABLE" : "LOADING"}
-        </span>
-      </span>
     </span>
   );
 }
