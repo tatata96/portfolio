@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import LazyHoverVideo from "../../components/LazyHoverVideo/LazyHoverVideo";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
 import "./personal_explorations_page.css";
 
@@ -102,13 +103,9 @@ function renderDescription(description: string) {
 function MediaPreview({ asset }: { asset: DumpAsset }) {
   if (asset.type === "video") {
     return (
-      <video
+      <LazyHoverVideo
         src={asset.src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
+        poster={asset.coverSrc}
         aria-label={asset.title}
       />
     );
@@ -179,13 +176,13 @@ function AssetModal({
           {asset.websiteUrl ? (
             <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__media-link">
               {asset.type === "video" ? (
-                <video src={asset.src} autoPlay muted loop playsInline />
+                <LazyHoverVideo src={asset.src} poster={asset.coverSrc} aria-label={asset.title} />
               ) : (
                 <img src={asset.src} alt={asset.alt ?? asset.title} />
               )}
             </a>
           ) : asset.type === "video" ? (
-            <video src={asset.src} autoPlay muted loop playsInline />
+            <LazyHoverVideo src={asset.src} poster={asset.coverSrc} aria-label={asset.title} />
           ) : asset.type === "pdf" ? (
             <iframe src={asset.src} title={asset.title} />
           ) : (

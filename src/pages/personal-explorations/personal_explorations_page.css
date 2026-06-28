@@ -367,6 +367,14 @@
   pointer-events: none;
 }
 
+.personal-project__media:has(video) {
+  background: transparent;
+}
+
+.personal-project__media:has(video)::after {
+  content: none;
+}
+
 .personal-project--live .personal-project__media::before {
   content: "";
   position: absolute;
@@ -386,14 +394,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.personal-project__media:hover img,
-.personal-project__media:hover video,
-.personal-project__media:focus-visible img,
-.personal-project__media:focus-visible video {
-  transform: scale(1.035);
+.personal-project__media video {
+  object-fit: contain;
 }
 
 .personal-project__media:focus-visible,
