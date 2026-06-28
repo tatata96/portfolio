@@ -9,7 +9,7 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0;
-  color-scheme: light dark;
+  color-scheme: light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -22,20 +22,15 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-  }
-}
-
 #root {
   min-height: 100svh;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
+  color: var(--text);
+  background: var(--bg);
   scroll-behavior: smooth;
 }
 
