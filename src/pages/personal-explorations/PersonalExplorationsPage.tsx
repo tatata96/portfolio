@@ -410,6 +410,10 @@ function PersonalExplorationsPage() {
         <div className="personal-enter">
           <ScrambleText text="ENTER PLAYGROUND" delay={350} />
         </div>
+        <div className="personal-scroll-hint" aria-hidden="true">
+          <span>scroll to explore</span>
+          <span className="personal-scroll-hint__arrow" />
+        </div>
       </header>
 
       <main

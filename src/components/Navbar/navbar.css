@@ -29,6 +29,12 @@
     transform 220ms ease;
 }
 
+.nav--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-100%);
+}
+
 .nav--compact {
   top: 28px;
   width: min(560px, calc(100% - 48px));

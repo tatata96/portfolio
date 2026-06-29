@@ -5,6 +5,7 @@ import './navbar.css'
 function Navbar() {
   const { pathname } = useLocation()
   const [isCompact, setIsCompact] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
 
   useEffect(() => {
     function handleScroll() {
@@ -15,6 +16,18 @@ function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [pathname])
+
+  useEffect(() => {
+    const playground = document.getElementById('playground')
+    if (!playground) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsHidden(entry.isIntersecting),
+      { threshold: 0.05 }
+    )
+    observer.observe(playground)
+    return () => observer.disconnect()
   }, [pathname])
 
   function handleWorkClick(event: React.MouseEvent<HTMLAnchorElement>) {
@@ -58,7 +71,7 @@ function Navbar() {
   }
 
   return (
-    <nav className={`nav${isCompact ? ' nav--compact' : ''}`}>
+    <nav className={`nav${isCompact ? ' nav--compact' : ''}${isHidden ? ' nav--hidden' : ''}`}>
       <NavLink className="nav-name" to="/" onClick={handleNameClick}>
         Tamara Kozok
       </NavLink>
