@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar'
 import HomePage from './pages/home/HomePage'
 import PersonalExplorationsPage from './pages/personal-explorations/PersonalExplorationsPage'
 import WorkDetailPage from './pages/work-detail/WorkDetailPage'
+import WritingDetailPage from './pages/writing/WritingDetailPage'
 
 function WorkDetailRoute() {
   const { slug } = useParams()
@@ -18,6 +19,8 @@ function WorkDetailRoute() {
 function AppRoutes() {
   const { hash, pathname } = useLocation()
   const isWorkDetailPage = useMatch('/work/:slug')
+  const isWritingPage = useMatch('/writing/:id')
+  const hideNav = Boolean(isWorkDetailPage || isWritingPage)
 
   useEffect(() => {
     if (!hash) return
@@ -32,13 +35,14 @@ function AppRoutes() {
   }, [hash, pathname])
 
   return (
-    <div className={`app-shell${isWorkDetailPage ? '' : ' app-shell--with-nav'}`}>
-      {!isWorkDetailPage && <Navbar />}
+    <div className={`app-shell${hideNav ? '' : ' app-shell--with-nav'}`}>
+      {!hideNav && <Navbar />}
       <div className="app-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/work" element={<Navigate to="/#work" replace />} />
           <Route path="/work/:slug" element={<WorkDetailRoute />} />
+          <Route path="/writing/:id" element={<WritingDetailPage />} />
         </Routes>
       </div>
     </div>
