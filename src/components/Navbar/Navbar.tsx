@@ -54,9 +54,9 @@ function Navbar() {
     if (pathname !== '/') return
 
     event.preventDefault()
-    document.getElementById('contact')?.scrollIntoView({
+    window.scrollTo({
+      top: document.body.scrollHeight,
       behavior: 'smooth',
-      block: 'start',
     })
   }
 
@@ -79,7 +79,6 @@ function Navbar() {
         <Link to="/#work" onClick={handleWorkClick}>Work</Link>
         <Link to="/#playground" onClick={handlePlaygroundClick}>Playground</Link>
         <Link to="/#contact" onClick={handleContactClick}>Contact</Link>
-        <a href="#cv">CV</a>
       </div>
     </nav>
   )
