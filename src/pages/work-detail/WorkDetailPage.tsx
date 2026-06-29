@@ -96,6 +96,21 @@ function renderSnapshotItem(item: SnapshotItem) {
     <div className="work-detail-snapshot__item" key={item.label}>
       <h3>{item.label}</h3>
       {item.value ? <p>{item.value}</p> : null}
+      {item.links ? (
+        <div className="work-detail-snapshot__links">
+          {item.links.map((link) => (
+            <a
+              className="work-detail-snapshot__link"
+              href={link.href}
+              key={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
       {item.bullets ? (
         <ul>
           {item.bullets.map((bullet) => (

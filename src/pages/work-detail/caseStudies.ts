@@ -69,6 +69,7 @@ export type SnapshotItem = {
   value?: string;
   bullets?: string[];
   tags?: string[];
+  links?: {href: string; label: string}[];
 };
 
 export type SolutionStep = {
@@ -177,7 +178,20 @@ const photifyCaseStudy: CaseStudy = {
         value: "Product Design, Frontend Development, Backend Development",
       },
       {label: "Team Model", value: "Built with one collaborator"},
-      {label: "Status", value: "Launched MVP"},
+      {
+        label: "Status",
+        value: "Launched MVP",
+        links: [
+          {
+            href: "https://apps.apple.com/tr/app/photify/id6779256503",
+            label: "View on App Store",
+          },
+          {
+            href: "https://www.photify.studio/",
+            label: "Website",
+          },
+        ],
+      },
     ],
     right: [
       {
@@ -414,7 +428,20 @@ const brikCaseStudy: CaseStudy = {
       {label: "Year", value: "2024-2025"},
       {label: "My Role", value: "Mobile Development, Product Development"},
       {label: "Team Model", value: "Cross-functional startup team"},
-      {label: "Status", value: "Live product"},
+      {
+        label: "Status",
+        value: "Live product",
+        links: [
+          {
+            href: "https://apps.apple.com/tr/app/brik-profesyonel-geli%C5%9Fim/id6747639850",
+            label: "View on App Store",
+          },
+          {
+            href: "https://onbrik.com/",
+            label: "Website",
+          },
+        ],
+      },
     ],
     right: [
       {
@@ -573,13 +600,26 @@ const algorandCaseStudy: CaseStudy = {
       {label: "Year", value: "2020-2024"},
       {label: "My Role", value: "Frontend Development"},
       {label: "Team Model", value: "Cross-functional product teams"},
-      {label: "Status", value: "Live Products"},
+      {
+        label: "Status",
+        value: "Contributed 2020–2024",
+        links: [
+          {
+            href: "https://algorand.co/",
+            label: "Algorand",
+          },
+          {
+            href: "https://hipolabs.com/",
+            label: "Hipo",
+          },
+        ],
+      },
     ],
     right: [
       {
         label: "In a Nutshell",
         value:
-          "As part of the frontend team at Hipo, I contributed to a range of products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.",
+          "As part of the frontend team at Hipo Labs, I contributed to a range of products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.",
       },
       {
         label: "Outcome",
@@ -611,7 +651,7 @@ const algorandCaseStudy: CaseStudy = {
       id: "context",
       title: "Context",
       heading: "Entering the World of Web3.",
-      body: "During my time at Hipo, I contributed to multiple products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.\n\nAlthough these products served different audiences, they shared a common challenge: translating complex blockchain concepts into experiences that felt understandable, trustworthy, and easy to use.",
+      body: "During my time at Hipo Labs, I contributed to multiple products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.\n\nAlthough these products served different audiences, they shared a common challenge: translating complex blockchain concepts into experiences that felt understandable, trustworthy, and easy to use.",
       logoRow: [
         {src: algorandLogoDark, alt: "Algorand"},
         {src: hipoLogo, alt: "Hipo"},
@@ -740,9 +780,15 @@ const algorandCaseStudy: CaseStudy = {
       body: "Pera Wallet is one of the leading wallets in the Algorand ecosystem. The Discover section introduced an embedded web experience — built with React — that gave users access to real-time asset metrics and interactive charts directly inside the app.\n\nRather than switching to an external tool or browser, users could explore price history, trading volume, market cap, and asset details for any token in the ecosystem.",
       variant: "role",
       phoneImages: [
-        {src: algorandDiscover1, alt: "Pera Wallet Discover — candlestick chart view"},
+        {
+          src: algorandDiscover1,
+          alt: "Pera Wallet Discover — candlestick chart view",
+        },
         {src: algorandDiscover2, alt: "Pera Wallet Discover — line chart view"},
-        {src: algorandDiscover3, alt: "Pera Wallet Discover — asset details and metrics"},
+        {
+          src: algorandDiscover3,
+          alt: "Pera Wallet Discover — asset details and metrics",
+        },
       ],
       subsections: [
         {
