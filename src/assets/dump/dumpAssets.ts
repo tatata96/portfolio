@@ -28,6 +28,7 @@ export type DumpAsset = {
   type: "image" | "video" | "pdf";
   src: string;
   coverSrc?: string;
+  hoverSoundSrc?: string;
   alt?: string;
   mediaWidth?: number;
   mediaHeight?: number;

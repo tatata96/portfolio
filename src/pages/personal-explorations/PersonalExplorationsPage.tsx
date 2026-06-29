@@ -3,6 +3,18 @@ import LazyHoverVideo from "../../components/LazyHoverVideo/LazyHoverVideo";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
 import "./personal_explorations_page.css";
 
+const playgroundSoundModules = import.meta.glob("../../assets/sound/*.{mp3,wav,ogg,m4a}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const playgroundSoundSources = Object.entries(playgroundSoundModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const HOVER_SOUND_MOVE_INTERVAL_MS = 180;
+
 // ── Scramble text ────────────────────────────────────────────────────────────
 
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?#@$%&";
@@ -231,6 +243,10 @@ function PersonalExplorationsPage() {
   const pageRef = useRef<HTMLElement | null>(null);
   const projectsRef = useRef<HTMLElement | null>(null);
   const projectRefs = useRef<Map<string, HTMLElement>>(new Map());
+  const soundRefs = useRef<Map<string, HTMLAudioElement>>(new Map());
+  const currentSoundRef = useRef<HTMLAudioElement | null>(null);
+  const lastMoveSoundTimesRef = useRef<Map<string, number>>(new Map());
+  const nextSoundIndexRef = useRef(0);
 
   useEffect(() => {
     let frameId = 0;
@@ -288,6 +304,66 @@ function PersonalExplorationsPage() {
 
   function handleAssetClick(asset: DumpAsset) {
     setSelectedAsset(asset);
+  }
+
+  function getNextHoverSoundSrc(asset: DumpAsset) {
+    if (asset.hoverSoundSrc) return asset.hoverSoundSrc;
+    if (!playgroundSoundSources.length) return undefined;
+
+    const soundSrc =
+      playgroundSoundSources[
+        nextSoundIndexRef.current % playgroundSoundSources.length
+      ];
+
+    nextSoundIndexRef.current =
+      (nextSoundIndexRef.current + 1) % playgroundSoundSources.length;
+
+    return soundSrc;
+  }
+
+  function playAssetHoverSound(asset: DumpAsset) {
+    const currentSound = currentSoundRef.current;
+    if (currentSound && !currentSound.paused && !currentSound.ended) return;
+
+    const soundSrc = getNextHoverSoundSrc(asset);
+    if (!soundSrc) return;
+
+    let audio = soundRefs.current.get(soundSrc);
+    if (!audio) {
+      audio = new Audio(soundSrc);
+      audio.preload = "auto";
+      audio.volume = 0.42;
+      soundRefs.current.set(soundSrc, audio);
+    }
+
+    audio.currentTime = 0;
+    currentSoundRef.current = audio;
+
+    audio.addEventListener(
+      "ended",
+      () => {
+        if (currentSoundRef.current === audio) {
+          currentSoundRef.current = null;
+        }
+      },
+      { once: true },
+    );
+
+    void audio.play().catch(() => {
+      if (currentSoundRef.current === audio) {
+        currentSoundRef.current = null;
+      }
+    });
+  }
+
+  function playAssetMoveSound(asset: DumpAsset) {
+    const now = window.performance.now();
+    const lastSoundTime = lastMoveSoundTimesRef.current.get(asset.id) ?? 0;
+
+    if (now - lastSoundTime < HOVER_SOUND_MOVE_INTERVAL_MS) return;
+
+    lastMoveSoundTimesRef.current.set(asset.id, now);
+    playAssetHoverSound(asset);
   }
 
   return (
@@ -369,6 +445,9 @@ function PersonalExplorationsPage() {
               className="personal-project__media"
               type="button"
               onClick={() => handleAssetClick(asset)}
+              onMouseEnter={() => playAssetHoverSound(asset)}
+              onMouseMove={() => playAssetMoveSound(asset)}
+              onFocus={() => playAssetHoverSound(asset)}
               aria-label={`Open ${asset.title}`}
             >
               <MediaPreview asset={asset} />
