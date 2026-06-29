@@ -13,10 +13,15 @@ import brikScreen3 from "../../assets/brik/brik_screen_3.png";
 import brikScreen4 from "../../assets/brik/brik_screen_4.png";
 import brikScreen5 from "../../assets/brik/brik_screen_5.png";
 import algorandLogo from "../../assets/algo/algo-logo.webp";
-import algorandBanner from "../../assets/algo/banner.png";
+import algorandLogoDark from "../../assets/algo/algorand-logo-dark.svg";
+import hipoLogo from "../../assets/algo/hipo.png";
+import peraLogo from "../../assets/algo/pera-logo.svg";
 import algorandConnect from "../../assets/algo/connect.webp";
 import algorandDeveloperPortal from "../../assets/algo/dev.webp";
 import algorandDeveloperPortalDocs from "../../assets/algo/dev2.webp";
+import algorandDiscover1 from "../../assets/algo/discover1.png";
+import algorandDiscover2 from "../../assets/algo/discover2.png";
+import algorandDiscover3 from "../../assets/algo/discover3.png";
 import algorandGovernance from "../../assets/algo/gov.png";
 import algorandMetrics from "../../assets/algo/metrics.webp";
 import algorandMetricsDetail from "../../assets/algo/metrics1.webp";
@@ -41,11 +46,20 @@ export type CaseStudySection = {
   heading: string;
   body: string;
   callout?: string;
+  accentParagraph?: string;
   variant?: "overview" | "walkthrough" | "role" | "reflection";
   images?: {
     src: string;
     alt: string;
     size?: "default" | "compact";
+  }[];
+  phoneImages?: {
+    src: string;
+    alt: string;
+  }[];
+  logoRow?: {
+    src: string;
+    alt: string;
   }[];
   subsections?: RoleSection[];
 };
@@ -133,6 +147,7 @@ export type CaseStudy = {
   };
   walkthrough?: {
     intro: string;
+    hint?: string;
     ariaLabel: string;
     steps: SolutionStep[];
   };
@@ -156,9 +171,9 @@ const photifyCaseStudy: CaseStudy = {
         label: "Product",
         value: "Photify - AI-powered event photo discovery platform",
       },
-      {label: "Duration", value: "2026"},
+      {label: "Year", value: "2026"},
       {
-        label: "Capacity",
+        label: "My Role",
         value: "Product Design, Frontend Development, Backend Development",
       },
       {label: "Team Model", value: "Built with one collaborator"},
@@ -168,10 +183,10 @@ const photifyCaseStudy: CaseStudy = {
       {
         label: "In a Nutshell",
         value:
-          "Photify helps event attendees instantly find photos of themselves using facial recognition. Instead of manually searching through hundreds of event photos, users upload a selfie and receive a personalized gallery of matched images.",
+          "Upload a selfie, get your event photos. Photify uses facial recognition to instantly match you to photos from any event you attended.",
       },
       {
-        label: "Impact",
+        label: "Outcome",
         bullets: [
           "Reduced photo discovery from hundreds of images to a personalized selection",
           "Released a production-ready mobile application on the App Store",
@@ -209,21 +224,21 @@ const photifyCaseStudy: CaseStudy = {
     {
       id: "solution-walkthrough",
       title: "Features",
-      heading: "Designed to make photo discovery effortless",
+      heading: "Designed to make photo discovery effortless.",
       body: "",
       variant: "walkthrough",
     },
     {
       id: "interaction-design",
       title: "My Role",
-      heading: "Co-founder, product designer, and technical lead",
+      heading: "Co-founder, product designer, and technical lead.",
       body: "Photify was built from the ground up with a former college classmate. As co-founders, we collaborated closely on the product vision and strategy, while taking ownership of different areas of the business.\n\nMy co-founder led marketing, sales, and partnership efforts, while I was responsible for product design, user experience, and technical implementation from concept through launch.",
       variant: "role",
     },
     {
       id: "reflection",
       title: "Reflection",
-      heading: "What I've learned",
+      heading: "What I've learned.",
       body: "",
       variant: "reflection",
     },
@@ -245,6 +260,7 @@ const photifyCaseStudy: CaseStudy = {
   walkthrough: {
     intro:
       "The goal was to create a flow simple enough for any event attendee to complete in under a minute. Each step was designed to reduce friction while building trust around the use of facial recognition technology.",
+    hint: "Click a step to explore the screens.",
     ariaLabel: "Photify solution steps",
     steps: [
       {
@@ -374,7 +390,7 @@ const photifyCaseStudy: CaseStudy = {
     },
     {
       title: "Ownership & Creative Freedom",
-      body: "Working on my own product was fundamentally different from working on client or company projects. Having ownership over every decision-from product direction and design choices to technical implementation-created a level of motivation I had not experienced before.\n\nThe freedom to experiment, challenge assumptions, and immediately act on ideas without organizational constraints allowed the product to evolve organically. It reinforced my interest in building products where design, technology, and strategy can influence one another rather than exist as separate disciplines.",
+      body: "Working on my own product was fundamentally different from working on client or company projects. The freedom to experiment, challenge assumptions, and immediately act on ideas without organizational constraints allowed the product to evolve organically. Having ownership over every decision created a level of motivation I had not experienced before.",
     },
   ],
 };
@@ -393,10 +409,10 @@ const brikCaseStudy: CaseStudy = {
       {label: "Client", value: "Early-stage startup"},
       {
         label: "Product",
-        value: "Brik - AI-powered workforce learning platform",
+        value: "Brik - AI-powered learning platform",
       },
-      {label: "Duration", value: "2024-2025"},
-      {label: "Capacity", value: "Mobile Development, Product Development"},
+      {label: "Year", value: "2024-2025"},
+      {label: "My Role", value: "Mobile Development, Product Development"},
       {label: "Team Model", value: "Cross-functional startup team"},
       {label: "Status", value: "Live product"},
     ],
@@ -404,10 +420,10 @@ const brikCaseStudy: CaseStudy = {
       {
         label: "In a Nutshell",
         value:
-          "Brik helps frontline teams build skills through short, engaging learning experiences. By combining AI-generated content, progress tracking, and gamification mechanics, the platform encourages consistent learning and measurable improvement.",
+          "Brik turns employee training into short, engaging lessons that fit the workday. AI-generated content and gamification keep teams motivated and learning consistently.",
       },
       {
-        label: "Impact",
+        label: "Outcome",
         bullets: [
           "Contributed to the development of a production mobile application",
           "Built core learning, engagement, and progress-tracking experiences",
@@ -440,7 +456,7 @@ const brikCaseStudy: CaseStudy = {
       id: "challenge",
       title: "Solution",
       heading: "Short lessons, lasting knowledge.",
-      body: "Instead of asking employees to dedicate hours to training, Brik breaks learning into short, engaging sessions that fit naturally into the workday. Progress tracking and gamification help maintain motivation over time.",
+      body: "Instead of asking employees to dedicate hours to training, Brik breaks learning into short, engaging sessions that fit naturally into the workday. Badges, streaks, and rewards turn everyday progress into something worth coming back to win.",
       variant: "overview",
     },
     {
@@ -454,7 +470,9 @@ const brikCaseStudy: CaseStudy = {
       id: "role",
       title: "My Role",
       heading: "Mobile development with a product mindset.",
-      body: "Although I joined Brik as a mobile developer, working in an early-stage startup meant responsibilities often extended beyond implementation. Product decisions were highly collaborative, and everyone on the team had the opportunity to contribute ideas, challenge assumptions, and influence the direction of the product.",
+      body: "This was my first mobile application. React Native's component model felt familiar coming from React, but building for mobile introduced a different set of challenges: device-specific behavior, simulator limitations, and store deployment processes that were more involved than I expected. The lessons I learned throughout the project became the foundation that later allowed me to design, build, and ship my own mobile application independently.",
+      accentParagraph:
+        "Although I joined Brik as a mobile developer, working in an early-stage startup meant responsibilities often extended beyond implementation. Product decisions were highly collaborative, and everyone on the team had the opportunity to contribute ideas, challenge assumptions, and influence the direction of the product.",
       callout:
         "Gained valuable exposure to product thinking and participated in conversations around\nuser experience\nfeature prioritization\nlong-term product strategy.",
       variant: "role",
@@ -486,6 +504,7 @@ const brikCaseStudy: CaseStudy = {
   walkthrough: {
     intro:
       "Each feature was designed to support repeat engagement: helping users start quickly, return regularly, understand their progress, and feel rewarded as they build knowledge over time.",
+    hint: "Click a step to explore the screens.",
     ariaLabel: "Brik approach steps",
     steps: [
       {
@@ -551,8 +570,8 @@ const algorandCaseStudy: CaseStudy = {
     left: [
       {label: "Client", value: "Algorand Foundation"},
       {label: "Product", value: "Algorand Ecosystem Products"},
-      {label: "Duration", value: "2020-2024"},
-      {label: "Capacity", value: "Frontend Development"},
+      {label: "Year", value: "2020-2024"},
+      {label: "My Role", value: "Frontend Development"},
       {label: "Team Model", value: "Cross-functional product teams"},
       {label: "Status", value: "Live Products"},
     ],
@@ -560,10 +579,10 @@ const algorandCaseStudy: CaseStudy = {
       {
         label: "In a Nutshell",
         value:
-          "As part of the frontend team at Hipo, I contributed to a range of products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations. My work focused on translating complex blockchain concepts into accessible user experiences while supporting millions of dollars in on-chain activity.",
+          "As part of the frontend team at Hipo, I contributed to a range of products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.",
       },
       {
-        label: "Impact",
+        label: "Outcome",
         bullets: [
           "Contributed to multiple production products used across the Algorand ecosystem",
           "Built and maintained governance, analytics, and developer-facing experiences",
@@ -581,6 +600,8 @@ const algorandCaseStudy: CaseStudy = {
           "Governance",
           "Developer Tools",
           "Wallet Integration",
+          "Metrics",
+          "Dashboard",
         ],
       },
     ],
@@ -591,43 +612,46 @@ const algorandCaseStudy: CaseStudy = {
       title: "Context",
       heading: "Entering the World of Web3.",
       body: "During my time at Hipo, I contributed to multiple products within the Algorand ecosystem, including governance platforms, developer tools, analytics dashboards, and wallet integrations.\n\nAlthough these products served different audiences, they shared a common challenge: translating complex blockchain concepts into experiences that felt understandable, trustworthy, and easy to use.",
-      images: [
-        {
-          src: algorandBanner,
-          alt: "Algorand ecosystem product interfaces",
-        },
+      logoRow: [
+        {src: algorandLogoDark, alt: "Algorand"},
+        {src: hipoLogo, alt: "Hipo"},
+        {src: peraLogo, alt: "Pera Wallet"},
       ],
     },
     {
-      id: "governance-platform",
-      title: "Governance Platform",
-      heading: "Helping users take part.",
-      body: "Algorand Governance allows token holders to participate in decisions that influence the future of the network. By committing their assets and fulfilling participation requirements, users can vote on proposals and earn governance rewards.\n\nHowever, participating in governance requires understanding unfamiliar concepts, managing wallet connections, and completing blockchain transactions-creating a significant barrier for many users.",
+      id: "metrics-dashboard",
+      title: "Metrics Dashboard",
+      heading: "Turning ecosystem activity into insight.",
+      body: "The Algorand Metrics Dashboard provides an overview of activity across the ecosystem, helping users monitor network growth, transaction volume, participation, and other key indicators.\n\nThe challenge was not collecting data, but presenting large amounts of information in a way that felt clear, meaningful, and easy to explore.",
       variant: "role",
       images: [
         {
-          src: algorandGovernance,
-          alt: "Algorand Governance platform interface",
+          src: algorandMetrics,
+          alt: "Algorand Metrics Dashboard overview interface",
+        },
+        {
+          src: algorandMetricsDetail,
+          alt: "Algorand Metrics Dashboard detail interface",
         },
       ],
       subsections: [
         {
           title: "My Role",
           paragraphs: [
-            "I took ownership of the Governance Platform frontend after inheriting the project from another engineer. I contributed to several areas of the governance platform, including governor discovery, activity tracking, wallet integrations, and governance participation flows.",
+            "I contributed to the frontend development of the Metrics Dashboard, helping transform complex blockchain data into accessible visualizations and user-friendly experiences.",
           ],
           bullets: [
-            "Built filtering and infinite scrolling experiences for the Governor List",
-            "Developed governance activity and history interfaces",
-            "Implemented wallet connection and transaction flows",
-            "Contributed to xGov participation experiences",
-            "Supported major platform upgrades and frontend migrations",
+            "Developed dashboard interfaces and data visualizations",
+            "Built reusable components for presenting network metrics",
+            "Integrated APIs and real-time data sources",
+            "Collaborated with design and product teams on information architecture",
+            "Maintained and expanded the frontend application",
           ],
         },
         {
           title: "Key Takeaway",
           paragraphs: [
-            "Working on governance products taught me that participation is often a design challenge rather than a technical one. Small improvements in clarity, feedback, and guidance can significantly reduce the friction users experience when interacting with complex systems.",
+            "Working on the Metrics Dashboard reinforced the importance of information hierarchy and visual communication. Even accurate data loses value if users cannot quickly understand what it means or identify the insights most relevant to them.",
           ],
           bullets: [],
         },
@@ -674,45 +698,6 @@ const algorandCaseStudy: CaseStudy = {
       ],
     },
     {
-      id: "metrics-dashboard",
-      title: "Metrics Dashboard",
-      heading: "Turning ecosystem activity into insight.",
-      body: "The Algorand Metrics Dashboard provides an overview of activity across the ecosystem, helping users monitor network growth, transaction volume, participation, and other key indicators.\n\nThe challenge was not collecting data, but presenting large amounts of information in a way that felt clear, meaningful, and easy to explore.",
-      variant: "role",
-      images: [
-        {
-          src: algorandMetrics,
-          alt: "Algorand Metrics Dashboard overview interface",
-        },
-        {
-          src: algorandMetricsDetail,
-          alt: "Algorand Metrics Dashboard detail interface",
-        },
-      ],
-      subsections: [
-        {
-          title: "My Role",
-          paragraphs: [
-            "I contributed to the frontend development of the Metrics Dashboard, helping transform complex blockchain data into accessible visualizations and user-friendly experiences.",
-          ],
-          bullets: [
-            "Developed dashboard interfaces and data visualizations",
-            "Built reusable components for presenting network metrics",
-            "Integrated APIs and real-time data sources",
-            "Collaborated with design and product teams on information architecture",
-            "Maintained and expanded the frontend application",
-          ],
-        },
-        {
-          title: "Key Takeaway",
-          paragraphs: [
-            "Working on the Metrics Dashboard reinforced the importance of information hierarchy and visual communication. Even accurate data loses value if users cannot quickly understand what it means or identify the insights most relevant to them.",
-          ],
-          bullets: [],
-        },
-      ],
-    },
-    {
       id: "wallet-integrations",
       title: "Wallet Integrations",
       heading: "Connecting users to the ecosystem.",
@@ -743,6 +728,73 @@ const algorandCaseStudy: CaseStudy = {
           title: "Key Takeaway",
           paragraphs: [
             "Wallet interactions often involve sensitive actions with real financial consequences. This experience reinforced the importance of clear feedback, confirmation states, and transparent communication, helping users feel confident throughout the transaction journey.",
+          ],
+          bullets: [],
+        },
+      ],
+    },
+    {
+      id: "pera-wallet-discover",
+      title: "Pera Wallet — Discover",
+      heading: "Asset intelligence, built into the wallet.",
+      body: "Pera Wallet is one of the leading wallets in the Algorand ecosystem. The Discover section introduced an embedded web experience — built with React — that gave users access to real-time asset metrics and interactive charts directly inside the app.\n\nRather than switching to an external tool or browser, users could explore price history, trading volume, market cap, and asset details for any token in the ecosystem.",
+      variant: "role",
+      phoneImages: [
+        {src: algorandDiscover1, alt: "Pera Wallet Discover — candlestick chart view"},
+        {src: algorandDiscover2, alt: "Pera Wallet Discover — line chart view"},
+        {src: algorandDiscover3, alt: "Pera Wallet Discover — asset details and metrics"},
+      ],
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I was responsible for building the embedded React interface integrated into the native Pera Wallet app. The work required close attention to visual consistency with the surrounding native experience.",
+          ],
+          bullets: [
+            "Built interactive price charts with candlestick and line chart modes",
+            "Implemented time range controls and chart switching",
+            "Developed asset metrics displays including volume, TVL, and market cap",
+            "Integrated asset detail views with trust indicators and social links",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Building a web experience embedded inside a native app is a different design problem than building for the browser. The interface has to feel at home in a context it doesn't fully control — matching the surrounding app's visual language while working within the constraints of a web view. It reinforced how much context shapes the way a product feels to its users.",
+          ],
+          bullets: [],
+        },
+      ],
+    },
+    {
+      id: "governance-platform",
+      title: "Governance Platform",
+      heading: "Helping users take part.",
+      body: "Algorand Governance allows token holders to participate in decisions that influence the future of the network. By committing their assets and fulfilling participation requirements, users can vote on proposals and earn governance rewards.\n\nHowever, participating in governance requires understanding unfamiliar concepts, managing wallet connections, and completing blockchain transactions-creating a significant barrier for many users.",
+      variant: "role",
+      images: [
+        {
+          src: algorandGovernance,
+          alt: "Algorand Governance platform interface",
+        },
+      ],
+      subsections: [
+        {
+          title: "My Role",
+          paragraphs: [
+            "I took ownership of the Governance Platform frontend after inheriting the project from another engineer. I contributed to several areas of the governance platform, including governor discovery, activity tracking, wallet integrations, and governance participation flows.",
+          ],
+          bullets: [
+            "Developed governance activity and history interfaces",
+            "Implemented wallet connection and transaction flows",
+            "Contributed to xGov participation experiences",
+            "Supported major platform upgrades and frontend migrations",
+          ],
+        },
+        {
+          title: "Key Takeaway",
+          paragraphs: [
+            "Working on governance products taught me that participation is often a design challenge rather than a technical one. Small improvements in clarity, feedback, and guidance can significantly reduce the friction users experience when interacting with complex systems.",
           ],
           bullets: [],
         },
@@ -790,9 +842,9 @@ const personalExplorationsCaseStudy: CaseStudy = {
     left: [
       {label: "Client", value: "Self-directed"},
       {label: "Work", value: "Personal Explorations"},
-      {label: "Duration", value: "Ongoing"},
+      {label: "Year", value: "Ongoing"},
       {
-        label: "Capacity",
+        label: "My Role",
         value: "Creative Direction, Visual Design, Prototyping",
       },
     ],

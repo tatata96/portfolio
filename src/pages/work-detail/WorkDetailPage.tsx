@@ -1,4 +1,4 @@
-import {useEffect, useState, type CSSProperties} from "react";
+import {useEffect, useRef, useState, type CSSProperties} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
 import {workItems} from "../work/workItems";
 import {
@@ -9,6 +9,48 @@ import {
 } from "./caseStudies";
 import FeatureWalkthrough from "./FeatureWalkthrough";
 import "./work_detail_page.css";
+
+function LogoRow({logos}: {logos: {src: string; alt: string}[]}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          requestAnimationFrame(() => {
+            el.classList.add("logo-row--visible");
+          });
+          observer.disconnect();
+        }
+      },
+      {threshold: 0.2},
+    );
+
+    const timeout = setTimeout(() => observer.observe(el), 100);
+
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className="logo-row" ref={ref}>
+      {logos.map((logo, i) => (
+        <figure
+          className="logo-row__item"
+          key={logo.src}
+          style={{"--logo-index": i} as CSSProperties}
+        >
+          <img src={logo.src} alt={logo.alt} />
+        </figure>
+      ))}
+    </div>
+  );
+}
 
 type ProjectAccentStyle = CSSProperties & {
   "--project-accent": string;
@@ -224,9 +266,9 @@ function renderRoleSubsections(roleSections: RoleSection[]) {
                       <figure
                         className="development-role-pair__visual"
                         key={visual.src}
+                        data-label={visual.label}
                       >
                         <img src={visual.src} alt={visual.alt} />
-                        <figcaption>{visual.label}</figcaption>
                       </figure>
                     ))}
                   </div>
@@ -400,6 +442,27 @@ function renderSectionImage(section: CaseStudySection) {
         >
           <img src={image.src} alt={image.alt} />
         </figure>
+      ))}
+    </div>
+  );
+}
+
+function renderPhoneImages(section: CaseStudySection) {
+  if (!section.phoneImages || section.phoneImages.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="section-phone-row">
+      {section.phoneImages.map((image) => (
+        <div className="section-phone" key={image.src}>
+          <div className="section-phone__device">
+            <div className="section-phone__screen">
+              <div className="section-phone__island" />
+              <img src={image.src} alt={image.alt} />
+            </div>
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -699,11 +762,17 @@ function WorkDetailPage() {
                     <div className="role-section-list__intro">
                       <div>{renderParagraphs(section.body)}</div>
                       {renderSectionCallout(section.callout)}
+                      {section.accentParagraph ? (
+                        <p className="role-section-list__accent-paragraph">
+                          {section.accentParagraph}
+                        </p>
+                      ) : null}
                     </div>
                   ) : (
                     renderParagraphs(section.body)
                   )}
                   {renderSectionImage(section)}
+                  {renderPhoneImages(section)}
 
                   {renderRoleSubsections(
                     section.subsections ?? caseStudy.roleSections,
@@ -723,6 +792,9 @@ function WorkDetailPage() {
                 <>
                   {renderParagraphs(section.body)}
                   {renderSectionImage(section)}
+                  {section.logoRow ? (
+                    <LogoRow logos={section.logoRow} />
+                  ) : null}
                 </>
               )}
             </section>

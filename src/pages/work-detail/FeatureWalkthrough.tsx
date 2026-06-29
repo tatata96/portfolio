@@ -12,6 +12,9 @@ function FeatureWalkthrough({walkthrough}: FeatureWalkthroughProps) {
   return (
     <div className="solution-walkthrough">
       <p className="solution-walkthrough__intro">{walkthrough.intro}</p>
+      {walkthrough.hint ? (
+        <p className="solution-walkthrough__hint">{walkthrough.hint}</p>
+      ) : null}
 
       {walkthrough.steps.length > 0 ? (
         <>
