@@ -14,7 +14,7 @@ import contactVideo from "./contact.mp4";
 import contactPoster from "../poster/contact-poster.jpg";
 
 import titresimPdf from "./titresim.pdf";
-import titresimCover from "./titresim.png";
+import titresimCollage from "./collage.png";
 import oldWebsiteVideo from "./old-website.mp4";
 import oldWebsitePoster from "../poster/old-website-poster.jpg";
 import studioVideo from "./studio.mp4";
@@ -132,8 +132,8 @@ export const dumpAssets: DumpAsset[] = [
     title: "Titresim",
     type: "pdf",
     src: titresimPdf,
-    coverSrc: titresimCover,
-    alt: "Titresim cover",
+    coverSrc: titresimCollage,
+    alt: "Titresim mockup collage",
     pageCount: 19,
     description:
       "Titresim is what I'm choosing to call a graphic novel. It's 12 pages long, written and illustrated entirely by hand, and began life as a stack of ink-covered A4 sheets. I printed 20 copies for friends and family.",
