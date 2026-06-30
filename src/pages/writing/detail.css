@@ -77,25 +77,6 @@
   height: auto; /* natural aspect ratio — no cropping, no black bars */
 }
 
-/* ── Close button ── */
-.detail-close {
-  position: fixed;
-  top: var(--space-md);
-  right: var(--space-md);
-  z-index: 21;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.35);
-  letter-spacing: 0;
-  cursor: pointer;
-  transition: color 0.15s;
-}
-
-.detail-close:hover {
-  color: rgba(0, 0, 0, 0.75);
-}
-
 /* ── Right column — content body ── */
 .detail-body {
   min-width: 0;
@@ -260,10 +241,6 @@
   .detail-layout--no-visual {
     gap: var(--space-md);
     padding: var(--space-md) 10px 3rem;
-  }
-
-  .detail-close {
-    right: 10px;
   }
 
   .detail-title {
