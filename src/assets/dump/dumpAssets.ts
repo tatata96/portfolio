@@ -83,7 +83,7 @@ export const dumpAssets: DumpAsset[] = [
     src: websiteVideo,
     coverSrc: websitePoster,
     description:
-      "My previous portfolio website had with cursor interaction with my favourite passage. Built and designed by me.",
+      "My previous portfolio website had cursor interaction with my favourite passage. Built and designed by me.",
     tags: ["interfaces", "digital"],
     x: 880,
     y: 150,
@@ -109,7 +109,7 @@ export const dumpAssets: DumpAsset[] = [
     src: workVideo,
     coverSrc: workPoster,
     description:
-      "I built this website years ago as a home for my gouache paintings, watercolor pieces, and drawings. The site itself is long gone, but this video remains-a small archive of the work and the interface that held it together.",
+      "A small archive of the work and the interface that held it together.",
     tags: ["interfaces", "digital", "paper"],
     x: 1260,
     y: 365,
@@ -136,7 +136,7 @@ export const dumpAssets: DumpAsset[] = [
     alt: "Titresim mockup collage",
     pageCount: 19,
     description:
-      "Titresim is what I'm choosing to call a graphic novel. It's 12 pages long, written and illustrated entirely by hand, and began life as a stack of ink-covered A4 sheets. I printed 20 copies for friends and family.",
+      "Titresim is what I'm choosing to call a graphic novel. It's 12 pages long, written and illustrated entirely by hand. I self-published 20 copies for friends and family.",
     tags: ["paper", "digital"],
     x: 185,
     y: 625,
@@ -163,7 +163,7 @@ export const dumpAssets: DumpAsset[] = [
     src: oldWebsiteVideo,
     coverSrc: oldWebsitePoster,
     description:
-      "From my old website's landing page. I used p5.js to make the typography react to the mouse, a small interactive type experiment.",
+      "I used p5.js to make the typography react to the mouse, a small interactive type experiment.",
     tags: ["motion", "interfaces", "digital"],
     x: 515,
     y: 735,

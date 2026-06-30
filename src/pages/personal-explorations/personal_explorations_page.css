@@ -657,7 +657,8 @@
   min-height: min(36svh, 420px);
 }
 
-.personal-project--small[data-project-id="apartmento"] {
+.personal-project--small[data-project-id="apartmento"],
+.personal-project--small[data-project-id="brief2"] {
   --apartmento-width: min(50vw, 840px);
   --apartmento-top: 12%;
   --apartmento-info-height: min(32svh, 340px);
@@ -665,7 +666,8 @@
   margin-bottom: clamp(120px, 12vw, 240px);
 }
 
-.personal-project--small[data-project-id="apartmento"] .personal-project__info {
+.personal-project--small[data-project-id="apartmento"] .personal-project__info,
+.personal-project--small[data-project-id="brief2"] .personal-project__info {
   left: 0;
   right: auto;
   top: var(--apartmento-top);
@@ -677,8 +679,8 @@
   border-bottom-right-radius: 0;
 }
 
-.personal-project--small[data-project-id="apartmento"]
-  .personal-project__media {
+.personal-project--small[data-project-id="apartmento"] .personal-project__media,
+.personal-project--small[data-project-id="brief2"] .personal-project__media {
   left: 0;
   right: auto;
   top: calc(var(--apartmento-top) + var(--apartmento-info-height) + 18px);
@@ -690,30 +692,12 @@
 
 .personal-project--small[data-project-id="apartmento"]
   .personal-project__media
+  video,
+.personal-project--small[data-project-id="brief2"]
+  .personal-project__media
   video {
   object-fit: cover;
   object-position: top center;
-}
-
-.personal-project--small[data-project-id="brief2"] .personal-project__info {
-  left: auto;
-  right: min(50vw, 840px);
-  top: 14%;
-  bottom: auto;
-  width: min(28vw, 430px);
-  height: min(44svh, 460px);
-  min-height: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.personal-project--small[data-project-id="brief2"] {
-  margin-top: clamp(120px, 10vw, 220px);
-}
-
-.personal-project--small[data-project-id="brief2"] .personal-project__media {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .personal-project--small[data-project-id="train"] {
@@ -739,8 +723,8 @@
 
 .personal-project--small[data-project-id="web"] .personal-project__media {
   left: auto;
-  right: 9%;
-  top: 16%;
+  right: 3%;
+  top: 36%;
   width: min(56vw, 930px);
   height: min(50svh, 540px);
 }
@@ -753,7 +737,7 @@
 .personal-project--small[data-project-id="web"] .personal-project__info {
   left: 12%;
   right: auto;
-  top: calc(16% + 46px);
+  top: calc(26% + 46px);
   bottom: auto;
   width: min(24vw, 390px);
   min-height: min(40svh, 460px);
