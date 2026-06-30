@@ -19,7 +19,7 @@ import oldWebsiteVideo from "./old-website.mp4";
 import oldWebsitePoster from "../poster/old-website-poster.jpg";
 import studioVideo from "./studio.mp4";
 import studioPoster from "../poster/studio-poster.jpg";
-import websiteVideo from "./website.mp4";
+import websiteVideo from "./corner.mp4";
 import websitePoster from "../poster/website-poster.jpg";
 import workVideo from "./drawings.mp4";
 import workPoster from "../poster/drawings-poster.jpg";
