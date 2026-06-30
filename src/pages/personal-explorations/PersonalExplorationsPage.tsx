@@ -131,12 +131,6 @@ function MediaPreview({ asset }: { asset: DumpAsset }) {
   );
 }
 
-function getStatusLabel(asset: DumpAsset) {
-  if (asset.websiteUrl) return "live";
-  if (asset.type === "pdf") return `${asset.pageCount} pages`;
-  return "archive";
-}
-
 type ProjectStyle = CSSProperties & {
   "--project-color": string;
 };
@@ -145,6 +139,8 @@ function getProjectColor(index: number) {
   const colors = ["#3451d1", "#ff4a12", "#171717", "#ebe7dc", "#7a5cff"];
   return colors[index % colors.length];
 }
+
+const SMALL_PROJECT_IDS = new Set(["apartmento", "brief2", "train", "web"]);
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 
@@ -287,8 +283,6 @@ function PersonalExplorationsPage() {
 
             if (entry.isIntersecting) {
               nextIds.add(id);
-            } else {
-              nextIds.delete(id);
             }
           });
 
@@ -429,8 +423,9 @@ function PersonalExplorationsPage() {
               visibleProjectIds.has(asset.id) ? "personal-project--visible" : "",
               index % 2 ? "personal-project--reverse" : "",
               getProjectColor(index) === "#ebe7dc" ? "personal-project--light" : "",
-              getProjectColor(index) === "#121212" ? "personal-project--dark" : "",
+              getProjectColor(index) === "#171717" ? "personal-project--dark" : "",
               asset.websiteUrl ? "personal-project--live" : "",
+              SMALL_PROJECT_IDS.has(asset.id) ? "personal-project--small" : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -457,18 +452,24 @@ function PersonalExplorationsPage() {
               <MediaPreview asset={asset} />
             </button>
 
-            <button
-              className="personal-project__scroll-meta"
-              type="button"
-              onClick={() => handleAssetClick(asset)}
-              aria-label={`Open ${asset.title}`}
-            >
-              <span>{String(index + 1).padStart(2, "0")} / {getPrimaryTag(asset)}</span>
-              <span>{asset.title}</span>
-              <span>{getStatusLabel(asset)}</span>
-              <span>{asset.tags.join(" / ")}</span>
-              <span>Open project</span>
-            </button>
+            <div className="personal-project__info">
+              <p className="personal-project__info-eyebrow">
+                {String(index + 1).padStart(2, "0")} / {getPrimaryTag(asset)}
+              </p>
+              <div className="personal-project__info-description">
+                {renderDescription(asset.description)}
+              </div>
+              {asset.websiteUrl ? (
+                <a
+                  href={asset.websiteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="personal-project__info-visit"
+                >
+                  Visit site ↗
+                </a>
+              ) : null}
+            </div>
           </article>
         ))}
       </main>
