@@ -85,8 +85,6 @@ function Detail({ item, onClose }: DetailProps) {
 
   return (
     <section className="detail-page" aria-label={`${item.title} detail`}>
-      <button className="detail-close" onClick={onClose}>[ esc ]</button>
-
       <div className={`detail-layout${hasVisual ? '' : ' detail-layout--no-visual'}`}>
         <header className="detail-heading">
           <span className="detail-id">{item.id} — {item.type}</span>
