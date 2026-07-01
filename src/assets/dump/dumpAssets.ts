@@ -37,6 +37,7 @@ export type DumpAsset = {
   pageCount?: number;
   collectionId?: string;
   websiteUrl?: string;
+  requestCopyUrl?: string;
   description: string;
   tags: string[];
   x: number;
@@ -135,6 +136,7 @@ export const dumpAssets: DumpAsset[] = [
     coverSrc: titresimCollage,
     alt: "Titresim mockup collage",
     pageCount: 19,
+    requestCopyUrl: "mailto:tamarakozok@gmail.com?subject=Request%20a%20copy%20of%20Titresim",
     description:
       "Titresim is what I'm choosing to call a graphic novel. It's 12 pages long, written and illustrated entirely by hand. I self-published 20 copies for friends and family.",
     tags: ["paper", "digital"],

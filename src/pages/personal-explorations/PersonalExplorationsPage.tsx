@@ -374,6 +374,14 @@ function PersonalExplorationsPage() {
                   Visit site ↗
                 </a>
               ) : null}
+              {asset.requestCopyUrl ? (
+                <a
+                  href={asset.requestCopyUrl}
+                  className="personal-project__info-visit"
+                >
+                  Request a copy
+                </a>
+              ) : null}
             </div>
           </article>
         ))}
