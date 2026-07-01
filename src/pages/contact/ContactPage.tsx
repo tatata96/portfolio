@@ -1,6 +1,9 @@
+import { usePlaygroundHoverSound } from "../../utils/usePlaygroundHoverSound";
 import "./contact_page.css";
 
 function ContactPage() {
+  const { playHoverSound } = usePlaygroundHoverSound();
+
   return (
     <section
       className="contact-page"
@@ -28,6 +31,8 @@ function ContactPage() {
           <a
             className="contact-page__card contact-page__card--email"
             href="mailto:tamarakozok@gmail.com"
+            onFocus={() => playHoverSound()}
+            onMouseEnter={() => playHoverSound()}
           >
             <span className="contact-page__card-title">tamarakozok@gmail.com</span>
           </a>
@@ -36,6 +41,8 @@ function ContactPage() {
             href="https://github.com/tatata96"
             target="_blank"
             rel="noopener noreferrer"
+            onFocus={() => playHoverSound()}
+            onMouseEnter={() => playHoverSound()}
           >
             <span className="contact-page__card-title">GitHub</span>
           </a>
@@ -44,6 +51,8 @@ function ContactPage() {
             href="https://www.linkedin.com/in/tamara-kozok/"
             target="_blank"
             rel="noopener noreferrer"
+            onFocus={() => playHoverSound()}
+            onMouseEnter={() => playHoverSound()}
           >
             <span className="contact-page__card-title">LinkedIn</span>
           </a>

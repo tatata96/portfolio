@@ -1,23 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import LazyHoverVideo from "../../components/LazyHoverVideo/LazyHoverVideo";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
-import {
-  getPlaygroundSoundMuted,
-  PLAYGROUND_SOUND_MUTED_EVENT,
-} from "../../utils/playgroundSoundPreference";
+import { usePlaygroundHoverSound } from "../../utils/usePlaygroundHoverSound";
 import "./personal_explorations_page.css";
-
-const playgroundSoundModules = import.meta.glob("../../assets/sound/*.{mp3,wav,ogg,m4a}", {
-  eager: true,
-  query: "?url",
-  import: "default",
-}) as Record<string, string>;
-
-const playgroundSoundSources = Object.entries(playgroundSoundModules)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([, src]) => src);
-
-const HOVER_SOUND_MOVE_INTERVAL_MS = 180;
 
 // ── Scramble text ────────────────────────────────────────────────────────────
 
@@ -150,19 +135,13 @@ const SMALL_PROJECT_IDS = new Set(["apartmento", "brief2", "train", "web"]);
 
 function PersonalExplorationsPage() {
   const [isChromeVisible, setIsChromeVisible] = useState(false);
-  const [isPlaygroundSoundMuted, setIsPlaygroundSoundMuted] = useState(
-    getPlaygroundSoundMuted
-  );
   const [visibleProjectIds, setVisibleProjectIds] = useState<Set<string>>(
     () => new Set()
   );
   const pageRef = useRef<HTMLElement | null>(null);
   const projectsRef = useRef<HTMLElement | null>(null);
   const projectRefs = useRef<Map<string, HTMLElement>>(new Map());
-  const soundRefs = useRef<Map<string, HTMLAudioElement>>(new Map());
-  const currentSoundRef = useRef<HTMLAudioElement | null>(null);
-  const lastMoveSoundTimesRef = useRef<Map<string, number>>(new Map());
-  const nextSoundIndexRef = useRef(0);
+  const { playHoverSound, playMoveSound } = usePlaygroundHoverSound();
 
   useEffect(() => {
     let frameId = 0;
@@ -192,38 +171,6 @@ function PersonalExplorationsPage() {
   }, []);
 
   useEffect(() => {
-    function stopCurrentSound() {
-      const currentSound = currentSoundRef.current;
-      if (!currentSound) return;
-
-      currentSound.pause();
-      currentSound.currentTime = 0;
-      currentSoundRef.current = null;
-    }
-
-    function handleSoundMutedChange(event: Event) {
-      const isMuted = (event as CustomEvent<boolean>).detail;
-      setIsPlaygroundSoundMuted(isMuted);
-
-      if (isMuted) {
-        stopCurrentSound();
-      }
-    }
-
-    if (isPlaygroundSoundMuted) {
-      stopCurrentSound();
-    }
-
-    window.addEventListener(PLAYGROUND_SOUND_MUTED_EVENT, handleSoundMutedChange);
-    return () => {
-      window.removeEventListener(
-        PLAYGROUND_SOUND_MUTED_EVENT,
-        handleSoundMutedChange
-      );
-    };
-  }, [isPlaygroundSoundMuted]);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         setVisibleProjectIds((currentIds) => {
@@ -247,68 +194,6 @@ function PersonalExplorationsPage() {
     projectRefs.current.forEach((project) => observer.observe(project));
     return () => observer.disconnect();
   }, []);
-
-  function getNextHoverSoundSrc(asset: DumpAsset) {
-    if (asset.hoverSoundSrc) return asset.hoverSoundSrc;
-    if (!playgroundSoundSources.length) return undefined;
-
-    const soundSrc =
-      playgroundSoundSources[
-        nextSoundIndexRef.current % playgroundSoundSources.length
-      ];
-
-    nextSoundIndexRef.current =
-      (nextSoundIndexRef.current + 1) % playgroundSoundSources.length;
-
-    return soundSrc;
-  }
-
-  function playAssetHoverSound(asset: DumpAsset) {
-    if (isPlaygroundSoundMuted) return;
-
-    const currentSound = currentSoundRef.current;
-    if (currentSound && !currentSound.paused && !currentSound.ended) return;
-
-    const soundSrc = getNextHoverSoundSrc(asset);
-    if (!soundSrc) return;
-
-    let audio = soundRefs.current.get(soundSrc);
-    if (!audio) {
-      audio = new Audio(soundSrc);
-      audio.preload = "auto";
-      audio.volume = 0.42;
-      soundRefs.current.set(soundSrc, audio);
-    }
-
-    audio.currentTime = 0;
-    currentSoundRef.current = audio;
-
-    audio.addEventListener(
-      "ended",
-      () => {
-        if (currentSoundRef.current === audio) {
-          currentSoundRef.current = null;
-        }
-      },
-      { once: true },
-    );
-
-    void audio.play().catch(() => {
-      if (currentSoundRef.current === audio) {
-        currentSoundRef.current = null;
-      }
-    });
-  }
-
-  function playAssetMoveSound(asset: DumpAsset) {
-    const now = window.performance.now();
-    const lastSoundTime = lastMoveSoundTimesRef.current.get(asset.id) ?? 0;
-
-    if (now - lastSoundTime < HOVER_SOUND_MOVE_INTERVAL_MS) return;
-
-    lastMoveSoundTimesRef.current.set(asset.id, now);
-    playAssetHoverSound(asset);
-  }
 
   return (
     <section
@@ -392,8 +277,8 @@ function PersonalExplorationsPage() {
           >
             <div
               className="personal-project__media"
-              onMouseEnter={() => playAssetHoverSound(asset)}
-              onMouseMove={() => playAssetMoveSound(asset)}
+              onMouseEnter={() => playHoverSound(asset.hoverSoundSrc)}
+              onMouseMove={() => playMoveSound(asset.id, asset.hoverSoundSrc)}
             >
               <MediaPreview asset={asset} />
             </div>
