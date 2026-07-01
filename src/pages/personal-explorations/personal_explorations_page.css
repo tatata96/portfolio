@@ -932,12 +932,12 @@
 
   .personal-project,
   .personal-project--reverse {
-    --mobile-project-width: min(88vw, 720px);
+    --mobile-project-width: min(100%, 720px);
     --mobile-project-panel-height: 360px;
     display: grid;
     grid-template-columns: var(--mobile-project-width);
     grid-template-rows: var(--mobile-project-panel-height) auto;
-    justify-content: start;
+    justify-content: center;
     min-height: 0;
     margin: 96px 0 136px;
   }
@@ -1108,7 +1108,7 @@
 
   .personal-project,
   .personal-project--reverse {
-    --mobile-project-width: min(86vw, 460px);
+    --mobile-project-width: min(100%, 460px);
     --mobile-project-panel-height: 280px;
     min-height: 0;
     margin-bottom: 116px;
