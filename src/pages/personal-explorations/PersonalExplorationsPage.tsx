@@ -142,96 +142,9 @@ function getProjectColor(index: number) {
 
 const SMALL_PROJECT_IDS = new Set(["apartmento", "brief2", "train", "web"]);
 
-// ── Modal ─────────────────────────────────────────────────────────────────────
-
-function AssetModal({
-  asset,
-  onClose,
-}: {
-  asset: DumpAsset;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    document.body.classList.add("personal-modal-open");
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.classList.remove("personal-modal-open");
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [onClose]);
-
-  return (
-    <div className="personal-modal" role="dialog" aria-modal="true">
-      <button
-        className="personal-modal__backdrop"
-        type="button"
-        aria-label="Close modal"
-        onClick={onClose}
-      />
-      <article className="personal-modal__panel">
-        <button
-          className="personal-modal__close"
-          type="button"
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          ×
-        </button>
-        <div className="personal-modal__media">
-          {asset.websiteUrl ? (
-            <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__media-link">
-              {asset.type === "video" ? (
-                <LazyHoverVideo
-                  src={asset.src}
-                  poster={asset.coverSrc}
-                  aria-label={asset.title}
-                  loadImmediately
-                  playImmediately
-                  playOnHover={false}
-                  playOnVisibleTouch={false}
-                />
-              ) : (
-                <img src={asset.src} alt={asset.alt ?? asset.title} />
-              )}
-            </a>
-          ) : asset.type === "video" ? (
-            <LazyHoverVideo
-              src={asset.src}
-              poster={asset.coverSrc}
-              aria-label={asset.title}
-              loadImmediately
-              playImmediately
-              playOnHover={false}
-              playOnVisibleTouch={false}
-            />
-          ) : asset.type === "pdf" ? (
-            <iframe src={asset.src} title={asset.title} />
-          ) : (
-            <img src={asset.src} alt={asset.alt ?? asset.title} />
-          )}
-        </div>
-        <div className="personal-modal__copy">
-          <p>{getPrimaryTag(asset)}</p>
-          <h2>{asset.title}</h2>
-          <div>{renderDescription(asset.description)}</div>
-          {asset.websiteUrl ? (
-            <a href={asset.websiteUrl} target="_blank" rel="noreferrer" className="personal-modal__visit-btn">
-              Visit site ↗
-            </a>
-          ) : null}
-        </div>
-      </article>
-    </div>
-  );
-}
-
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 function PersonalExplorationsPage() {
-  const [selectedAsset, setSelectedAsset] = useState<DumpAsset | null>(null);
   const [isChromeVisible, setIsChromeVisible] = useState(false);
   const [visibleProjectIds, setVisibleProjectIds] = useState<Set<string>>(
     () => new Set()
@@ -295,10 +208,6 @@ function PersonalExplorationsPage() {
     projectRefs.current.forEach((project) => observer.observe(project));
     return () => observer.disconnect();
   }, []);
-
-  function handleAssetClick(asset: DumpAsset) {
-    setSelectedAsset(asset);
-  }
 
   function getNextHoverSoundSrc(asset: DumpAsset) {
     if (asset.hoverSoundSrc) return asset.hoverSoundSrc;
@@ -440,17 +349,13 @@ function PersonalExplorationsPage() {
             }}
             style={{ "--project-color": getProjectColor(index) } as ProjectStyle}
           >
-            <button
+            <div
               className="personal-project__media"
-              type="button"
-              onClick={() => handleAssetClick(asset)}
               onMouseEnter={() => playAssetHoverSound(asset)}
               onMouseMove={() => playAssetMoveSound(asset)}
-              onFocus={() => playAssetHoverSound(asset)}
-              aria-label={`Open ${asset.title}`}
             >
               <MediaPreview asset={asset} />
-            </button>
+            </div>
 
             <div className="personal-project__info">
               <p className="personal-project__info-eyebrow">
@@ -473,14 +378,6 @@ function PersonalExplorationsPage() {
           </article>
         ))}
       </main>
-
-      {/* ── Modal ── */}
-      {selectedAsset ? (
-        <AssetModal
-          asset={selectedAsset}
-          onClose={() => setSelectedAsset(null)}
-        />
-      ) : null}
     </section>
   );
 }
