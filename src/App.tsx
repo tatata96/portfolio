@@ -20,7 +20,8 @@ function AppRoutes() {
   const { hash, pathname } = useLocation()
   const isWorkDetailPage = useMatch('/work/:slug')
   const isWritingPage = useMatch('/writing/:id')
-  const hideNav = Boolean(isWorkDetailPage || isWritingPage)
+  const isPersonalExplorationsPage = pathname === '/work/personal-explorations'
+  const hideNav = Boolean((isWorkDetailPage && !isPersonalExplorationsPage) || isWritingPage)
 
   useEffect(() => {
     if (!hash) return
