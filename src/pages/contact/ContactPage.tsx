@@ -1,15 +1,11 @@
-import { usePlaygroundHoverSound } from "../../utils/usePlaygroundHoverSound";
+import {usePlaygroundHoverSound} from "../../utils/usePlaygroundHoverSound";
 import "./contact_page.css";
 
 function ContactPage() {
-  const { playHoverSound } = usePlaygroundHoverSound();
+  const {playHoverSound} = usePlaygroundHoverSound();
 
   return (
-    <section
-      className="contact-page"
-      id="contact"
-      aria-label="Contact"
-    >
+    <section className="contact-page" id="contact" aria-label="Contact">
       <div className="contact-page__marks" aria-hidden="true">
         <span className="contact-page__mark contact-page__mark--tr" />
         <span className="contact-page__mark contact-page__mark--ml" />
@@ -22,9 +18,8 @@ function ContactPage() {
           <p className="contact-page__eyebrow">Contact</p>
           <p className="contact-page__text">
             Thanks for stopping by.
-            <br />
-            I live for genuine human
-            connection—don't hesitate to reach out.
+            <br />I value genuine human connection:) don't hesitate to reach
+            out.
           </p>
         </div>
         <div className="contact-page__links" aria-label="Contact links">
@@ -34,7 +29,9 @@ function ContactPage() {
             onFocus={() => playHoverSound()}
             onMouseEnter={() => playHoverSound()}
           >
-            <span className="contact-page__card-title">tamarakozok@gmail.com</span>
+            <span className="contact-page__card-title">
+              tamarakozok@gmail.com
+            </span>
           </a>
           <a
             className="contact-page__card contact-page__card--github"

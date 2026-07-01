@@ -8,7 +8,11 @@
   padding: clamp(88px, 10vw, 132px) 32px;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 243, 237, 0.96)),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(246, 243, 237, 0.96)
+    ),
     #f7f4ee;
   color: var(--text-h);
 }
@@ -172,21 +176,7 @@
   transition:
     background-color 180ms ease,
     border-color 180ms ease,
-    box-shadow 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
-}
-
-.contact-page__card::before {
-  position: absolute;
-  inset: 0;
-  background: var(--contact-card-accent);
-  content: "";
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
+    color 180ms ease;
 }
 
 .contact-page__card--github {
@@ -205,7 +195,7 @@
 .contact-page__card-title {
   max-width: 100%;
   font-family: "Syne", system-ui, sans-serif;
-  font-size: clamp(28px, 3.2vw, 46px);
+  font-size: clamp(28px, 3.2vw, 36px);
   font-weight: 500;
   line-height: 1;
   text-align: center;
@@ -214,16 +204,9 @@
 
 .contact-page__card:hover,
 .contact-page__card:focus-visible {
-  border-color: transparent;
+  background-color: var(--contact-card-accent);
+  border-color: var(--contact-card-accent);
   color: #fff;
-  box-shadow: 0 28px 70px rgba(8, 6, 13, 0.16);
-  transform: translateY(-6px);
-}
-
-.contact-page__card:hover::before,
-.contact-page__card:focus-visible::before {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .contact-page__card:focus-visible {
