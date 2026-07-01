@@ -29,7 +29,7 @@ import personalExplorationsImage from "../../assets/personal/t.png";
 import photifyColors from "../../assets/photify/colors.png";
 import photifyDisplayFlow from "../../assets/photify/display.png";
 import photifyEnterEventFlow from "../../assets/photify/enter-event.png";
-import photifyFigma from "../../assets/photify/figma.png";
+import photifyFigma from "../../assets/photify/figma.webp";
 import photifyLogo from "../../assets/photify/photify-3d-yellow-bg-logo.jpeg";
 import photifyPolo1 from "../../assets/photify/polo/1.jpeg";
 import photifyPolo2 from "../../assets/photify/polo/2.jpeg";
