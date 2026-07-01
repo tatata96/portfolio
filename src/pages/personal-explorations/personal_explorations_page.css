@@ -769,6 +769,12 @@
     justify-content: center;
     min-height: 0;
     margin: 96px 0 136px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--page-ink) 14%, transparent);
+    border-radius: 20px;
+    background: var(--project-color);
+    color: #f5f1ea;
+    transform: translateZ(0);
   }
 
   .personal-project__media,
@@ -784,10 +790,9 @@
     top: auto;
     width: var(--mobile-project-width);
     height: var(--mobile-project-panel-height);
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    min-height: 250px;
+    border-radius: 0;
+    background: color-mix(in srgb, var(--project-color) 12%, var(--bg));
   }
 
   .personal-project__info,
@@ -806,17 +811,19 @@
     height: auto;
     min-height: auto;
     margin: 0;
-    gap: 12px;
-    padding: 20px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    overflow: auto;
+    gap: 9px;
+    padding: 18px 20px 22px;
+    border-radius: 0;
+    background: var(--project-color);
+    overflow: visible;
   }
 
   .personal-project__info-description {
     max-width: 34ch;
+    color: color-mix(in srgb, currentColor 76%, transparent);
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.35;
   }
 
   .personal-project__info-visit {
@@ -867,10 +874,7 @@
     top: auto;
     width: var(--mobile-project-width);
     height: var(--mobile-project-panel-height);
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 0;
   }
 
   .personal-project--small[data-project-id="apartmento"]
@@ -886,10 +890,7 @@
     height: auto;
     min-height: auto;
     margin: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 0;
   }
 
 }
@@ -918,6 +919,7 @@
     --mobile-project-panel-height: 280px;
     min-height: 0;
     margin-bottom: 116px;
+    border-radius: 16px;
   }
 
   .personal-project__media,
@@ -928,6 +930,7 @@
   .personal-project--layout-6 .personal-project__media {
     width: var(--mobile-project-width);
     height: var(--mobile-project-panel-height);
+    min-height: 225px;
   }
 
   .personal-project__info,
@@ -939,6 +942,11 @@
     width: var(--mobile-project-width);
     height: auto;
     margin: 0;
+    padding: 20px 18px 24px;
+  }
+
+  .personal-project__info-description {
+    font-size: 14px;
   }
 
   .personal-project--small,

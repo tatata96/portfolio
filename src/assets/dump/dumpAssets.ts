@@ -109,7 +109,7 @@ export const dumpAssets: DumpAsset[] = [
     src: workVideo,
     coverSrc: workPoster,
     description:
-      "A small archive of the work and the interface that held it together.",
+      "A small archive of my old gouache and ink work and the interface that held it together.",
     tags: ["interfaces", "digital", "paper"],
     x: 1260,
     y: 365,
