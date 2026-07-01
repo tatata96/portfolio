@@ -756,6 +756,8 @@
   }
 
   .personal-projects {
+    display: grid;
+    row-gap: 48px;
     padding-inline: 18px;
   }
 
@@ -768,7 +770,7 @@
     grid-template-rows: var(--mobile-project-panel-height) auto;
     justify-content: center;
     min-height: 0;
-    margin: 96px 0 136px;
+    margin: 0;
     overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--page-ink) 14%, transparent);
     border-radius: 20px;
@@ -841,7 +843,7 @@
   .personal-project--small,
   .personal-project--small.personal-project--reverse {
     min-height: 0;
-    margin: 20px 0;
+    margin: 0;
   }
 
   .personal-project--small[data-project-id="apartmento"],
@@ -849,7 +851,7 @@
   .personal-project--small[data-project-id="train"],
   .personal-project--small[data-project-id="web"],
   .personal-project[data-project-id="studio"] {
-    margin: 20px 0;
+    margin: 0;
   }
 
   .personal-project--small .personal-project__media {
@@ -918,8 +920,11 @@
     --mobile-project-width: min(100%, 460px);
     --mobile-project-panel-height: 280px;
     min-height: 0;
-    margin-bottom: 116px;
     border-radius: 16px;
+  }
+
+  .personal-projects {
+    row-gap: 30px;
   }
 
   .personal-project__media,
@@ -952,7 +957,7 @@
   .personal-project--small,
   .personal-project--small.personal-project--reverse {
     min-height: 0;
-    margin: 16px 0;
+    margin: 0;
   }
 
   .personal-project--small[data-project-id="apartmento"],
@@ -960,7 +965,7 @@
   .personal-project--small[data-project-id="train"],
   .personal-project--small[data-project-id="web"],
   .personal-project[data-project-id="studio"] {
-    margin: 16px 0;
+    margin: 0;
   }
 
   .personal-project--small .personal-project__media {
