@@ -1,4 +1,3 @@
-import singleTImage from "../../assets/personal/t-single.png";
 import "./contact_page.css";
 
 function ContactPage() {
@@ -16,33 +15,38 @@ function ContactPage() {
         <span className="contact-page__mark contact-page__mark--br" />
       </div>
       <div className="contact-page__inner">
-        <div className="contact-page__panel">
-          <img
-            className="contact-page__single-t"
-            src={singleTImage}
-            alt=""
-            aria-hidden="true"
-          />
+        <div className="contact-page__intro">
           <p className="contact-page__eyebrow">Contact</p>
-          <a className="contact-page__email" href="mailto:tamarakozok@gmail.com">
-            tamarakozok@gmail.com
+          <p className="contact-page__text">
+            Thanks for stopping by.
+            <br />
+            I live for genuine human
+            connection—don't hesitate to reach out.
+          </p>
+        </div>
+        <div className="contact-page__links" aria-label="Contact links">
+          <a
+            className="contact-page__card contact-page__card--email"
+            href="mailto:tamarakozok@gmail.com"
+          >
+            <span className="contact-page__card-title">tamarakozok@gmail.com</span>
           </a>
-          <div className="contact-page__links" aria-label="Social links">
-            <a
-              href="https://github.com/tatata96"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/tamara-kozok/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </div>
+          <a
+            className="contact-page__card contact-page__card--github"
+            href="https://github.com/tatata96"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="contact-page__card-title">GitHub</span>
+          </a>
+          <a
+            className="contact-page__card contact-page__card--linkedin"
+            href="https://www.linkedin.com/in/tamara-kozok/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="contact-page__card-title">LinkedIn</span>
+          </a>
         </div>
       </div>
     </section>
