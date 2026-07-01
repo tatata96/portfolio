@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import {
+  getPlaygroundSoundMuted,
+  PLAYGROUND_SOUND_MUTED_EVENT,
+  setPlaygroundSoundMuted,
+} from '../../utils/playgroundSoundPreference'
 import './navbar.css'
 
 function Navbar() {
   const { pathname } = useLocation()
   const [isCompact, setIsCompact] = useState(false)
+  const [isPlaygroundSoundMuted, setIsPlaygroundSoundMuted] = useState(
+    getPlaygroundSoundMuted,
+  )
 
   useEffect(() => {
     function handleScroll() {
@@ -16,6 +24,24 @@ function Navbar() {
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [pathname])
+
+  useEffect(() => {
+    function handleSoundMutedChange(event: Event) {
+      setIsPlaygroundSoundMuted((event as CustomEvent<boolean>).detail)
+    }
+
+    window.addEventListener(PLAYGROUND_SOUND_MUTED_EVENT, handleSoundMutedChange)
+    return () => {
+      window.removeEventListener(
+        PLAYGROUND_SOUND_MUTED_EVENT,
+        handleSoundMutedChange,
+      )
+    }
+  }, [])
+
+  function handleSoundToggle() {
+    setPlaygroundSoundMuted(!isPlaygroundSoundMuted)
+  }
 
   function handleWorkClick(event: React.MouseEvent<HTMLAnchorElement>) {
     if (pathname !== '/') return
@@ -66,6 +92,19 @@ function Navbar() {
         <Link to="/#work" onClick={handleWorkClick}>Work</Link>
         <Link to="/#playground" onClick={handlePlaygroundClick}>Playground</Link>
         <Link to="/#contact" onClick={handleContactClick}>Contact</Link>
+        <button
+          type="button"
+          className="nav-sound-button"
+          onClick={handleSoundToggle}
+          aria-pressed={isPlaygroundSoundMuted}
+          aria-label={
+            isPlaygroundSoundMuted
+              ? "Turn playground sounds on"
+              : "Silence playground sounds"
+          }
+        >
+          {isPlaygroundSoundMuted ? "Sound off" : "Sound on"}
+        </button>
       </div>
     </nav>
   )

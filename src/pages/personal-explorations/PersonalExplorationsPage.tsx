@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import LazyHoverVideo from "../../components/LazyHoverVideo/LazyHoverVideo";
 import { dumpAssets, type DumpAsset } from "../../assets/dump/dumpAssets";
+import {
+  getPlaygroundSoundMuted,
+  PLAYGROUND_SOUND_MUTED_EVENT,
+} from "../../utils/playgroundSoundPreference";
 import "./personal_explorations_page.css";
 
 const playgroundSoundModules = import.meta.glob("../../assets/sound/*.{mp3,wav,ogg,m4a}", {
@@ -146,6 +150,9 @@ const SMALL_PROJECT_IDS = new Set(["apartmento", "brief2", "train", "web"]);
 
 function PersonalExplorationsPage() {
   const [isChromeVisible, setIsChromeVisible] = useState(false);
+  const [isPlaygroundSoundMuted, setIsPlaygroundSoundMuted] = useState(
+    getPlaygroundSoundMuted
+  );
   const [visibleProjectIds, setVisibleProjectIds] = useState<Set<string>>(
     () => new Set()
   );
@@ -183,6 +190,38 @@ function PersonalExplorationsPage() {
       window.removeEventListener("resize", scheduleChromeVisibilityUpdate);
     };
   }, []);
+
+  useEffect(() => {
+    function stopCurrentSound() {
+      const currentSound = currentSoundRef.current;
+      if (!currentSound) return;
+
+      currentSound.pause();
+      currentSound.currentTime = 0;
+      currentSoundRef.current = null;
+    }
+
+    function handleSoundMutedChange(event: Event) {
+      const isMuted = (event as CustomEvent<boolean>).detail;
+      setIsPlaygroundSoundMuted(isMuted);
+
+      if (isMuted) {
+        stopCurrentSound();
+      }
+    }
+
+    if (isPlaygroundSoundMuted) {
+      stopCurrentSound();
+    }
+
+    window.addEventListener(PLAYGROUND_SOUND_MUTED_EVENT, handleSoundMutedChange);
+    return () => {
+      window.removeEventListener(
+        PLAYGROUND_SOUND_MUTED_EVENT,
+        handleSoundMutedChange
+      );
+    };
+  }, [isPlaygroundSoundMuted]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -225,6 +264,8 @@ function PersonalExplorationsPage() {
   }
 
   function playAssetHoverSound(asset: DumpAsset) {
+    if (isPlaygroundSoundMuted) return;
+
     const currentSound = currentSoundRef.current;
     if (currentSound && !currentSound.paused && !currentSound.ended) return;
 
