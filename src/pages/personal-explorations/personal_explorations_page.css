@@ -67,6 +67,12 @@
   z-index: 1000;
   inset: 0;
   --fixed-mark-inset: 12px;
+  --fixed-mark-size: 38px;
+  --fixed-mark-dot: 7px;
+  --fixed-mark-dot-stop: calc(var(--fixed-mark-dot) + 1px);
+  --fixed-mark-dot-1: calc(var(--fixed-mark-size) * 0.21);
+  --fixed-mark-dot-2: 50%;
+  --fixed-mark-dot-3: calc(var(--fixed-mark-size) * 0.79);
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -77,54 +83,54 @@
 
 .personal-fixed-mark {
   position: absolute;
-  width: 38px;
-  height: 38px;
+  width: var(--fixed-mark-size);
+  height: var(--fixed-mark-size);
   --mark-color: var(--page-orange);
   background:
     radial-gradient(
-      circle at 8px 8px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-1) var(--fixed-mark-dot-1),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 19px 8px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-2) var(--fixed-mark-dot-1),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 30px 8px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-3) var(--fixed-mark-dot-1),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 8px 19px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-1) var(--fixed-mark-dot-2),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 19px 19px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-2) var(--fixed-mark-dot-2),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 30px 19px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-3) var(--fixed-mark-dot-2),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 8px 30px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-1) var(--fixed-mark-dot-3),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 19px 30px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-2) var(--fixed-mark-dot-3),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     ),
     radial-gradient(
-      circle at 30px 30px,
-      var(--mark-color) 0 7px,
-      transparent 8px
+      circle at var(--fixed-mark-dot-3) var(--fixed-mark-dot-3),
+      var(--mark-color) 0 var(--fixed-mark-dot),
+      transparent var(--fixed-mark-dot-stop)
     );
 }
 
@@ -900,6 +906,12 @@
 }
 
 @media (max-width: 560px) {
+  .personal-fixed-marks {
+    --fixed-mark-inset: 9px;
+    --fixed-mark-size: 26px;
+    --fixed-mark-dot: 4.8px;
+  }
+
   .personal-bg-title {
     top: 31%;
     right: 38px;

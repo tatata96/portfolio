@@ -78,18 +78,20 @@ function HomePage() {
               aria-hidden="true"
             />
           )}
-          {showScribble && (
-            <video
-              className="home-hero__scribble"
-              src={scribbleVideo}
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-              aria-hidden="true"
-            />
-          )}
-          <img className="home-hero__portrait" src={meImage} alt="" />
+          <div className="home-hero__portrait-stage">
+            {showScribble && (
+              <video
+                className="home-hero__scribble"
+                src={scribbleVideo}
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+              />
+            )}
+            <img className="home-hero__portrait" src={meImage} alt="" />
+          </div>
           <div className="home-hero__copy" aria-label="Introduction">
             <p className="home-hero__copy-left">
               Trained in Computer Science, I have spent the last six years
