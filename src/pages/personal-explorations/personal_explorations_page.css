@@ -737,7 +737,7 @@
   margin-top: clamp(180px, 16vw, 320px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .personal-bg-title {
     right: clamp(46px, 12vw, 96px);
     top: 36%;
@@ -764,7 +764,7 @@
   .personal-project,
   .personal-project--reverse {
     --mobile-project-width: min(100%, 720px);
-    --mobile-project-panel-height: 360px;
+    --mobile-project-panel-height: clamp(320px, 56.25vw, 405px);
     display: grid;
     grid-template-columns: var(--mobile-project-width);
     grid-template-rows: var(--mobile-project-panel-height) auto;
