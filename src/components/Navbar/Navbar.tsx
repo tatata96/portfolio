@@ -7,6 +7,72 @@ import {
 } from '../../utils/playgroundSoundPreference'
 import './navbar.css'
 
+function SoundOnIcon() {
+  return (
+    <svg
+      className="nav-sound-button__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 16V8h3l5-4v16l-5-4H3Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13 9s2 .5 2 3-2 3-2 3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 7s3 .83 3 5-3 5-3 5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17 5s4 1.17 4 7-4 7-4 7"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function SoundOffIcon() {
+  return (
+    <svg
+      className="nav-sound-button__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 16V8h3l5-4v16l-5-4H3Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="m14.5 15 6-6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="m14.5 9 6 6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function Navbar() {
   const { pathname } = useLocation()
   const [isCompact, setIsCompact] = useState(false)
@@ -103,7 +169,7 @@ function Navbar() {
               : "Silence playground sounds"
           }
         >
-          {isPlaygroundSoundMuted ? "Sound off" : "Sound on"}
+          {isPlaygroundSoundMuted ? <SoundOffIcon /> : <SoundOnIcon />}
         </button>
       </div>
     </nav>
