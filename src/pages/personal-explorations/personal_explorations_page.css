@@ -769,6 +769,8 @@
     grid-template-columns: var(--mobile-project-width);
     grid-template-rows: var(--mobile-project-panel-height) auto;
     justify-content: center;
+    justify-self: center;
+    width: var(--mobile-project-width);
     min-height: 0;
     margin: 0;
     overflow: hidden;
